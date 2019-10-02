@@ -29,10 +29,11 @@ namespace Toggl.iOS
             if (!dependencyContainer.UserAccessManager.CheckIfLoggedIn())
                 return;
 
-            var shouldBeSubscribedToPushNotifications = dependencyContainer
-                .RemoteConfigService
-                .GetPushNotificationsConfiguration()
-                .RegisterPushNotificationsTokenWithServer;
+            // var shouldBeSubscribedToPushNotifications = dependencyContainer
+            //     .RemoteConfigService
+            //     .GetPushNotificationsConfiguration()
+            //     .RegisterPushNotificationsTokenWithServer;
+            var shouldBeSubscribedToPushNotifications = true;
 
             if (!shouldBeSubscribedToPushNotifications) return;
 
@@ -53,10 +54,11 @@ namespace Toggl.iOS
                 return;
             }
 
-            var shouldHandlePushNotifications = dependencyContainer
-                .RemoteConfigService
-                .GetPushNotificationsConfiguration()
-                .HandlePushNotifications;
+            // var shouldHandlePushNotifications = dependencyContainer
+            //     .RemoteConfigService
+            //     .GetPushNotificationsConfiguration()
+            //     .HandlePushNotifications;
+            var shouldHandlePushNotifications = true;
 
             if (!shouldHandlePushNotifications)
             {
