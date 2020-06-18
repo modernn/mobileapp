@@ -40,7 +40,7 @@ namespace Toggl.Networking.ApiClients
 
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {
-                if (response.RawData.ToUpper().Contains("SAML2 CONFIGURATION"))
+                if (response.RawData.ToUpper().Contains("SSO"))
                 {
                     throw new SamlNotConfiguredException(request, response);
                 }
