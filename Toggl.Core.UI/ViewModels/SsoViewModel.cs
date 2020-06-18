@@ -1,26 +1,44 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Toggl.Core.Analytics;
+using Toggl.Core.Extensions;
+using Toggl.Core.Interactors;
+using Toggl.Core.Login;
 using Toggl.Core.Services;
 using Toggl.Core.UI.Extensions;
 using Toggl.Core.UI.Navigation;
+using Toggl.Core.UI.Parameters;
+using Toggl.Core.UI.ViewModels.Extensions;
 using Toggl.Networking;
 using Toggl.Networking.Exceptions;
 using Toggl.Shared;
 using Toggl.Shared.Extensions;
 using Toggl.Shared.Extensions.Reactive;
 using Toggl.Shared.Models;
+using Toggl.Storage.Settings;
 
 namespace Toggl.Core.UI.ViewModels
 {
     [Preserve(AllMembers = true)]
     public sealed class SsoViewModel : ViewModel
     {
+        private readonly ImmutableList<string> mustLinkKeys =
+            ImmutableList.Create( new [] {"confirmation_code", "email"});
+
+        private readonly ImmutableList<string> loginWithApiTokenKeys = ImmutableList.Create( new [] {"apiToken"});
+        private readonly ImmutableList<string> errorKeys = ImmutableList.Create( new [] {"ssoError"});
         private readonly IAnalyticsService analyticsService;
         private readonly ISchedulerProvider schedulerProvider;
         private readonly IUnauthenticatedTogglApi unauthenticatedTogglApi;
+        private readonly IUserAccessManager userAccessManager;
+        private readonly ILastTimeUsageStorage lastTimeUsageStorage;
+        private readonly IOnboardingStorage onboardingStorage;
+        private readonly IInteractorFactory interactorFactory;
+        private readonly ITimeService timeService;
+
 
         private readonly BehaviorSubject<bool> isLoadingSubject = new BehaviorSubject<bool>(false);
         private readonly BehaviorSubject<string> errorMessageSubject = new BehaviorSubject<string>("");
@@ -37,16 +55,31 @@ namespace Toggl.Core.UI.ViewModels
             INavigationService navigationService,
             ISchedulerProvider schedulerProvider,
             IRxActionFactory rxActionFactory,
-            IUnauthenticatedTogglApi unauthenticatedTogglApi)
+            IUnauthenticatedTogglApi unauthenticatedTogglApi,
+            IUserAccessManager userAccessManager,
+            ILastTimeUsageStorage lastTimeUsageStorage,
+            IOnboardingStorage onboardingStorage,
+            IInteractorFactory interactorFactory,
+            ITimeService timeService)
             : base(navigationService)
         {
             Ensure.Argument.IsNotNull(analyticsService, nameof(analyticsService));
             Ensure.Argument.IsNotNull(schedulerProvider, nameof(schedulerProvider));
             Ensure.Argument.IsNotNull(rxActionFactory, nameof(rxActionFactory));
+            Ensure.Argument.IsNotNull(userAccessManager, nameof(userAccessManager));
+            Ensure.Argument.IsNotNull(lastTimeUsageStorage, nameof(lastTimeUsageStorage));
+            Ensure.Argument.IsNotNull(onboardingStorage, nameof(onboardingStorage));
+            Ensure.Argument.IsNotNull(interactorFactory, nameof(interactorFactory));
+            Ensure.Argument.IsNotNull(timeService, nameof(timeService));
 
             this.analyticsService = analyticsService;
             this.schedulerProvider = schedulerProvider;
             this.unauthenticatedTogglApi = unauthenticatedTogglApi;
+            this.userAccessManager = userAccessManager;
+            this.lastTimeUsageStorage = lastTimeUsageStorage;
+            this.onboardingStorage = onboardingStorage;
+            this.interactorFactory = interactorFactory;
+            this.timeService = timeService;
 
             Continue = rxActionFactory.FromAsync(getSamlConfigAndInitializeAuthFlow);
 
@@ -89,7 +122,6 @@ namespace Toggl.Core.UI.ViewModels
             {
                 var config = await unauthenticatedTogglApi.Auth.GetSamlConfig(Email.Value);
                 await performAuthFlow(config.SsoUrl);
-                return;
             }
             catch (SamlNotConfiguredException samlNotConfiguredException)
             {
@@ -110,6 +142,29 @@ namespace Toggl.Core.UI.ViewModels
             var authResult = await Xamarin.Essentials.WebAuthenticator.AuthenticateAsync(
                 ssoUri,
                 new Uri("togglauth://"));
+
+            var authResultParams = authResult.Properties;
+            if (authResultParams.HasAllKeys(loginWithApiTokenKeys))
+            {
+                await userAccessManager.LoginWithApiToken(authResultParams[loginWithApiTokenKeys[0]])
+                    .Track(analyticsService.Login, AuthenticationMethod.SSO);
+
+                await this.onLoggedIn(lastTimeUsageStorage, onboardingStorage, interactorFactory, timeService,
+                    analyticsService);
+
+                await Navigate<MainTabBarViewModel, MainTabBarParameters>(MainTabBarParameters.Default);
+            }
+            else if (authResultParams.HasAllKeys(mustLinkKeys))
+            {
+                var confirmationCode = authResultParams[mustLinkKeys[0]];
+                var email = Shared.Email.From(authResultParams[mustLinkKeys[1]]);
+                await Navigate<SsoLinkViewModel, SsoLinkParameters>(
+                    SsoLinkParameters.WithEmailAndConfirmationCode(email, confirmationCode));
+            }
+            else
+            {
+                errorMessageSubject.OnNext(Shared.Resources.SingleSignOnError);
+            }
         }
     }
 }
