@@ -29,7 +29,7 @@ namespace Toggl.Networking.ApiClients
         {
             var endpoint = endpoints.Get;
             var url = new UriBuilder(endpoint.Url);
-            url.Query = $"email={email.ToString()}";
+            url.Query = $"email={email.ToString()}&client=mobile";
             var request = new Request("", url.Uri, Enumerable.Empty<HttpHeader>(), endpoint.Method);
             var response = await apiClient.Send(request).ConfigureAwait(false);
 
