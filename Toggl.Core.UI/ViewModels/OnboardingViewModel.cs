@@ -44,6 +44,7 @@ namespace Toggl.Core.UI.ViewModels
         private readonly BehaviorSubject<bool> isForAccountLinking = new BehaviorSubject<bool>(false);
 
         private Email emailForLinking;
+        private string confirmationCode;
         private ThirdPartyLoginInfo loginInfo;
         private List<bool> onboardingPagesViewed = new List<bool> { false, false, false };
 
@@ -108,6 +109,7 @@ namespace Toggl.Core.UI.ViewModels
         {
             isForAccountLinking.OnNext(payload.IsForAccountLinking);
             emailForLinking = payload.Email;
+            confirmationCode = payload.ConfirmationCode;
 
             return base.Initialize(payload);
         }
@@ -142,7 +144,7 @@ namespace Toggl.Core.UI.ViewModels
             }
             else
             {
-                return Navigate<LoginViewModel, CredentialsParameter>(CredentialsParameter.With(emailForLinking, Password.Empty, isForAccountLinking.Value));
+                return Navigate<LoginViewModel, CredentialsParameter>(CredentialsParameter.With(emailForLinking, Password.Empty, isForAccountLinking.Value, confirmationCode));
             }
         }
 
@@ -166,7 +168,7 @@ namespace Toggl.Core.UI.ViewModels
                 .DisposedBy(disposeBag);
 
             await UIDependencyContainer.Instance.SyncManager.ForceFullSync();
-            await this.ssoLinkIfNeededAndNavigate(api, isForAccountLinking.Value, emailForLinking);
+            await this.ssoLinkIfNeededAndNavigate(api, isForAccountLinking.Value, emailForLinking, confirmationCode);
         }
 
         private async void tryLoggingIn(ThirdPartyLoginProvider provider)
