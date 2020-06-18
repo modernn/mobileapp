@@ -33,7 +33,7 @@ namespace Toggl.Droid
             ProcessLifecycleOwner.Get().Lifecycle.AddObserver(this);
 
 #if !DEBUG
-            Firebase.FirebaseApp.InitializeApp(this);
+            //Firebase.FirebaseApp.InitializeApp(this);
 #endif
             AndroidDependencyContainer.EnsureInitialized(Context);
             var app = new AppStart(AndroidDependencyContainer.Instance);
