@@ -48,6 +48,8 @@ namespace Toggl.Core.UI.ViewModels
         public BehaviorRelay<Email> Email { get; } = new BehaviorRelay<Email>(Shared.Email.Empty);
         public BehaviorRelay<Password> Password { get; } = new BehaviorRelay<Password>(Shared.Password.Empty);
 
+        private Subject<Exception> allErrorsSubject = new Subject<Exception>();
+        public IObservable<Exception> AllErrors { get; }
         public IObservable<bool> PasswordVisible { get; }
         public IObservable<bool> IsLoading { get; }
         public IObservable<Unit> ShakeEmail { get; }
@@ -92,6 +94,9 @@ namespace Toggl.Core.UI.ViewModels
             this.schedulerProvider = schedulerProvider;
             this.interactorFactory = interactorFactory;
 
+            AllErrors = allErrorsSubject
+                .AsDriver(schedulerProvider);
+
             Login = rxActionFactory.FromAction(login);
             SignUp = rxActionFactory.FromAsync(signUp);
             ForgotPassword = rxActionFactory.FromAsync(forgotPassword);
@@ -115,6 +120,7 @@ namespace Toggl.Core.UI.ViewModels
             LoginErrorMessage = loginErrorMessageSubject
                 .DistinctUntilChanged()
                 .AsDriver(this.schedulerProvider);
+
         }
 
         public override Task Initialize(CredentialsParameter parameter)
@@ -212,6 +218,8 @@ namespace Toggl.Core.UI.ViewModels
 
         private void onError(Exception exception)
         {
+            allErrorsSubject.OnNext(exception);
+
             isLoadingSubject.OnNext(false);
             onCompleted();
 

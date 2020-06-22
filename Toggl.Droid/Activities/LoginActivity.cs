@@ -1,3 +1,4 @@
+using Accord.Statistics.Kernels;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -70,6 +71,10 @@ namespace Toggl.Droid.Activities
 
             ViewModel.PasswordErrorMessage
                 .Subscribe(passwordInputLayout.Rx().ErrorObserver())
+                .DisposedBy(DisposeBag);
+
+            ViewModel.AllErrors
+                .Subscribe(error => Android.Util.Log.Info("TOGGLSYNCERROR", error.ToString()))
                 .DisposedBy(DisposeBag);
 
             ViewModel.LoginErrorMessage
