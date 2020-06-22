@@ -35,6 +35,8 @@ using Toggl.Core;
 using Toggl.Core.UI.Collections;
 using Toggl.Core.UI.ViewModels.MainLog.Identity;
 using Toggl.Droid.Views;
+using Toggl.Core.Sync.V2;
+using Accord.Statistics.Kernels;
 
 namespace Toggl.Droid.Fragments
 {
@@ -225,6 +227,15 @@ namespace Toggl.Droid.Fragments
                 .DisposedBy(DisposeBag);
 
             setupOnboardingSteps();
+
+            if (AndroidDependencyContainer.Instance.SyncManager is SyncManagerV2 sync)
+            {
+                Android.Util.Log.Info("TOGGLSYNCERROR", "Subscribing to TOGGLSYNCERROR.");
+
+                sync.AllErrors
+                    .Subscribe(err => Android.Util.Log.Info("TOGGLSYNCERROR", err.ToString()))
+                    .DisposedBy(DisposeBag);
+            }
         }
 
         private void updateMainLog(IImmutableList<AnimatableSectionModel<MainLogSectionViewModel, MainLogItemViewModel, IMainLogKey>> items)
