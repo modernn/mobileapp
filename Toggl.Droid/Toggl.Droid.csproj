@@ -1324,6 +1324,9 @@
   <ItemGroup>
     <ProguardConfiguration Include="ProGuard.cfg" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\raw" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Fody.2.4.6\build\Fody.targets" Condition="Exists('..\packages\Fody.2.4.6\build\Fody.targets')" />
   <Import Project="..\packages\Realm.Database.3.0.0\build\Realm.Database.targets" Condition="Exists('..\packages\Realm.Database.3.0.0\build\Realm.Database.targets')" />
