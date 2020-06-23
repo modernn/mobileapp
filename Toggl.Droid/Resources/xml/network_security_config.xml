@@ -3,5 +3,8 @@
     <trust-anchors> 
       <certificates src="user" /> 
     </trust-anchors> 
-  </debug-overrides> 
+  </debug-overrides>
+  <domain-config>
+    <domain includeSubdomains="true">toggl.space</domain>
+  </domain-config>
 </network-security-config>
