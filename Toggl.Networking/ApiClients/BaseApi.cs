@@ -103,12 +103,15 @@ namespace Toggl.Networking.ApiClients
         {
             try
             {
+                HackyLog.Out("TOGGLAPI", $"Request: {request.HttpMethod} {request.Endpoint}");
+
                 var response = await sendRequestAsync(request, headers)
                     .ConfigureAwait(false);
                 return response;
             }
             catch (HttpRequestException ex)
             {
+                HackyLog.Out("TOGGLAPI", $"Error: {ex}");
                 throw new OfflineException(ex);
             }
         }
