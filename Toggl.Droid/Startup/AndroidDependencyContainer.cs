@@ -22,6 +22,10 @@ using Toggl.Storage.Realm;
 using Toggl.Storage.Realm.Queries;
 using Toggl.Storage.Settings;
 using Xamarin.Android.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
+using Javax.Net.Ssl;
+using Android.Net;
 
 namespace Toggl.Droid
 {
@@ -144,10 +148,16 @@ namespace Toggl.Droid
         {
             var httpHandler = new AndroidClientHandler
             {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+                ServerCertificateCustomValidationCallback = unsafeIgnoreCertificate
             };
 
             return new HttpClient(httpHandler, true);
+        }
+
+        private bool unsafeIgnoreCertificate(HttpRequestMessage msg, X509Certificate2 cert, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
         }
     }
 }
