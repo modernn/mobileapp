@@ -38,10 +38,10 @@ namespace Toggl.Droid
         public SplashScreen()
             : base()
         {
-#if !USE_PRODUCTION_API
+//#if !USE_PRODUCTION_API
             System.Net.ServicePointManager.ServerCertificateValidationCallback
                   += (sender, certificate, chain, sslPolicyErrors) => true;
-#endif
+//#endif
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
