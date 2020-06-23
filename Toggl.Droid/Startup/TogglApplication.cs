@@ -9,7 +9,6 @@ using Toggl.Core;
 using Toggl.Core.UI;
 using Toggl.Droid.BroadcastReceivers;
 using Toggl.Droid.Extensions;
-using Toggl.Shared;
 using static AndroidX.AppCompat.App.AppCompatDelegate;
 
 namespace Toggl.Droid
@@ -28,7 +27,7 @@ namespace Toggl.Droid
 
         public override void OnCreate()
         {
-            HackyLog.Initialize((tag, text) => Android.Util.Log.Info(tag, text));
+            Toggl.Shared.HackyLog.Initialize((tag, text) => Android.Util.Log.Info(tag, text));
 
             DefaultNightMode = Context.GetOptimalNightMode();
 
