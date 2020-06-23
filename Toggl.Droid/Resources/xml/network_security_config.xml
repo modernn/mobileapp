@@ -5,6 +5,6 @@
     </trust-anchors> 
   </debug-overrides>
   <domain-config>
-    <domain includeSubdomains="true">toggl.space</domain>
+    <domain>sync.toggl.space</domain>
   </domain-config>
 </network-security-config>
