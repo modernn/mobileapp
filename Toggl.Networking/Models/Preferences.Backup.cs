@@ -29,5 +29,11 @@ namespace Toggl.Networking.Models
 
         [JsonIgnore]
         public bool CollapseTimeEntriesBackup { get; set; }
+
+        [JsonIgnore]
+        public PropertySyncStatus TimerViewSyncStatus { get; set; }
+
+        [JsonIgnore]
+        public TimerView TimerViewBackup { get; set; }
     }
 }

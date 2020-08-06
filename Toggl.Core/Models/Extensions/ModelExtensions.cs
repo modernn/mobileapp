@@ -13,6 +13,7 @@ namespace Toggl.Core.Models
             New<DurationFormat> durationFormat = default(New<DurationFormat>),
             New<bool> collapseTimeEntries = default(New<bool>),
             New<bool> useNewSync = default(New<bool>),
+            New<TimerView> timerView = default(New<TimerView>),
             New<SyncStatus> syncStatus = default(New<SyncStatus>),
             New<string> lastSyncErrorMessage = default(New<string>),
             New<bool> isDeleted = default(New<bool>)
@@ -23,6 +24,7 @@ namespace Toggl.Core.Models
                 durationFormat.ValueOr(original.DurationFormat),
                 collapseTimeEntries.ValueOr(original.CollapseTimeEntries),
                 useNewSync.ValueOr(original.UseNewSync),
+                timerView.ValueOr(original.TimerView),
                 syncStatus.ValueOr(original.SyncStatus),
                 lastSyncErrorMessage.ValueOr(original.LastSyncErrorMessage),
                 isDeleted.ValueOr(original.IsDeleted)

@@ -25,6 +25,8 @@ namespace Toggl.Core.Tests.Mocks
 
         public bool UseNewSync { get; set; }
 
+        public TimerView TimerView { get; set; }
+
         [JsonIgnore]
         public PropertySyncStatus TimeOfDayFormatSyncStatus { get; set; }
 
@@ -38,6 +40,9 @@ namespace Toggl.Core.Tests.Mocks
         public PropertySyncStatus CollapseTimeEntriesSyncStatus { get; set; }
 
         [JsonIgnore]
+        public PropertySyncStatus TimerViewSyncStatus { get; set; }
+
+        [JsonIgnore]
         public TimeFormat TimeOfDayFormatBackup { get; set; }
 
         [JsonIgnore]
@@ -48,5 +53,8 @@ namespace Toggl.Core.Tests.Mocks
 
         [JsonIgnore]
         public bool CollapseTimeEntriesBackup { get; set; }
+
+        [JsonIgnore]
+        public TimerView TimerViewBackup { get; set; }
     }
 }

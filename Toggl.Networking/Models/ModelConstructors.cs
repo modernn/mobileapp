@@ -1,4 +1,5 @@
-﻿using Toggl.Shared;
+﻿using System.Timers;
+using Toggl.Shared;
 using Toggl.Shared.Models;
 
 namespace Toggl.Networking.Models
@@ -55,6 +56,7 @@ namespace Toggl.Networking.Models
             DurationFormat = entity.DurationFormat;
             CollapseTimeEntries = entity.CollapseTimeEntries;
             UseNewSync = entity.UseNewSync;
+            TimerView = entity.TimerView;
         }
     }
 

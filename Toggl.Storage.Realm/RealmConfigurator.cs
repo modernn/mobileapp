@@ -57,6 +57,7 @@ namespace Toggl.Storage.Realm
                     {
                         // RealmExternalCalendar: New entity for the Calendar Integration
                         // RealmExternalCalendarEvent: New entity for the Calendar Integration
+                        // RealmPreferences: Added timer view properties
                     }
                 }
             };

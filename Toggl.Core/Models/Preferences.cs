@@ -1,4 +1,5 @@
-﻿using Toggl.Core.Models.Interfaces;
+﻿using System.Timers;
+using Toggl.Core.Models.Interfaces;
 using Toggl.Shared;
 using Toggl.Shared.Models;
 using Toggl.Storage;
@@ -17,24 +18,37 @@ namespace Toggl.Core.Models
         public bool IsDeleted { get; }
         public bool UseNewSync { get; }
 
+        public TimerView TimerView { get; }
+
         public const long fakeId = 0;
         public long Id => fakeId;
 
         private Preferences(IPreferences entity, SyncStatus syncStatus, string lastSyncErrorMessage, bool isDeleted = false)
-            : this(entity.TimeOfDayFormat, entity.DateFormat, entity.DurationFormat, entity.CollapseTimeEntries, entity.UseNewSync, syncStatus, lastSyncErrorMessage, isDeleted)
+            : this(entity.TimeOfDayFormat, entity.DateFormat, entity.DurationFormat, entity.CollapseTimeEntries, entity.UseNewSync, entity.TimerView, syncStatus, lastSyncErrorMessage, isDeleted)
         {
             TimeOfDayFormatSyncStatus = entity.TimeOfDayFormatSyncStatus;
             DurationFormatSyncStatus = entity.DurationFormatSyncStatus;
             DateFormatSyncStatus = entity.DateFormatSyncStatus;
             CollapseTimeEntriesSyncStatus = entity.CollapseTimeEntriesSyncStatus;
+            TimerViewSyncStatus = entity.TimerViewSyncStatus;
 
             TimeOfDayFormatBackup = entity.TimeOfDayFormatBackup;
             DateFormatBackup = entity.DateFormatBackup;
             DurationFormatBackup = entity.DurationFormatBackup;
             CollapseTimeEntriesBackup = entity.CollapseTimeEntriesBackup;
+            TimerViewBackup = entity.TimerViewBackup;
         }
 
-        public Preferences(TimeFormat timeOfDayFormat, DateFormat dateFormat, DurationFormat durationFormat, bool collapseTimeEntries, bool useNewSync, SyncStatus syncStatus = default, string lastSyncErrorMessage = "", bool isDeleted = false)
+        public Preferences(
+            TimeFormat timeOfDayFormat,
+            DateFormat dateFormat,
+            DurationFormat durationFormat,
+            bool collapseTimeEntries,
+            bool useNewSync,
+            TimerView timerView,
+            SyncStatus syncStatus = default,
+            string lastSyncErrorMessage = "",
+            bool isDeleted = false)
         {
             Ensure.Argument.IsADefinedEnumValue(syncStatus, nameof(syncStatus));
             Ensure.Argument.IsNotNull(dateFormat.Localized, nameof(dateFormat));
@@ -48,6 +62,7 @@ namespace Toggl.Core.Models
             LastSyncErrorMessage = lastSyncErrorMessage;
             IsDeleted = isDeleted;
             UseNewSync = useNewSync;
+            TimerView = timerView;
         }
 
         public static Preferences From(IDatabasePreferences entity)
@@ -65,7 +80,8 @@ namespace Toggl.Core.Models
                 DateFormat.FromLocalizedDateFormat("DD.MM.YYYY"),
                 DurationFormat.Improved,
                 false,
-                false
+                false,
+                TimerView.List
             );
     }
 }

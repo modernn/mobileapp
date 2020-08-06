@@ -13,5 +13,8 @@
 
         PropertySyncStatus CollapseTimeEntriesSyncStatus { get; set; }
         bool CollapseTimeEntriesBackup { get; set; }
+
+        PropertySyncStatus TimerViewSyncStatus { get; set; }
+        TimerView TimerViewBackup { get; set; }
     }
 }

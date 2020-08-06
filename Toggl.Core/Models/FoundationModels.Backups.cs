@@ -18,13 +18,13 @@ namespace Toggl.Core.Models
 
         public DateTimeOffset StartBackup { get; set; }
         public PropertySyncStatus StartSyncStatus { get; set; }
-        
+
         public long? DurationBackup { get; set; }
         public PropertySyncStatus DurationSyncStatus { get; set; }
-         
+
         public string DescriptionBackup { get; set; }
         public PropertySyncStatus DescriptionSyncStatus { get; set; }
-        
+
         public IList<long> TagIdsBackup { get; } = new List<long>();
         public PropertySyncStatus TagIdsSyncStatus { get; set; }
 
@@ -51,6 +51,7 @@ namespace Toggl.Core.Models
         public PropertySyncStatus DateFormatSyncStatus { get; set; }
         public PropertySyncStatus DurationFormatSyncStatus { get; set; }
         public PropertySyncStatus CollapseTimeEntriesSyncStatus { get; set; }
+        public PropertySyncStatus TimerViewSyncStatus { get; set; }
 
         public TimeFormat TimeOfDayFormatBackup { get; set; }
 
@@ -59,5 +60,6 @@ namespace Toggl.Core.Models
         public DurationFormat DurationFormatBackup { get; set; }
 
         public bool CollapseTimeEntriesBackup { get; set; }
+        public TimerView TimerViewBackup { get; set; }
     }
 }

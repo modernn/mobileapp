@@ -51,6 +51,15 @@ namespace Toggl.Storage.Realm
 
         public bool UseNewSync { get; set; }
 
+        [Ignored]
+        public TimerView TimerView
+        {
+            get => (TimerView)TimerViewInt;
+            set => TimerViewInt = (int)value;
+        }
+
+        public int TimerViewInt { get; set; }
+
         public void PrepareForSyncing()
         {
             SyncStatus = SyncStatus.Syncing;

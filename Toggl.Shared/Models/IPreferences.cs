@@ -11,5 +11,7 @@
         bool CollapseTimeEntries { get; }
 
         bool UseNewSync { get; }
+
+        TimerView TimerView { get; }
     }
 }

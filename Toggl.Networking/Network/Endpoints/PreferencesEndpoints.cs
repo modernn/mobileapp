@@ -11,8 +11,8 @@ namespace Toggl.Networking.Network
             this.baseUrl = baseUrl;
         }
 
-        public Endpoint Get => Endpoint.Get(baseUrl, "me/preferences");
+        public Endpoint Get => Endpoint.Get(baseUrl, "me/preferences/mobile");
 
-        public Endpoint Post => Endpoint.Post(baseUrl, "me/preferences");
+        public Endpoint Post => Endpoint.Post(baseUrl, "me/preferences/mobile");
     }
 }

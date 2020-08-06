@@ -43,6 +43,15 @@ namespace Toggl.Storage.Realm
         public bool CollapseTimeEntriesBackup { get; set; }
 
         [Ignored]
+        public TimerView TimerViewBackup
+        {
+            get => (TimerView)TimerViewIntBackup;
+            set => TimerViewIntBackup = (int)value;
+        }
+
+        public int TimerViewIntBackup { get; set; }
+
+        [Ignored]
         public PropertySyncStatus TimeOfDayFormatSyncStatus
         {
             get => (PropertySyncStatus)TimeOfDayFormatSyncStatusInt;
@@ -77,5 +86,14 @@ namespace Toggl.Storage.Realm
         }
 
         public int CollapseTimeEntriesSyncStatusInt { get; set; }
+
+        [Ignored]
+        public PropertySyncStatus TimerViewSyncStatus
+        {
+            get => (PropertySyncStatus)TimerViewSyncStatusInt;
+            set => TimerViewSyncStatusInt = (int)value;
+        }
+
+        public int TimerViewSyncStatusInt { get; set; }
     }
 }
