@@ -87,6 +87,7 @@ namespace Toggl.Storage.Realm
             DurationFormat = entity.DurationFormat;
             CollapseTimeEntries = entity.CollapseTimeEntries;
             UseNewSync = entity.UseNewSync;
+            TimerView = entity.TimerView;
 
             TimeOfDayFormatSyncStatus = entity.TimeOfDayFormatSyncStatus;
             DurationFormatSyncStatus = entity.DurationFormatSyncStatus;

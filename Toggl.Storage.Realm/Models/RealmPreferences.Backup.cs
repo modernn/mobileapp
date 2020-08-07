@@ -45,11 +45,11 @@ namespace Toggl.Storage.Realm
         [Ignored]
         public TimerView TimerViewBackup
         {
-            get => (TimerView)TimerViewIntBackup;
-            set => TimerViewIntBackup = (int)value;
+            get => TimerView.FromString(TimerViewStringBackup);
+            set => TimerViewStringBackup = value.Value;
         }
 
-        public int TimerViewIntBackup { get; set; }
+        public string TimerViewStringBackup { get; set; }
 
         [Ignored]
         public PropertySyncStatus TimeOfDayFormatSyncStatus

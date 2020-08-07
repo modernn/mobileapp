@@ -16,7 +16,8 @@ namespace Toggl.Core.Tests.Sync.Extensions
                 TimeOfDayFormat = preferences.TimeOfDayFormat,
                 DateFormat = preferences.DateFormat,
                 DurationFormat = durationFormat.ValueOr(preferences.DurationFormat),
-                CollapseTimeEntries = preferences.CollapseTimeEntries
+                CollapseTimeEntries = preferences.CollapseTimeEntries,
+                TimerView = preferences.TimerView,
             };
 
         public static IThreadSafePreferences ToSyncable(this IPreferences preferences)
@@ -29,7 +30,8 @@ namespace Toggl.Core.Tests.Sync.Extensions
                 IsDeleted = false,
                 LastSyncErrorMessage = null,
                 SyncStatus = SyncStatus.InSync,
-                TimeOfDayFormat = preferences.TimeOfDayFormat
+                TimeOfDayFormat = preferences.TimeOfDayFormat,
+                TimerView = preferences.TimerView
             };
     }
 }

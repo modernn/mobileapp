@@ -14,10 +14,10 @@ namespace Toggl.Networking.Tests.Models
             => $"\"alpha_features\":[{{\"code\":\"mobile_sync_client\",\"enabled\":{useSync.ToString().ToLower()}}}]";
 
         private string getValidIncomingJson(bool useSync = false)
-            => $"{{\"timeofday_format\":\"h:mm A\",\"date_format\":\"YYYY-MM-DD\",\"duration_format\":\"improved\",\"CollapseTimeEntries\":true,{alphaFeaturesJson(useSync)}}}";
+            => $"{{\"timeofday_format\":\"h:mm A\",\"date_format\":\"YYYY-MM-DD\",\"duration_format\":\"improved\",\"CollapseTimeEntries\":true,\"TimerViewMobile\":\"list\",{alphaFeaturesJson(useSync)}}}";
 
         private string getValidJson()
-            => "{\"timeofday_format\":\"h:mm A\",\"date_format\":\"YYYY-MM-DD\",\"duration_format\":\"improved\",\"CollapseTimeEntries\":true}";
+            => "{\"timeofday_format\":\"h:mm A\",\"date_format\":\"YYYY-MM-DD\",\"duration_format\":\"improved\",\"CollapseTimeEntries\":true,\"TimerViewMobile\":\"list\"}";
 
         private Preferences validPreferences => new Preferences
         {
@@ -25,7 +25,8 @@ namespace Toggl.Networking.Tests.Models
             DateFormat = DateFormat.FromLocalizedDateFormat("YYYY-MM-DD"),
             DurationFormat = DurationFormat.Improved,
             CollapseTimeEntries = true,
-            UseNewSync = true
+            UseNewSync = true,
+            TimerView = TimerView.List,
         };
 
         [Fact, LogIfTooSlow]

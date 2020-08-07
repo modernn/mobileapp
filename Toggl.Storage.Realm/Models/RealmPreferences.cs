@@ -54,11 +54,11 @@ namespace Toggl.Storage.Realm
         [Ignored]
         public TimerView TimerView
         {
-            get => (TimerView)TimerViewInt;
-            set => TimerViewInt = (int)value;
+            get => TimerView.FromString(TimerViewString);
+            set => TimerViewString = value.Value;
         }
 
-        public int TimerViewInt { get; set; }
+        public string TimerViewString { get; set; }
 
         public void PrepareForSyncing()
         {
@@ -88,6 +88,7 @@ namespace Toggl.Storage.Realm
             DurationFormat = entity.DurationFormat;
             CollapseTimeEntries = entity.CollapseTimeEntries;
             UseNewSync = entity.UseNewSync;
+            TimerView = entity.TimerView;
             SyncStatus = SyncStatus.InSync;
             TimeOfDayFormatSyncStatus = InSync;
             DateFormatSyncStatus = InSync;

@@ -29,7 +29,8 @@ namespace Toggl.Networking.Models
         [IgnoreWhenPosting]
         public bool UseNewSync { get; set; }
 
-        [JsonProperty("TimerViewMobile")]
+        [JsonProperty("TimerViewMobile", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(TimerViewConverter))]
         public TimerView TimerView { get; set; }
     }
 }
