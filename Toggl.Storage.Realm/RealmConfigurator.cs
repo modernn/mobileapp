@@ -8,7 +8,7 @@ namespace Toggl.Storage.Realm
         public RealmConfiguration Configuration { get; }
             = new RealmConfiguration
             {
-                SchemaVersion = 10,
+                SchemaVersion = 11,
                 MigrationCallback = (migration, oldSchemaVersion) =>
                 {
                     if (oldSchemaVersion < 3)
@@ -57,6 +57,11 @@ namespace Toggl.Storage.Realm
                     {
                         // RealmExternalCalendar: New entity for the Calendar Integration
                         // RealmExternalCalendarEvent: New entity for the Calendar Integration
+                    }
+                    if (oldSchemaVersion < 11)
+                    {
+                        // RealmExternalCalendar: Properties added/removed
+                        // RealmExternalCalendarEvent: Properties added/removed
                     }
                 }
             };

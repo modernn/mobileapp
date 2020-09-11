@@ -6,18 +6,24 @@ namespace Toggl.Core.Models.Calendar
     {
         public long Id { get; }
 
-        public string SyncId { get; }
+        public long IntegrationId { get; }
+
+        public string ExternalId { get; }
 
         public string Name { get; }
 
-        public ExternalCalendar(long id, string syncId, string name)
+        public bool Selected { get; }
+
+        public ExternalCalendar(long id, long integrationId, string externalId, string name, bool selected)
         {
             Id = id;
-            SyncId = syncId;
+            IntegrationId = integrationId;
+            ExternalId = externalId;
             Name = name;
+            Selected = selected;
         }
 
-        public ExternalCalendar(IDatabaseExternalCalendar entity) : this(entity.Id, entity.SyncId, entity.Name)
+        public ExternalCalendar(IDatabaseExternalCalendar entity) : this(entity.Id, entity.IntegrationId, entity.ExternalId, entity.Name, entity.Selected)
         {
         }
 

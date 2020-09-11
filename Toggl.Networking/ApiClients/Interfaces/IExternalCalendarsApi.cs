@@ -16,7 +16,7 @@ namespace Toggl.Networking.ApiClients.Interfaces
 
         Task<IExternalCalendarEventsPage> GetCalendarEvents(
             long integrationId,
-            string calendarId,
+            long calendarId,
             DateTimeOffset startDate,
             DateTimeOffset endDate,
             string nextPageToken = null,

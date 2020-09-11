@@ -130,7 +130,7 @@ namespace Toggl.Droid.Services
         protected override IEnumerable<IThreadSafeExternalCalendarEvent> ResolveDuplicates(
             IEnumerable<CalendarItem> nativeEvents,
             IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents)
-            => externalEvents.Where((externalEvent) => nativeEvents.None((nativeEvent) => externalEvent.SyncId == nativeEvent.SyncId));
+            => externalEvents.Where((externalEvent) => nativeEvents.None((nativeEvent) => externalEvent.EventId == nativeEvent.SyncId));
 
         private static CalendarItem calendarItemFromCursor(ICursor cursor)
         {

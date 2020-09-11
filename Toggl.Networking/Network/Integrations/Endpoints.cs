@@ -11,7 +11,7 @@ namespace Toggl.Networking.Network.Integrations
 
         public Endpoints(ApiEnvironment environment)
         {
-            baseUrl = BaseUrls.ForReports(environment);
+            baseUrl = BaseUrls.ForIntegrations(environment);
         }
     }
 }

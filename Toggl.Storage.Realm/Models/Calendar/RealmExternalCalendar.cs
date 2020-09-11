@@ -24,20 +24,29 @@ namespace Toggl.Storage.Realm.Models.Calendar
 
         public long? OriginalId { get; set; }
 
-        public string SyncId { get; set; }
+        public long IntegrationId { get; set; }
+
+        public string ExternalId { get; set; }
 
         public string Name { get; set; }
 
+        public bool Selected { get; set; }
+
+
         public void SetPropertiesFrom(IDatabaseExternalCalendar entity, Realms.Realm realm)
         {
-            SyncId = entity.SyncId;
+            IntegrationId = entity.IntegrationId;
+            ExternalId = entity.ExternalId;
             Name = entity.Name;
+            Selected = entity.Selected;
         }
 
         public void SetPropertiesFrom(IExternalCalendar entity, Realms.Realm realm)
         {
-            SyncId = entity.SyncId;
+            IntegrationId = entity.IntegrationId;
+            ExternalId = entity.ExternalId;
             Name = entity.Name;
+            Selected = entity.Selected;
         }
 
         public void ChangeId(long id)

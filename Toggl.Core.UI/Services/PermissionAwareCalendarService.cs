@@ -40,7 +40,7 @@ namespace Toggl.Core.Calendar
             {
                 var syncId = id.Substring(CalendarItem.ExternalEventIdPrefix.Length);
                 return dataSource.ExternalCalendarEvents
-                    .GetAll((externalEvent) => externalEvent.SyncId == syncId)
+                    .GetAll((externalEvent) => externalEvent.EventId == syncId)
                     .Select((events) => events.First())
                     .Select(CalendarItem.From);
             }

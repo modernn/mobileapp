@@ -45,7 +45,7 @@ namespace Toggl.Core.Tests.UI.Services
             protected override IEnumerable<IThreadSafeExternalCalendarEvent> ResolveDuplicates(
                 IEnumerable<CalendarItem> nativeEvents,
                 IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents)
-                => externalEvents.Where((externalEvent) => nativeEvents.None((nativeEvent) => externalEvent.SyncId == nativeEvent.SyncId));
+                => externalEvents.Where((externalEvent) => nativeEvents.None((nativeEvent) => externalEvent.EventId == nativeEvent.SyncId));
         }
 
         public sealed class MergingCalendarItemsFromMultipleSources
@@ -82,7 +82,7 @@ namespace Toggl.Core.Tests.UI.Services
                     ),
                 };
 
-                externalCalendar = new ExternalCalendar(0, "0", "Calendar");
+                externalCalendar = new ExternalCalendar(0, 0, "0", "Calendar", true);
 
                 externalCalendarEvents = new List<IThreadSafeExternalCalendarEvent>
                 {

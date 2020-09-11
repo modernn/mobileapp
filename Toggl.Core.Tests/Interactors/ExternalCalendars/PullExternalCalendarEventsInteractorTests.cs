@@ -25,7 +25,9 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
 
             protected IExternalCalendar Calendar = new ExternalCalendar
             {
-                SyncId = "Calendar-0",
+                Id = 0,
+                IntegrationId = 0,
+                ExternalId = "Calendar-0",
                 Name = "Memes",
             };
 
@@ -64,7 +66,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            SyncId = "0",
+                            EventId = "0",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -75,7 +77,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                         },
                         new ExternalCalendarEvent
                         {
-                            SyncId = "1",
+                            EventId = "1",
                             ICalId = "1",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -93,7 +95,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     Api.ExternalCalendars.GetCalendarEvents(
                         Integration.Id,
-                        Calendar.SyncId,
+                        Calendar.Id,
                         Arg.Any<DateTimeOffset>(),
                         Arg.Any<DateTimeOffset>(),
                         Arg.Any<string>(), Arg.Any<long?>()).Returns(page);
@@ -113,7 +115,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            SyncId = "0",
+                            EventId = "0",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -124,7 +126,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                         },
                         new ExternalCalendarEvent
                         {
-                            SyncId = "1",
+                            EventId = "1",
                             ICalId = "1",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -143,7 +145,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            SyncId = "3",
+                            EventId = "3",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -161,14 +163,14 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     Api.ExternalCalendars.GetCalendarEvents(
                         Integration.Id,
-                        Calendar.SyncId,
+                        Calendar.Id,
                         Arg.Any<DateTimeOffset>(),
                         Arg.Any<DateTimeOffset>(),
                         null, Arg.Any<long?>()).Returns(firstPage);
 
                     Api.ExternalCalendars.GetCalendarEvents(
                         Integration.Id,
-                        Calendar.SyncId,
+                        Calendar.Id,
                         Arg.Any<DateTimeOffset>(),
                         Arg.Any<DateTimeOffset>(),
                         "next_page_token", Arg.Any<long?>()).Returns(secondPage);
@@ -188,7 +190,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     Api.ExternalCalendars.GetCalendarEvents(
                             Integration.Id,
-                            Calendar.SyncId,
+                            Calendar.Id,
                             Arg.Any<DateTimeOffset>(),
                             Arg.Any<DateTimeOffset>(),
                             null, Arg.Any<long?>())
@@ -210,7 +212,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            SyncId = "0",
+                            EventId = "0",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -228,14 +230,14 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     Api.ExternalCalendars.GetCalendarEvents(
                         Integration.Id,
-                        Calendar.SyncId,
+                        Calendar.Id,
                         Arg.Any<DateTimeOffset>(),
                         Arg.Any<DateTimeOffset>(),
                         null, Arg.Any<long?>()).Returns(page);
 
                     Api.ExternalCalendars.GetCalendarEvents(
                             Integration.Id,
-                            Calendar.SyncId,
+                            Calendar.Id,
                             Arg.Any<DateTimeOffset>(),
                             Arg.Any<DateTimeOffset>(),
                             null, Arg.Any<long?>())

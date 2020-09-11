@@ -29,7 +29,7 @@ namespace Toggl.Core.Interactors
                 var page = await api.ExternalCalendars.GetCalendars(integration.Id, nextPageToken, pageSizeLimit);
                 calendars.AddRange(page.Calendars);
                 nextPageToken = page.NextPageToken;
-            } while (nextPageToken != null);
+            } while (!string.IsNullOrEmpty(nextPageToken));
 
             return calendars;
         }

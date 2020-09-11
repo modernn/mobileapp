@@ -1,9 +1,11 @@
 ﻿using System;
 namespace Toggl.Shared.Models.Calendar
 {
-    public interface IExternalCalendar
+    public interface IExternalCalendar : IIdentifiable
     {
-        string SyncId { get; }
+        long IntegrationId { get; }
+        string ExternalId { get; }
         string Name { get; }
+        bool Selected { get; }
     }
 }

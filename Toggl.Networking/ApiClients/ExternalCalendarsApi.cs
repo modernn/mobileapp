@@ -26,15 +26,17 @@ namespace Toggl.Networking.ApiClients
             long integrationId,
             string nextPageToken = null,
             long? limit = null)
-            => SendRequest<IExternalCalendarsPage>(endpoints.GetAllCalendars(integrationId, nextPageToken, limit), AuthHeader);
+            => SendRequest<ExternalCalendarsPage>(endpoints.GetAllCalendars(integrationId, nextPageToken, limit), AuthHeader)
+                .ContinueWith(task => task.Result as IExternalCalendarsPage);
 
         public Task<IExternalCalendarEventsPage> GetCalendarEvents(
             long integrationId,
-            string calendarId,
+            long calendarId,
             DateTimeOffset startDate,
             DateTimeOffset endDate,
             string nextPageToken = null,
             long? limit = null)
-            => SendRequest<IExternalCalendarEventsPage>(endpoints.GetAllCalendarEvents(integrationId, calendarId, startDate, endDate, nextPageToken, limit), AuthHeader);
+            => SendRequest<ExternalCalendarEventsPage>(endpoints.GetAllCalendarEvents(integrationId, calendarId, startDate, endDate, nextPageToken, limit), AuthHeader)
+                .ContinueWith(task => task.Result as IExternalCalendarEventsPage);
     }
 }

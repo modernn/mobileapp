@@ -8,8 +8,8 @@ namespace Toggl.Networking.Models.Calendar
     [Preserve(AllMembers = true)]
     internal sealed class ExternalCalendarEvent : IExternalCalendarEvent
     {
-        [JsonProperty("id")]
-        public string SyncId { get; set; }
+        [JsonProperty("event_id")]
+        public string EventId { get; set; }
 
         [JsonProperty("ical_uid")]
         public string ICalId { get; set; }
@@ -30,7 +30,7 @@ namespace Toggl.Networking.Models.Calendar
 
         public ExternalCalendarEvent(IExternalCalendarEvent entity)
         {
-            SyncId = entity.SyncId;
+            EventId = entity.EventId;
             ICalId = entity.ICalId;
             Title = entity.Title;
             StartTime = entity.StartTime;

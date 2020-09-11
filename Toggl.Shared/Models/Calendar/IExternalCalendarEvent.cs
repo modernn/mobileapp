@@ -3,7 +3,7 @@ namespace Toggl.Shared.Models.Calendar
 {
     public interface IExternalCalendarEvent
     {
-        string SyncId { get; }
+        string EventId { get; }
         string ICalId { get; }
         string Title { get; }
 

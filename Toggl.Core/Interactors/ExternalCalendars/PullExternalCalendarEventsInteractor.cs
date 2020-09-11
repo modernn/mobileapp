@@ -39,10 +39,10 @@ namespace Toggl.Core.Interactors
             string nextPageToken = null;
             do
             {
-                var page = await api.ExternalCalendars.GetCalendarEvents(integration.Id, calendar.SyncId, startDate, endDate, nextPageToken, pageSizeLimit);
+                var page = await api.ExternalCalendars.GetCalendarEvents(integration.Id, calendar.Id, startDate, endDate, nextPageToken, pageSizeLimit);
                 events.AddRange(page.Events);
                 nextPageToken = page.NextPageToken;
-            } while (nextPageToken != null);
+            } while (!string.IsNullOrEmpty(nextPageToken));
 
             return events;
         }

@@ -47,12 +47,16 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-0",
+                            Id = 0,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-0",
                             Name = "Memes",
                         },
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-1",
+                            Id = 1,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-1",
                             Name = "Personal",
                         },
                     },
@@ -84,12 +88,16 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-0",
+                            Id = 0,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-0",
                             Name = "Memes",
                         },
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-1",
+                            Id = 0,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-1",
                             Name = "Personal",
                         },
                     },
@@ -102,7 +110,9 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-2",
+                            Id = 0,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-2",
                             Name = "Work",
                         },
                     },
@@ -156,12 +166,16 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-0",
+                            Id = 0,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-0",
                             Name = "Memes",
                         },
                         new ExternalCalendar
                         {
-                            SyncId = "Calendar-1",
+                            Id = 1,
+                            IntegrationId = 42,
+                            ExternalId = "Calendar-1",
                             Name = "Personal",
                         },
                     },
