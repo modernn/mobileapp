@@ -10,7 +10,7 @@ using Toggl.Core.UI.ViewModels;
 using Toggl.Shared;
 using Toggl.Shared.Extensions;
 
-namespace Toggl.WPF.Presentation
+namespace Toggl.WPF.Views
 {
     public partial class LoginView : ReactiveUserControl<LoginViewModel>
     {

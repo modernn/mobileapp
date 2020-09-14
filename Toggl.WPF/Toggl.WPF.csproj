@@ -18,20 +18,4 @@
       <PackageReference Include="ReactiveUI.Events.WPF" Version="11.4.17" />
       <PackageReference Include="ReactiveUI.WPF" Version="11.4.17" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Page Update="Presentation\LoginView.xaml">
-        <Generator></Generator>
-      </Page>
-      <Page Update="Presentation\MainWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Presentation\LoginView.xaml.cs">
-        <DependentUpon>LoginView.xaml</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
 </Project>

@@ -4,6 +4,7 @@ using Toggl.Core.UI.Navigation;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Core.UI.Views;
 using Toggl.WPF.Presentation;
+using Toggl.WPF.Views;
 
 namespace Toggl.WPF
 {

@@ -2,7 +2,7 @@
 using System.Windows;
 using Toggl.Core.UI.ViewModels;
 
-namespace Toggl.WPF.Presentation
+namespace Toggl.WPF.Views
 {
     public partial class MainTabBarView
     {
