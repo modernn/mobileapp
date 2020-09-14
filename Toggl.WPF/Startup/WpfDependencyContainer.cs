@@ -31,7 +31,7 @@ namespace Toggl.WPF.Startup
 #endif
 
         private readonly CompositePresenter presenter;
-        private static readonly UserAgent userAgent = new UserAgent("wpf-nativeapp", "1.0.0.0");
+        private static readonly UserAgent userAgent = new UserAgent("MobileIntegrationTests", "1.0.0.0");
         public WpfDependencyContainer(ApiEnvironment apiEnvironment, UserAgent userAgent) : base(apiEnvironment, userAgent)
         {
             presenter = new CompositePresenter();
