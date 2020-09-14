@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Toggl.Core.UI\Toggl.Core.UI.csproj" />
       <ProjectReference Include="..\Toggl.Core\Toggl.Core.csproj" />
+      <ProjectReference Include="..\Toggl.Storage.Realm\Toggl.Storage.Realm.csproj" />
     </ItemGroup>
 
     <ItemGroup>

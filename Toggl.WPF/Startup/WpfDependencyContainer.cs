@@ -1,6 +1,6 @@
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using NSubstitute;
 using Toggl.Core;
 using Toggl.Core.Analytics;
@@ -14,9 +14,9 @@ using Toggl.Networking.Network;
 using Toggl.Shared;
 using Toggl.Storage;
 using Toggl.Storage.Queries;
+using Toggl.Storage.Realm;
 using Toggl.Storage.Settings;
 using Toggl.WPF.Analytics;
-using Toggl.WPF.Database;
 using Toggl.WPF.Services;
 
 namespace Toggl.WPF.Startup
@@ -45,8 +45,11 @@ namespace Toggl.WPF.Startup
             UIDependencyContainer.Instance = Instance;
         }
 
+        private readonly Lazy<RealmConfigurator> realmConfigurator
+            = new Lazy<RealmConfigurator>(() => new RealmConfigurator());
+
         protected override ITogglDatabase CreateDatabase()
-         => new FakeTogglDatabase();
+          => new Storage.Realm.Database(realmConfigurator.Value);
 
         protected override IPlatformInfo CreatePlatformInfo()
             => Substitute.For<IPlatformInfo>();
