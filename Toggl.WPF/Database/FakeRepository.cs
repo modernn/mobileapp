@@ -84,6 +84,11 @@ namespace Toggl.WPF.Database
             // return Observable.Return((TModel) null);
         }
 
+        public IObservable<TModel> FirstOrDefaultWithId(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IObservable<IEnumerable<TModel>> GetByIds(long[] ids)
         {
             //throw new NotImplementedException();
