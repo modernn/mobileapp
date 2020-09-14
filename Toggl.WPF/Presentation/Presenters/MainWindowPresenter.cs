@@ -32,6 +32,10 @@ namespace Toggl.WPF
                     var loginView = new LoginView(loginViewModel);
                     window.SetMainView(loginView);
                     break;
+                case MainTabBarViewModel mainTabBarViewModel:
+                    var mainTabBarView = new MainTabBarView(mainTabBarViewModel);
+                    window.SetMainView(mainTabBarView);
+                    break;
             }
         }
     }

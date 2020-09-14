@@ -80,7 +80,8 @@
                             </Image>
                         </Border>
                         <Button x:Name="loginButton"
-                                Height="32" Width="200" />
+                                Height="32" Width="200"
+                                Content="Log in"/>
                     </Grid>
 
                     <Button x:Name="googleLoginButton"

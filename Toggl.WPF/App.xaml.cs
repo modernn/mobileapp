@@ -47,6 +47,7 @@ namespace Toggl.WPF
                 case AccessLevel.TokenRevoked:
                     break;
                 case AccessLevel.LoggedIn:
+                    navigationService.Navigate<MainTabBarViewModel, MainTabBarParameters>(MainTabBarParameters.Default, null);
                     break;
             }
         }
