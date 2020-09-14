@@ -17,6 +17,7 @@ using Toggl.Storage.Queries;
 using Toggl.Storage.Realm;
 using Toggl.Storage.Settings;
 using Toggl.WPF.Analytics;
+using Toggl.WPF.Presentation;
 using Toggl.WPF.Services;
 
 namespace Toggl.WPF.Startup
@@ -34,7 +35,11 @@ namespace Toggl.WPF.Startup
         private static readonly UserAgent userAgent = new UserAgent("MobileIntegrationTests", "1.0.0.0");
         public WpfDependencyContainer(ApiEnvironment apiEnvironment, UserAgent userAgent) : base(apiEnvironment, userAgent)
         {
-            presenter = new CompositePresenter();
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            presenter = new CompositePresenter(
+                new MainWindowPresenter(mainWindow)
+            );
         }
 
         public new static WpfDependencyContainer Instance { get; private set; }
