@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="Qml.Net" Version="0.11.0" />
+    <PackageReference Include="Qml.Net.LinuxBinaries" Version="0.11.0" />
+    <PackageReference Include="Qml.Net.WindowsBinaries" Version="0.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Toggl.Core.UI\Toggl.Core.UI.csproj" />
+    <ProjectReference Include="..\Toggl.Core\Toggl.Core.csproj" />
+    <ProjectReference Include="..\Toggl.Shared\Toggl.Shared.csproj" />
+    <ProjectReference Include="..\Toggl.Storage.Realm\Toggl.Storage.Realm.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Main.qml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
