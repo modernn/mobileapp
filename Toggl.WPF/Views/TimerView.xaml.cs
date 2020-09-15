@@ -1,8 +1,8 @@
 ﻿using ReactiveUI;
 using System;
-using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Windows.Media;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Shared.Extensions;
 using Toggl.WPF.Extensions;
@@ -47,7 +47,7 @@ namespace Toggl.WPF.Views
                     {
                         var projectColor = Shared.Color.ParseAndAdjustToLabel(project.Color, isInDarkMode: false);
                         Project.Text = project.Name;
-                        Project.Foreground = new SolidBrush(projectColor.ToNativeColor());
+                        Project.Foreground = new SolidColorBrush(projectColor.ToNativeColor());
                     }
                 }).DisposedBy(disposeBag);
         }
