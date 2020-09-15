@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reactive;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Accord.Statistics.Running;
@@ -16,6 +18,7 @@ using Toggl.Core.UI.ViewModels.Calendar;
 using Toggl.Core.UI.ViewModels.Reports;
 using Toggl.Core.UI.Views;
 using Toggl.Shared;
+using Toggl.Shared.Extensions;
 
 namespace Linux
 {
@@ -25,6 +28,7 @@ namespace Linux
         private string _error;
         private List<string> _tabs;
         private IThreadSafeTimeEntry _runningTimeEntry;
+        private TimeEntriesViewModel _timeEntries;
         [NotifySignal]
         public string Status {
             get {
@@ -69,6 +73,19 @@ namespace Linux
             {
                 _runningTimeEntry = value;
                 _ = this.ActivateSignal("runningTimeEntryChanged");
+            }
+        }
+        [NotifySignal]
+        public TimeEntriesViewModel TimeEntries
+        {
+            get
+            {
+                return _timeEntries;
+            }
+            set
+            {
+                _timeEntries = value;
+                _ = this.ActivateSignal("timeEntriesChanged");
             }
         }
         public Toggl()
@@ -147,14 +164,25 @@ namespace Linux
                     var tabNames = new List<string>();
                     foreach (var i in mainTabBarView.Tabs)
                     {
-                        if (i.Value as MainViewModel != null)
+                        var val = i.Value;
+                        lock (val) ;
+                        if (val as MainViewModel != null)
                         {
                             tabNames.Add(typeof(MainViewModel).Name);
-                            (i.Value as MainViewModel).CurrentRunningTimeEntry.Subscribe(timeEntry => RunningTimeEntry = timeEntry);
+                            var vm = i.Value as MainViewModel;
+                            if (vm.TimeEntriesViewModel == null)
+                            {
+                                Console.Error.WriteLine("NOOO");
+                            }
+                            else
+                            {
+                                Console.Error.WriteLine(".............");
+                                TimeEntries = vm.TimeEntriesViewModel;
+                            }
                         }
-                        else if (i.Value as ReportsViewModel != null)
+                        else if (val as ReportsViewModel != null)
                             tabNames.Add(typeof(ReportsViewModel).Name);
-                        else if (i.Value as CalendarViewModel != null)
+                        else if (val as CalendarViewModel != null)
                             tabNames.Add(typeof(CalendarViewModel).Name);
                         else
                             tabNames.Add("N/A");

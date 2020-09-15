@@ -21,7 +21,7 @@ namespace Linux
 {
     public sealed class LinuxDependencyContainer : UIDependencyContainer
     {
-        private const ApiEnvironment environment = ApiEnvironment.Staging;
+        private const ApiEnvironment environment = ApiEnvironment.Production;
         private static readonly UserAgent userAgent = new UserAgent("MobileIntegrationTests", "1.0.0.0");
         private readonly CompositePresenter presenter;
 

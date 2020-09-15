@@ -38,12 +38,35 @@ ApplicationWindow {
             }
         }
     }
-    Text {
+    Row {
         id: timer
         anchors.top: tabs.bottom
-        text: toggl.runningTimeEntry
+        Text {
+            text: toggl.runningTimeEntry
+        }
+        Text {
+            text: " : "
+        }
+        Text {
+            text: toggl.runningTimeEntry.Description
+        }
+        Text {
+            text: " : "
+        }
+        Text {
+            text: toggl.timeEntries.count
+        }
     }
-    
+    ListView {
+        id:tes 
+        anchors.top: timer.bottom
+        width: parent.width
+        anchors.bottom: parent.bottom
+        model: toggl.timeEntries
+        delegate: Text {
+            text: modelData
+        }
+    }
     Item {
         anchors.fill: parent
         visible: toggl.status === "LOGIN VIEW"
