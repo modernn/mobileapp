@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Toggl.Core.UI;
 using Toggl.Core.UI.Navigation;
 using Toggl.Core.UI.Parameters;
 using Toggl.Core.UI.ViewModels;
-using Toggl.WPF.Presentation;
 using Toggl.WPF.Startup;
 
 namespace Toggl.WPF
@@ -23,7 +16,8 @@ namespace Toggl.WPF
         {
             base.OnStartup(e);
             WpfDependencyContainer.EnsureInitialized();
-            var app = new AppStart(WpfDependencyContainer.Instance);
+            var dependencyContainer = WpfDependencyContainer.Instance;
+            var app = new AppStart(dependencyContainer);
             app.LoadLocalizationConfiguration();
             var accessLevel = app.GetAccessLevel();
             app.SetupBackgroundSync();
@@ -35,7 +29,7 @@ namespace Toggl.WPF
                 app.ForceFullSync();
             }
 
-            var navigationService = WpfDependencyContainer.Instance.NavigationService;
+            var navigationService = dependencyContainer.NavigationService;
 
             switch (accessLevel)
             {
@@ -47,6 +41,7 @@ namespace Toggl.WPF
                 case AccessLevel.TokenRevoked:
                     break;
                 case AccessLevel.LoggedIn:
+                    dependencyContainer.UserAccessManager.LoginWithSavedCredentials();
                     navigationService.Navigate<MainTabBarViewModel, MainTabBarParameters>(MainTabBarParameters.Default, null);
                     break;
             }
