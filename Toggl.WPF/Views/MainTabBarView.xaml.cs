@@ -32,6 +32,8 @@ namespace Toggl.WPF.Views
             ViewModel = mainTabBarViewModel;
             InitializeComponent();
 
+            TimerView.Bind(ViewModel.TimerViewModel.Value as TimerViewModel);
+
             createTabFor(ViewModel.MainViewModel)
                 .GetAwaiter()
                 .GetResult();
