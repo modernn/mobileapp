@@ -14,6 +14,7 @@ namespace Toggl.Core.UI.ViewModels
     [Preserve(AllMembers = true)]
     public sealed class MainTabBarViewModel : ViewModelWithInput<MainTabBarParameters>
     {
+        public Lazy<ViewModel> TimerViewModel { get; }
         public Lazy<ViewModel> MainViewModel { get; }
         public Lazy<ViewModel> ReportsViewModel { get; }
         public Lazy<ViewModel> CalendarViewModel { get; }
@@ -28,6 +29,21 @@ namespace Toggl.Core.UI.ViewModels
         {
             Ensure.Argument.IsNotNull(container, nameof(container));
             Ensure.Argument.IsNotNull(container.SchedulerProvider, nameof(container.SchedulerProvider));
+
+            TimerViewModel = new Lazy<ViewModel>(() => new TimerViewModel(
+                container.DataSource,
+                container.SyncManager,
+                container.TimeService,
+                container.UserPreferences,
+                container.AnalyticsService,
+                container.OnboardingStorage,
+                container.InteractorFactory,
+                container.NavigationService,
+                container.AccessibilityService,
+                container.AccessRestrictionStorage,
+                container.SchedulerProvider,
+                container.RxActionFactory
+            ));
 
             MainViewModel = new Lazy<ViewModel>(() => new MainViewModel(
                 container.DataSource,

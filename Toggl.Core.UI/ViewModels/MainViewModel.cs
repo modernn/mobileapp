@@ -13,21 +13,18 @@ using Toggl.Core.Extensions;
 using Toggl.Core.Interactors;
 using Toggl.Core.Models.Interfaces;
 using Toggl.Core.Services;
-using Toggl.Core.Suggestions;
 using Toggl.Core.Sync;
 using Toggl.Core.UI.Collections;
 using Toggl.Core.UI.Extensions;
 using Toggl.Core.UI.Helper;
 using Toggl.Core.UI.Navigation;
 using Toggl.Core.UI.Parameters;
-using Toggl.Core.UI.ViewModels.Reports;
 using Toggl.Core.UI.ViewModels.MainLog;
 using Toggl.Core.UI.ViewModels.MainLog.Identity;
 using Toggl.Shared;
 using System.ComponentModel;
 using static Toggl.Core.Analytics.ContinueTimeEntryMode;
 using static Toggl.Core.Analytics.ContinueTimeEntryOrigin;
-using Toggl.Core.Exceptions;
 using Toggl.Storage.Settings;
 using Toggl.Core.UI.Services;
 using Toggl.Core.Experiments;
@@ -95,6 +92,7 @@ namespace Toggl.Core.UI.ViewModels
         public TrackingOnboardingCondition FinalTooltipCondition { get; private set; }
         public TrackingOnboardingCondition TapToStopTooltipCondition { get; private set; }
 
+        public TimerViewModel TimerViewModel { get; }
         public RatingViewModel RatingViewModel { get; }
         public SuggestionsViewModel SuggestionsViewModel { get; }
         public IOnboardingStorage OnboardingStorage { get; }
