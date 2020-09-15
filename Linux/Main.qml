@@ -10,6 +10,12 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Toggl Track")
+    Button {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        text: "Log out"
+        onClicked: toggl.logout()
+    }
 
     Text {
         id: status
@@ -19,6 +25,23 @@ ApplicationWindow {
         id: error
         anchors.top: status.bottom
         text: "Error: " + toggl.error
+    }
+
+    Row {
+        id: tabs
+        anchors.top: error.bottom
+        spacing: 3
+        Repeater {
+            model: toggl.tabs ? Net.toListModel(toggl.tabs) : null
+            Text {
+                text: modelData
+            }
+        }
+    }
+    Text {
+        id: timer
+        anchors.top: tabs.bottom
+        text: toggl.runningTimeEntry
     }
     
     Item {

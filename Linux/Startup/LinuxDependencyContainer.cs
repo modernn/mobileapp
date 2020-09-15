@@ -22,14 +22,14 @@ namespace Linux
     public sealed class LinuxDependencyContainer : UIDependencyContainer
     {
         private const ApiEnvironment environment = ApiEnvironment.Staging;
-        private static readonly UserAgent userAgent = new UserAgent("LinuxMobileApp", "1.0.0.0");
+        private static readonly UserAgent userAgent = new UserAgent("MobileIntegrationTests", "1.0.0.0");
         private readonly CompositePresenter presenter;
 
         private readonly Lazy<RealmConfigurator> realmConfigurator = new Lazy<RealmConfigurator>(() => new RealmConfigurator());
         public new static LinuxDependencyContainer Instance { get; private set; }
         public static void EnsureInitialized(Toggl toggl)
         {
-            Instance = new LinuxDependencyContainer(ApiEnvironment.Staging, userAgent, toggl);
+            Instance = new LinuxDependencyContainer(environment, userAgent, toggl);
             UIDependencyContainer.Instance = Instance;
         }
 
