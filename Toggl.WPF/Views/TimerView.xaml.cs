@@ -62,15 +62,9 @@ namespace Toggl.WPF.Views
                 .Subscribe(StartButton.Rx().IsVisible())
                 .DisposedBy(disposeBag);
 
-            StartButton.Rx().Tap()
-                .SelectValue(true)
-                .Subscribe(ViewModel.StartTimeEntry.Inputs)
-                .DisposedBy(disposeBag);
-
-            StopButton.Rx().Tap()
-                .SelectValue(TimeEntryStopOrigin.Manual)
-                .Subscribe(ViewModel.StopTimeEntry.Inputs)
-                .DisposedBy(disposeBag);
+            StartButton.Command = ViewModel.StartTimeEntry.ToCommand();
+            StopButton.Command = ViewModel.StopTimeEntry.ToCommand();
+            StopButton.CommandParameter = TimeEntryStopOrigin.Manual;
         }
     }
 }

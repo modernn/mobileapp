@@ -60,7 +60,7 @@ namespace Toggl.Core.UI.ViewModels
 
         public ViewAction Refresh { get; private set; }
         public ViewAction OpenSettings { get; private set; }
-        public InputAction<bool> StartTimeEntry { get; private set; }
+        public ViewAction StartTimeEntry { get; private set; }
         public InputAction<EditTimeEntryInfo> SelectTimeEntry { get; private set; }
         public InputAction<TimeEntryStopOrigin> StopTimeEntry { get; private set; }
 
@@ -159,7 +159,7 @@ namespace Toggl.Core.UI.ViewModels
             Refresh = rxActionFactory.FromAsync(refresh);
             OpenSettings = rxActionFactory.FromAsync(openSettings);
             SelectTimeEntry = rxActionFactory.FromAsync<EditTimeEntryInfo>(timeEntrySelected);
-            StartTimeEntry = rxActionFactory.FromAsync<bool>(startTimeEntry, IsTimeEntryRunning.Invert());
+            StartTimeEntry = rxActionFactory.FromAsync(startTimeEntry, IsTimeEntryRunning.Invert());
             StopTimeEntry = rxActionFactory.FromObservable<TimeEntryStopOrigin>(stopTimeEntry, IsTimeEntryRunning);
           
             OnboardingStorage.StopButtonWasTappedBefore
@@ -217,11 +217,11 @@ namespace Toggl.Core.UI.ViewModels
             return navigate<SettingsViewModel>();
         }
 
-        private async Task startTimeEntry(bool useDefaultMode)
+        private async Task startTimeEntry()
         {
             OnboardingStorage.StartButtonWasTapped();
 
-            var duration = useDefaultMode == userPreferences.IsManualModeEnabled
+            var duration = userPreferences.IsManualModeEnabled
                 ? (TimeSpan?)TimeSpan.FromMinutes(DefaultTimeEntryDurationForManualModeInMinutes)
                 : null;
 
