@@ -8,6 +8,7 @@
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:viewModels="clr-namespace:Toggl.Core.UI.ViewModels;assembly=Toggl.Core.UI"
                                 xmlns:views="clr-namespace:Toggl.WPF.Views"
+                                xmlns:shared="clr-namespace:Toggl.Shared;assembly=Toggl.Shared"
                                 mc:Ignorable="d"
                                 d:DesignHeight="300" d:DesignWidth="300"
                                 Background="{DynamicResource Toggl.CardBackground}"
@@ -89,7 +90,7 @@
                         </Border>
                         <Button x:Name="loginButton"
                                 Height="32" Width="200"
-                                Content="Log in"
+                                Content="{x:Static shared:Resources.LoginTitle}"
                                 IsDefault="True"/>
                     </Grid>
 

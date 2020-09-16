@@ -8,6 +8,7 @@
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:viewModels="clr-namespace:Toggl.Core.UI.ViewModels;assembly=Toggl.Core.UI"
                                 xmlns:ui="http://schemas.modernwpf.com/2019"
+                                xmlns:shared="clr-namespace:Toggl.Shared;assembly=Toggl.Shared"
                                 mc:Ignorable="d" 
                                 d:DesignHeight="100" d:DesignWidth="400">
     <Grid 
@@ -33,6 +34,7 @@
             Background="Transparent"
             BorderBrush="Transparent"
             BorderThickness="0"
+            ui:ControlHelper.PlaceholderText="{x:Static shared:Resources.StartTimeEntryPlaceholder}"
             Grid.Column="1"
             Grid.Row="0" />
 

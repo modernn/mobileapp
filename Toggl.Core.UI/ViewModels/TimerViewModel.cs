@@ -22,6 +22,7 @@ using static Toggl.Core.Analytics.ContinueTimeEntryMode;
 using static Toggl.Core.Analytics.ContinueTimeEntryOrigin;
 using Toggl.Storage.Settings;
 using Toggl.Shared.Extensions;
+using Toggl.Shared.Extensions.Reactive;
 using Toggl.Storage;
 using static Toggl.Core.Helper.Constants;
 
@@ -47,7 +48,9 @@ namespace Toggl.Core.UI.ViewModels
         private readonly IAccessRestrictionStorage accessRestrictionStorage;
 
         private readonly CompositeDisposable disposeBag = new CompositeDisposable();
-        
+
+        public BehaviorRelay<string> Description { get; } = new BehaviorRelay<string>(string.Empty);
+
         public IObservable<bool> IsInManualMode { get; private set; }
         public IObservable<string> ElapsedTime { get; private set; }
         public IObservable<bool> IsTimeEntryRunning { get; private set; }
@@ -91,7 +94,7 @@ namespace Toggl.Core.UI.ViewModels
             Ensure.Argument.IsNotNull(accessibilityService, nameof(accessibilityService));
             Ensure.Argument.IsNotNull(accessRestrictionStorage, nameof(accessRestrictionStorage));
             Ensure.Argument.IsNotNull(rxActionFactory, nameof(rxActionFactory));
- 
+
             this.dataSource = dataSource;
             this.syncManager = syncManager;
             this.userPreferences = userPreferences;
@@ -161,7 +164,7 @@ namespace Toggl.Core.UI.ViewModels
             SelectTimeEntry = rxActionFactory.FromAsync<EditTimeEntryInfo>(timeEntrySelected);
             StartTimeEntry = rxActionFactory.FromAsync(startTimeEntry, IsTimeEntryRunning.Invert());
             StopTimeEntry = rxActionFactory.FromObservable<TimeEntryStopOrigin>(stopTimeEntry, IsTimeEntryRunning);
-          
+
             OnboardingStorage.StopButtonWasTappedBefore
                              .Subscribe(hasBeen => hasStopButtonEverBeenUsed = hasBeen)
                              .DisposedBy(disposeBag);
@@ -226,7 +229,7 @@ namespace Toggl.Core.UI.ViewModels
                 : null;
 
             var defaultWorkspace = await interactorFactory.GetDefaultWorkspace().Execute();
-            var prototype = "".AsTimeEntryPrototype(
+            var prototype = Description.Value.AsTimeEntryPrototype(
                 TimeService.CurrentDateTime,
                 defaultWorkspace.Id,
                 duration

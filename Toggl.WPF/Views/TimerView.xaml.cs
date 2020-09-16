@@ -3,6 +3,7 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Media;
+using ModernWpf;
 using Toggl.Core.Analytics;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Shared.Extensions;
@@ -36,6 +37,9 @@ namespace Toggl.WPF.Views
                 .Subscribe(Description.Rx().TextObserver())
                 .DisposedBy(disposeBag);
 
+            Description.Rx().Text()
+                .Subscribe(ViewModel.Description.Accept);
+
             ViewModel.CurrentRunningTimeEntry
                 .Select(te => te?.Project)
                 .Subscribe(project =>
@@ -46,7 +50,10 @@ namespace Toggl.WPF.Views
                     }
                     else
                     {
-                        var projectColor = Shared.Color.ParseAndAdjustToLabel(project.Color, isInDarkMode: false);
+                        var projectColor =
+                            Shared.Color.ParseAndAdjustToLabel(
+                                project.Color,
+                                isInDarkMode: ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark);
                         Project.Text = project.Name;
                         Project.Foreground = new SolidColorBrush(projectColor.ToNativeColor());
                     }
