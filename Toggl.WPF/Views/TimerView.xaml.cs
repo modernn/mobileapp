@@ -50,12 +50,8 @@ namespace Toggl.WPF.Views
                     }
                     else
                     {
-                        var projectColor =
-                            Shared.Color.ParseAndAdjustToLabel(
-                                project.Color,
-                                isInDarkMode: ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark);
                         Project.Text = project.Name;
-                        Project.Foreground = new SolidColorBrush(projectColor.ToNativeColor());
+                        Project.Foreground = project.Color.ToAdjustedColor().ToNativeColor().ToBrush();
                     }
                 }).DisposedBy(disposeBag);
 
