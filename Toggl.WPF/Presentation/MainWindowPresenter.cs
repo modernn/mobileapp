@@ -26,7 +26,7 @@ namespace Toggl.WPF
             throw new NotImplementedException();
         }
 
-        public async Task Present<TInput, TOutput>(ViewModel<TInput, TOutput> viewModel, IView sourceView)
+        public Task Present<TInput, TOutput>(ViewModel<TInput, TOutput> viewModel, IView sourceView)
         {
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
@@ -42,6 +42,7 @@ namespace Toggl.WPF
                         break;
                 }
             });
+            return Task.CompletedTask;
         }
     }
 }

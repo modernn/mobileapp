@@ -12,6 +12,16 @@
                                 d:DesignHeight="300" d:DesignWidth="300"
                                 Background="{DynamicResource Toggl.CardBackground}"
                                 Loaded="LoginView_OnLoaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Storyboard x:Key="RotateConfirmSpinner" BeginTime="00:00:00.000"
+                        Duration="00:00:1.000" RepeatBehavior="Forever">
+                <DoubleAnimation Storyboard.TargetName="confirmButtonSpinner"
+                                 Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(RotateTransform.Angle)" 
+                                 From="0" To="360" BeginTime="00:00:00.000" Duration="00:00:01.000"/>
+            </Storyboard>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Background="{StaticResource ViewBackground}">
         <Border BorderThickness="1"
                 BorderBrush="{DynamicResource Toggl.LoginView.Border}"
@@ -38,20 +48,22 @@
                             Margin="0 8 0 0">
                     <TextBox x:Name="emailTextBox"
                              Margin="0 32 0 0"
-                             Width="200" />
+                             Width="200"
+                             ui:ControlHelper.PlaceholderText="Email address"/>
                     <Grid x:Name="passwordBoxContainer" x:FieldModifier="private"
                           Width="268"
                           Margin="0 12 0 0">
                         <PasswordBox x:Name="passwordBox"
                                      PasswordChar="*"
                                      Width="200"
-                                     ui:PasswordBoxHelper.PasswordRevealMode="Peek" />
+                                     ui:PasswordBoxHelper.PasswordRevealMode="Peek"
+                                     ui:ControlHelper.PlaceholderText="Password"/>
                     </Grid>
-                    <Label x:Name="forgotPasswordLabel"
-                           Margin="50 16 0 0">
-                        <Hyperlink x:Name="forgotPasswordHyperlink"
-                                   Style="{StaticResource Toggl.NormalHyperlink}">Forgot password?</Hyperlink>
-                    </Label>
+                    <!-- <Label x:Name="forgotPasswordLabel" -->
+                    <!--        Margin="50 16 0 0"> -->
+                    <!--     <Hyperlink x:Name="forgotPasswordHyperlink" -->
+                    <!--                Style="{StaticResource Toggl.NormalHyperlink}">Forgot password?</Hyperlink> -->
+                    <!-- </Label> -->
 
                     <Grid x:Name="loginErrorContainer"
                           Margin="0 12 0 12"

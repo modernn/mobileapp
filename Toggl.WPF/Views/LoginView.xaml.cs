@@ -78,10 +78,10 @@ namespace Toggl.WPF.Views
                 .DisposeWith(disposeBag);
 
             // forgot password
-            this.forgotPasswordHyperlink.Command =
-                ReactiveCommand.Create(() => Process.Start("explorer.exe", "https://toggl.com/track/forgot-password?desktop=true"));
-            Disposable.Create(this.forgotPasswordHyperlink, x => x.Command = null)
-                .DisposeWith(disposeBag);
+            // this.forgotPasswordHyperlink.Command =
+            //     ReactiveCommand.Create(() => Process.Start("chrome.exe", "https://toggl.com/track/forgot-password?desktop=true"));
+            // Disposable.Create(this.forgotPasswordHyperlink, x => x.Command = null)
+            //     .DisposeWith(disposeBag);
         }
     }
 
