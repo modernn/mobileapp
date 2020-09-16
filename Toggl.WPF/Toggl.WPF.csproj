@@ -18,4 +18,9 @@
       <PackageReference Include="ReactiveUI.Events.WPF" Version="11.4.17" />
       <PackageReference Include="ReactiveUI.WPF" Version="11.4.17" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\bg-pattern.png" />
+      <Resource Include="Resources\bg-pattern.png" />
+    </ItemGroup>
 </Project>

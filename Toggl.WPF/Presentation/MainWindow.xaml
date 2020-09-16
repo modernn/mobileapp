@@ -7,7 +7,7 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         ui:WindowHelper.UseModernWindowStyle="True"
-        Title="MainWindow" Height="600" Width="400">
+        Title="Toggl Track" Height="600" Width="400">
     <Grid x:Name="root">
     </Grid>
 </Window>

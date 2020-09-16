@@ -23,13 +23,18 @@
                 </ui:ThemeResources>
                 <ui:XamlControlsResources />
                 <!-- Other merged dictionaries here -->
+                <ResourceDictionary Source="Resources/SharedStyles.xaml" />
                 <ResourceDictionary Source="Resources/TimeEntryCellStyles.xaml" />
                 <ResourceDictionary Source="Resources/Buttons.xaml" />
                 <ResourceDictionary Source="Resources/Typography.xaml" />
+                <ResourceDictionary Source="Resources/Icons.xaml" />
+                <ResourceDictionary Source="Resources/Hyperlink.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <converters:EmptyStringToCollapsedConverter x:Key="EmptyStringToCollapsedConverter" />
+            <converters:EmptyStringToHiddenConverter x:Key="EmptyStringToHiddenConverter" />
+            <converters:FalseToHiddenVisibilityConverter x:Key="FalseToHiddenVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

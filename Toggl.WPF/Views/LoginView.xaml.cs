@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
@@ -58,8 +59,7 @@ namespace Toggl.WPF.Views
                 .DisposeWith(disposeBag);
 
             // Login
-            var loginCommand = ViewModel.Login.ToCommand();
-            this.loginButton.Command = loginCommand;
+            this.loginButton.Command = ViewModel.Login.ToCommand();
             Disposable.Create(this.loginButton, button => button.Command = null)
                 .DisposeWith(disposeBag);
 
@@ -72,12 +72,15 @@ namespace Toggl.WPF.Views
                 })
                 .DisposeWith(disposeBag);
 
-            // Google Login
-
-
             // login error
             ViewModel.LoginErrorMessage
-                .Subscribe(errorMessage => loginErrorTextBlock.Text = errorMessage)
+                .Subscribe(errorMessage => validationErrorControl.ErrorText = errorMessage)
+                .DisposeWith(disposeBag);
+
+            // forgot password
+            this.forgotPasswordHyperlink.Command =
+                ReactiveCommand.Create(() => Process.Start("explorer.exe", "https://toggl.com/track/forgot-password?desktop=true"));
+            Disposable.Create(this.forgotPasswordHyperlink, x => x.Command = null)
                 .DisposeWith(disposeBag);
         }
     }
