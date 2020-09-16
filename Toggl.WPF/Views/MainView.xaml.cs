@@ -1,7 +1,6 @@
-﻿using System.Windows.Controls;
-using Toggl.Core.UI.ViewModels;
+﻿using Toggl.Core.UI.ViewModels;
 
-namespace Toggl.WPF.Presentation
+namespace Toggl.WPF.Views
 {
     public partial class MainView
     {
@@ -9,6 +8,7 @@ namespace Toggl.WPF.Presentation
         {
             ViewModel = viewModel;
             InitializeComponent();
+            TimeEntriesView.Bind(ViewModel.TimeEntriesViewModel);
         }
     }
 }

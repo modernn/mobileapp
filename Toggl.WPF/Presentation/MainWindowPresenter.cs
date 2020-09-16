@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Toggl.Core.UI.Navigation;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Core.UI.Views;
@@ -27,17 +28,20 @@ namespace Toggl.WPF
 
         public async Task Present<TInput, TOutput>(ViewModel<TInput, TOutput> viewModel, IView sourceView)
         {
-            switch(viewModel)
+            Dispatcher.CurrentDispatcher.Invoke(() =>
             {
-                case LoginViewModel loginViewModel:
-                    var loginView = new LoginView(loginViewModel);
-                    window.SetMainView(loginView);
-                    break;
-                case MainTabBarViewModel mainTabBarViewModel:
-                    var mainTabBarView = new MainTabBarView(mainTabBarViewModel);
-                    window.SetMainView(mainTabBarView);
-                    break;
-            }
+                switch (viewModel)
+                {
+                    case LoginViewModel loginViewModel:
+                        var loginView = new LoginView(loginViewModel);
+                        window.SetMainView(loginView);
+                        break;
+                    case MainTabBarViewModel mainTabBarViewModel:
+                        var mainTabBarView = new MainTabBarView(mainTabBarViewModel);
+                        window.SetMainView(mainTabBarView);
+                        break;
+                }
+            });
         }
     }
 }
