@@ -25,7 +25,7 @@
     <Grid Background="{StaticResource ViewBackground}">
         <Border BorderThickness="1"
                 BorderBrush="{DynamicResource Toggl.LoginView.Border}"
-                Width="302" Height="472"
+                Width="302" Height="320"
                 Background="{DynamicResource Toggl.CardBackground}"
                 VerticalAlignment="Center" HorizontalAlignment="Center">
             <DockPanel>
