@@ -10,11 +10,17 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Toggl Track")
-    Button {
+    Row {
         anchors.top: parent.top
         anchors.right: parent.right
-        text: "Log out"
-        onClicked: toggl.logout()
+        Button {
+            text: "Sync"
+            onClicked: toggl.sync()
+        }
+        Button {
+            text: "Log out"
+            onClicked: toggl.logout()
+        }
     }
 
     Text {
@@ -42,29 +48,56 @@ ApplicationWindow {
         id: timer
         anchors.top: tabs.bottom
         Text {
-            text: toggl.runningTimeEntry
+            text: JSON.stringify(toggl.runningTimeEntry)
         }
         Text {
             text: " : "
         }
         Text {
-            text: toggl.runningTimeEntry.Description
-        }
-        Text {
-            text: " : "
-        }
-        Text {
-            text: toggl.timeEntries.count
+            text: toggl.runningTimeEntry.description
         }
     }
     ListView {
-        id:tes 
+        id: tes
+
+        clip: true
         anchors.top: timer.bottom
         width: parent.width
         anchors.bottom: parent.bottom
-        model: toggl.timeEntries
-        delegate: Text {
-            text: modelData
+
+        spacing: 6
+
+        model: Net.toListModel(toggl.timeEntries2)
+        
+        delegate: Rectangle {
+            border {
+                width: 1
+                color: "light gray"
+            }
+            width: tes.width
+            height: delegateLayout.height
+            RowLayout {
+                id: delegateLayout
+                width: parent.width
+                ColumnLayout {
+                    Text {
+                        text: modelData.description.length <= 0 ? "No description" : modelData.description
+                        color: modelData.description.length <= 0 ? "gray" : "black"
+                    }
+                    Text {
+                        text: modelData.project ? modelData.project.name : ""
+                        color: modelData.project ? modelData.project.color : "transparent"
+                    }
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                Text {
+                    Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
+                    text: modelData.duration
+                }
+            }
+            //text: modelData? JSON.stringify(modelData) : "null"
         }
     }
     Item {
@@ -96,7 +129,7 @@ ApplicationWindow {
     }
     Text {
         text: "HERE BE DRAGONS"
-        visible: toggl.status !== "LOGIN VIEW"
+        visible: toggl.status !== "LOGIN VIEW" && toggl.status !== "MAIN TAB BAR VIEW"
         anchors.centerIn: parent
     }
 }

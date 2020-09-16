@@ -27,8 +27,9 @@ namespace Linux
         private string _status;
         private string _error;
         private List<string> _tabs;
-        private IThreadSafeTimeEntry _runningTimeEntry;
+        private QMLTimeEntry _runningTimeEntry;
         private TimeEntriesViewModel _timeEntries;
+        private List<QMLTimeEntry> _timeEntries2;
         [NotifySignal]
         public string Status {
             get {
@@ -63,7 +64,7 @@ namespace Linux
             }
         }
         [NotifySignal]
-        public IThreadSafeTimeEntry RunningTimeEntry
+        public QMLTimeEntry RunningTimeEntry
         {
             get
             {
@@ -86,6 +87,19 @@ namespace Linux
             {
                 _timeEntries = value;
                 _ = this.ActivateSignal("timeEntriesChanged");
+            }
+        }
+        [NotifySignal]
+        public List<QMLTimeEntry> TimeEntries2
+        {
+            get
+            {
+                return _timeEntries2;
+            }
+            set
+            {
+                _timeEntries2 = value;
+                _ = this.ActivateSignal("timeEntries2Changed");
             }
         }
         public Toggl()
@@ -141,6 +155,14 @@ namespace Linux
         public void Logout()
         {
         }
+        public void Sync()
+        {
+            LinuxDependencyContainer
+                .Instance
+                .SyncManager
+                .ForceFullSync()
+                .Subscribe();
+        }
         private MainTabBarViewModel mainTabBarView;
 
         public bool CanPresent<TInput, TOutput>(ViewModel<TInput, TOutput> viewModel)
@@ -187,6 +209,33 @@ namespace Linux
                         else
                             tabNames.Add("N/A");
                     }
+                    LinuxDependencyContainer.Instance.DataSource.TimeEntries.CurrentlyRunningTimeEntry.Subscribe(te =>
+                    {
+                        if (te != null)
+                        {
+                            RunningTimeEntry = new QMLTimeEntry(te);
+                        }
+                        else
+                        {
+                            RunningTimeEntry = null;
+                        }
+
+                    });
+                    LinuxDependencyContainer.Instance.DataSource.TimeEntries.GetAll().Subscribe(tes => {
+                        var newTes = new List<QMLTimeEntry>();
+                        foreach (var i in tes)
+                        {
+                            if (i.Duration == null || i.Duration < 0)
+                            {
+                            }
+                            else
+                            {
+                                newTes.Add(new QMLTimeEntry(i));
+                            }
+                            Console.Error.WriteLine(i.Description);
+                        }
+                        TimeEntries2 = newTes;
+                    });
                     Tabs = tabNames;
                     break;
                 case OutdatedAppViewModel outdated:
