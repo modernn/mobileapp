@@ -16,12 +16,31 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.6" />
     <PackageReference Include="Microsoft.WinUI" Version="3.0.0-preview2.200713.0" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="ReactiveUI" Version="11.5.35" />
+    <PackageReference Include="ReactiveUI.Fody" Version="11.5.35" />
+    <PackageReference Include="Realm" Version="5.0.1" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="App.xaml" />
+    <None Remove="LoginView.xaml" />
     <None Remove="MainWindow.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Toggl.Core.UI\Toggl.Core.UI.csproj" />
+    <ProjectReference Include="..\..\Toggl.Core\Toggl.Core.csproj" />
+    <ProjectReference Include="..\..\Toggl.Storage.Realm\Toggl.Storage.Realm.csproj" />
+    <ProjectReference Include="..\..\Toggl.Storage\Toggl.Storage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="LoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

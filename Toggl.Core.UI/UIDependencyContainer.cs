@@ -11,14 +11,14 @@ namespace Toggl.Core.UI
     public abstract class UIDependencyContainer : DependencyContainer
     {
         private readonly Lazy<IDeeplinkParser> deeplinkParser;
-        private readonly Lazy<ViewModelLoader> viewModelLoader;
+        private readonly Lazy<IViewModelLoader> viewModelLoader;
         private readonly Lazy<INavigationService> navigationService;
         private readonly Lazy<IPermissionsChecker> permissionsService;
         private Lazy<IWidgetsService> widgetsService;
         private Lazy<IDateRangeShortcutsService> dateRangeShortcutsService;
 
         public IDeeplinkParser DeeplinkParser => deeplinkParser.Value;
-        public ViewModelLoader ViewModelLoader => viewModelLoader.Value;
+        public virtual IViewModelLoader ViewModelLoader => viewModelLoader.Value;
         public INavigationService NavigationService => navigationService.Value;
         public IPermissionsChecker PermissionsChecker => permissionsService.Value;
         public IWidgetsService WidgetsService => widgetsService.Value;
@@ -30,7 +30,7 @@ namespace Toggl.Core.UI
             : base(apiEnvironment, userAgent)
         {
             deeplinkParser = new Lazy<IDeeplinkParser>(createDeeplinkParser);
-            viewModelLoader = new Lazy<ViewModelLoader>(CreateViewModelLoader);
+            viewModelLoader = new Lazy<IViewModelLoader>(CreateViewModelLoader);
             navigationService = new Lazy<INavigationService>(CreateNavigationService);
             permissionsService = new Lazy<IPermissionsChecker>(CreatePermissionsChecker);
             widgetsService = new Lazy<IWidgetsService>(CreateWidgetsService);
@@ -44,7 +44,7 @@ namespace Toggl.Core.UI
         protected abstract IPermissionsChecker CreatePermissionsChecker();
         protected abstract IWidgetsService CreateWidgetsService();
 
-        protected virtual ViewModelLoader CreateViewModelLoader()
+        protected virtual IViewModelLoader CreateViewModelLoader()
             => new ViewModelLoader(this);
 
         protected override IErrorHandlingService CreateErrorHandlingService()

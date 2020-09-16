@@ -10,7 +10,7 @@ using Toggl.Storage.Settings;
 
 namespace Toggl.Core.UI.Navigation
 {
-    public sealed class ViewModelLoader
+    public sealed class ViewModelLoader : IViewModelLoader
     {
         private readonly UIDependencyContainer dependencyContainer;
 
