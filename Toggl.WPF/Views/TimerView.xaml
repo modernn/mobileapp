@@ -67,13 +67,36 @@
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Ellipse Stroke="Black" Height="24" Width="24" StrokeThickness="0">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="Red" />
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Ellipse Name="BackgroundEllipse"
+                                 Fill="{DynamicResource Toggl.SecondaryAccentBrush}"
+                                 Width="36"
+                                 Height="36" />
+                        <Path Name="StopButton"
+                              Width="36"
+                              Height="36"
+                              Fill="White"
+                              Data="{StaticResource StopButtonGeometry}"/>
+                        <Ellipse Name="OverlayEllipse"
+                                 Width="36"
+                                 Height="36"
+                                 Fill="Transparent" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OverlayEllipse" Property="Fill">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="Black" Opacity="0.1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OverlayEllipse" Property="Fill">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="Black" Opacity="0.2" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
         </Button>
@@ -89,13 +112,36 @@
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Ellipse Stroke="Black" Height="30" Width="30" StrokeThickness="0">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="Green" />
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Ellipse Name="BackgroundEllipse"
+                                 Fill="{DynamicResource Toggl.AccentBrush}"
+                                 Width="36"
+                                 Height="36" />
+                        <Path Name="StartButton"
+                              Width="36"
+                              Height="36"
+                              Fill="White"
+                              Data="{StaticResource StartButtonGeometry}"/>
+                        <Ellipse Name="OverlayEllipse"
+                                 Width="36"
+                                 Height="36"
+                                 Fill="Transparent" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OverlayEllipse" Property="Fill">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="Black" Opacity="0.1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OverlayEllipse" Property="Fill">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="Black" Opacity="0.2" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
         </Button>

@@ -28,7 +28,7 @@ namespace Toggl.WPF
 
         public Task Present<TInput, TOutput>(ViewModel<TInput, TOutput> viewModel, IView sourceView)
         {
-            Dispatcher.CurrentDispatcher.Invoke(() =>
+            window.Dispatcher.Invoke(() =>
             {
                 switch (viewModel)
                 {
