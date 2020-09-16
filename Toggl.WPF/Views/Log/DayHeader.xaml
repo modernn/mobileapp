@@ -1,0 +1,49 @@
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="mainLog:DaySummaryViewModel"
+                                x:Class="Toggl.WPF.Views.Log.DayHeader"
+                                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:mainLog="clr-namespace:Toggl.Core.UI.ViewModels.MainLog;assembly=Toggl.Core.UI"
+                                mc:Ignorable="d"
+                                d:DesignHeight="300" d:DesignWidth="300"
+                                Margin="6">
+    <UserControl.Effect>
+        <DropShadowEffect Direction="270" Opacity="0.16"
+                          BlurRadius="4" ShadowDepth="2" />
+    </UserControl.Effect>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource Toggl.CardBackground}">
+            <ToggleButton x:Name="HeaderToggleButton"
+                          Height="{StaticResource TimeEntryDayHeaderHeight}"
+                          Style="{StaticResource Toggl.TimeEntryDayHeaderToggleButton}"
+                          IsChecked="True"
+                          Focusable="False">
+                <DockPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="DateHeaderTextBlock" DockPanel.Dock="Left"
+                               Style="{StaticResource Toggl.BaseText}"
+                               Margin="12 0 0 0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               Text="Date Header"/>
+                    <TextBlock x:Name="DateDurationTextBlock" DockPanel.Dock="Right"
+                               Style="{StaticResource Toggl.BaseText}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Text="Date Duration"/>
+                </DockPanel>
+            </ToggleButton>
+        </Border>
+        <StackPanel Grid.Row="1" Name="TimeEntriesPanel" x:FieldModifier="private"
+                    Background="{DynamicResource Toggl.LightGrayBrush}"
+                    Visibility="{Binding ElementName=HeaderToggleButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+    </Grid>
+</reactiveUi:ReactiveUserControl>
