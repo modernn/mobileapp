@@ -3,6 +3,7 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Media;
+using Toggl.Core.Analytics;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Shared.Extensions;
 using Toggl.WPF.Extensions;
@@ -50,6 +51,26 @@ namespace Toggl.WPF.Views
                         Project.Foreground = new SolidColorBrush(projectColor.ToNativeColor());
                     }
                 }).DisposedBy(disposeBag);
+
+            ViewModel.CurrentRunningTimeEntry
+                .Select(te => te != null)
+                .Subscribe(StopButton.Rx().IsVisible())
+                .DisposedBy(disposeBag);
+
+            ViewModel.CurrentRunningTimeEntry
+                .Select(te => te == null)
+                .Subscribe(StartButton.Rx().IsVisible())
+                .DisposedBy(disposeBag);
+
+            StartButton.Rx().Tap()
+                .SelectValue(true)
+                .Subscribe(ViewModel.StartTimeEntry.Inputs)
+                .DisposedBy(disposeBag);
+
+            StopButton.Rx().Tap()
+                .SelectValue(TimeEntryStopOrigin.Manual)
+                .Subscribe(ViewModel.StopTimeEntry.Inputs)
+                .DisposedBy(disposeBag);
         }
     }
 }

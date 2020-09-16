@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using Toggl.Core.UI.Reactive;
 
 namespace Toggl.WPF.Extensions.Reactive
@@ -18,5 +20,8 @@ namespace Toggl.WPF.Extensions.Reactive
                 Base = @base;
             }
         }
+
+        public static Action<bool> IsVisible(this IReactive<Control> self) =>
+            isVisible => self.Base.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
     }
 }

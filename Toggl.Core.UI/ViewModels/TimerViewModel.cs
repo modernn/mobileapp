@@ -23,6 +23,7 @@ using static Toggl.Core.Analytics.ContinueTimeEntryOrigin;
 using Toggl.Storage.Settings;
 using Toggl.Shared.Extensions;
 using Toggl.Storage;
+using static Toggl.Core.Helper.Constants;
 
 namespace Toggl.Core.UI.ViewModels
 {
@@ -216,60 +217,24 @@ namespace Toggl.Core.UI.ViewModels
             return navigate<SettingsViewModel>();
         }
 
-        private Task openSyncFailures()
-            => navigate<SyncFailuresViewModel>();
-
-        private Task startTimeEntry(bool useDefaultMode)
+        private async Task startTimeEntry(bool useDefaultMode)
         {
-            var initializeInManualMode = useDefaultMode == userPreferences.IsManualModeEnabled;
-
             OnboardingStorage.StartButtonWasTapped();
 
-            if (hasStopButtonEverBeenUsed)
-                OnboardingStorage.SetNavigatedAwayFromMainViewAfterStopButton();
+            var duration = useDefaultMode == userPreferences.IsManualModeEnabled
+                ? (TimeSpan?)TimeSpan.FromMinutes(DefaultTimeEntryDurationForManualModeInMinutes)
+                : null;
 
-            var requestCameFromLongPress = !useDefaultMode;
-            var parameter = initializeInManualMode
-                ? StartTimeEntryParameters.ForManualMode(TimeService.CurrentDateTime, requestCameFromLongPress)
-                : StartTimeEntryParameters.ForTimerMode(TimeService.CurrentDateTime, requestCameFromLongPress);
+            var defaultWorkspace = await interactorFactory.GetDefaultWorkspace().Execute();
+            var prototype = "".AsTimeEntryPrototype(
+                TimeService.CurrentDateTime,
+                defaultWorkspace.Id,
+                duration
+            );
 
-            return navigate<StartTimeEntryViewModel, StartTimeEntryParameters>(parameter);
+            await interactorFactory.CreateTimeEntry(prototype, TimeEntryStartOrigin.Manual).Execute();
         }
 
-        private async Task<IThreadSafeTimeEntry> continueTimeEntry(ContinueTimeEntryInfo continueInfo)
-        {
-            var continuedTimeEntry = await interactorFactory
-                .ContinueTimeEntry(continueInfo.Id, continueInfo.ContinueMode)
-                .Execute()
-                .ConfigureAwait(false);
-
-            analyticsService.TimeEntryContinued.Track(
-                originFromContinuationMode(continueInfo.ContinueMode),
-                continueInfo.IndexInLog,
-                continueInfo.DayInLog,
-                continueInfo.DaysInThePast);
-
-            OnboardingStorage.SetTimeEntryContinued();
-
-            return continuedTimeEntry;
-
-            ContinueTimeEntryOrigin originFromContinuationMode(ContinueTimeEntryMode mode)
-            {
-                switch (mode)
-                {
-                    case SingleTimeEntrySwipe:
-                        return Swipe;
-                    case SingleTimeEntryContinueButton:
-                        return ContinueButton;
-                    case TimeEntriesGroupSwipe:
-                        return GroupSwipe;
-                    case TimeEntriesGroupContinueButton:
-                        return GroupContinueButton;
-                }
-
-                throw new InvalidEnumArgumentException($"Unexpected continue time entry mode {mode}");
-            }
-        }
 
         private async Task timeEntrySelected(EditTimeEntryInfo editTimeEntryInfo)
         {
