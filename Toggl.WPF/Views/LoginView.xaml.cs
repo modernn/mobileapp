@@ -59,6 +59,7 @@ namespace Toggl.WPF.Views
                 .DisposeWith(disposeBag);
 
             // Login
+            this.loginButton.Content = Toggl.Shared.Resources.LoginTitle;
             this.loginButton.Command = ViewModel.Login.ToCommand();
             Disposable.Create(this.loginButton, button => button.Command = null)
                 .DisposeWith(disposeBag);
