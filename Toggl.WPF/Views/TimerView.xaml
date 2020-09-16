@@ -7,6 +7,7 @@
                                 xmlns:local="clr-namespace:Toggl.WPF.Views"
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:viewModels="clr-namespace:Toggl.Core.UI.ViewModels;assembly=Toggl.Core.UI"
+                                xmlns:ui="http://schemas.modernwpf.com/2019"
                                 mc:Ignorable="d" 
                                 d:DesignHeight="100" d:DesignWidth="400">
     <Grid 
@@ -53,6 +54,7 @@
             VerticalAlignment="Center"
             Background="Transparent"
             BorderBrush="Transparent"
+            ui:TextBoxHelper.IsDeleteButtonVisible="False"
             Grid.Column="2"
             Grid.Row="0" 
             Grid.RowSpan="2"/>
