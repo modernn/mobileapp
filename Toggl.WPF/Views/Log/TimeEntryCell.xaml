@@ -31,14 +31,12 @@
         </Grid.ColumnDefinitions>
         
         <ToggleButton Grid.Column="0"
+                      x:Name="GroupToggleButton"
                       Style="{StaticResource Toggl.GroupIcon}"
                       Visibility="{Binding IsTimeEntryGroupHeader, Converter={StaticResource BooleanToVisibilityConverter}}"
                       Margin="12 0 0 0"
                       VerticalAlignment="Center"
-                      Content="{Binding RepresentedTimeEntriesIds.Length}"
-                      IsChecked="{Binding VisualizationIntent,
-                        Mode=OneWay,
-                        Converter={StaticResource EnumEqualToVisibilityConverter}, ConverterParameter={x:Static mainLog:LogItemVisualizationIntent.ExpandedGroupHeader}}" />
+                      Content="{Binding RepresentedTimeEntriesIds.Length}" />
 
         <FrameworkElement Grid.Column="0" Width="38"
                           Visibility="{Binding BelongsToGroup, Converter={StaticResource BooleanToVisibilityConverter}}" />

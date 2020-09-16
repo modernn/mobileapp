@@ -104,7 +104,6 @@
     </Style>
     
     <Style TargetType="ToggleButton" x:Key="Toggl.GroupIcon">
-        <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource Toggl.TextBox.Border}" />
         <Setter Property="Foreground" Value="{DynamicResource Toggl.SecondaryTextBrush}" />

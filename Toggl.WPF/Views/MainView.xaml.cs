@@ -8,7 +8,7 @@ namespace Toggl.WPF.Views
         {
             ViewModel = viewModel;
             InitializeComponent();
-            TimeEntriesView.Bind(ViewModel.TimeEntriesViewModel, ViewModel.ContinueTimeEntry.ToCommand());
+            TimeEntriesView.Bind(ViewModel.TimeEntriesViewModel, ViewModel.ContinueTimeEntry);
         }
     }
 }
