@@ -36,6 +36,7 @@
             <converters:EmptyStringToCollapsedConverter x:Key="EmptyStringToCollapsedConverter" />
             <converters:EmptyStringToHiddenConverter x:Key="EmptyStringToHiddenConverter" />
             <converters:FalseToHiddenVisibilityConverter x:Key="FalseToHiddenVisibilityConverter" />
+            <converters:EnumEqualToVisibilityConverter x:Key="EnumEqualToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

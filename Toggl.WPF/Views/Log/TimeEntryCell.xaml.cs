@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Toggl.Core.Analytics;
 using Toggl.Core.UI.Helper;
 using Toggl.Core.UI.ViewModels.MainLog;
@@ -7,11 +8,14 @@ using Toggl.WPF.Extensions;
 
 namespace Toggl.WPF.Views.Log
 {
-    public partial class TimeEntryCell : UserControl
+    public partial class TimeEntryCell
     {
         public TimeEntryCell(TimeEntryLogItemViewModel timeEntryLogItemViewModel, ICommand continueTimeEntryCommand)
         {
             InitializeComponent();
+            ViewModel = timeEntryLogItemViewModel;
+            DataContext = ViewModel;
+
             this.TimeEntryLabel.DescriptionLabel.Text = timeEntryLogItemViewModel.Description;
             if (timeEntryLogItemViewModel.HasProject)
             {
