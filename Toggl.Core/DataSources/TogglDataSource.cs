@@ -41,6 +41,7 @@ namespace Toggl.Core.DataSources
             TimeEntries = new TimeEntriesDataSource(database.TimeEntries, timeService, analyticsService, schedulerProvider);
             ExternalCalendars = new ExternalCalendarsDataSource(database.ExternalCalendars);
             ExternalCalendarEvents = new ExternalCalendarEventsDataSource(database.ExternalCalendarEvents);
+            TimelineEvents = new TimelineEventDataSource(database.TimelineEvents);
         }
 
         public ITimeEntriesSource TimeEntries { get; }
@@ -64,6 +65,8 @@ namespace Toggl.Core.DataSources
         public IDataSource<IThreadSafeExternalCalendar, IDatabaseExternalCalendar> ExternalCalendars { get; }
 
         public IDataSource<IThreadSafeExternalCalendarEvent, IDatabaseExternalCalendarEvent> ExternalCalendarEvents { get; }
+
+        public IDataSource<IThreadSafeTimelineEvent, IDatabaseTimelineEvent> TimelineEvents { get; }
 
         public IObservable<bool> HasUnsyncedData()
             => Observable.Merge(

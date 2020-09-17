@@ -54,6 +54,11 @@ namespace Toggl.Core.Models.Interfaces
         new IEnumerable<IThreadSafeTag> Tags { get; }
     }
 
+    public partial interface IThreadSafeTimelineEvent
+        : IThreadSafeModel, IDatabaseTimelineEvent
+    {
+    }
+
     public partial interface IThreadSafeUser
         : IThreadSafeModel, IDatabaseUser
     {

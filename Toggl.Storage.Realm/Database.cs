@@ -40,6 +40,7 @@ namespace Toggl.Storage.Realm
 
             ExternalCalendars = Repository<IDatabaseExternalCalendar>.For(getRealmInstance, (externalCalendar, realm) => new RealmExternalCalendar(externalCalendar, realm));
             ExternalCalendarEvents = Repository<IDatabaseExternalCalendarEvent>.For(getRealmInstance, (externalCalendarEvent, realm) => new RealmExternalCalendarEvent(externalCalendarEvent, realm));
+            TimelineEvents = Repository<IDatabaseTimelineEvent>.For(getRealmInstance, (timelineEvent, realm) => new RealmTimelineEvent(timelineEvent, realm));
         }
 
         public IIdProvider IdProvider { get; }
@@ -57,6 +58,7 @@ namespace Toggl.Storage.Realm
 
         public IRepository<IDatabaseExternalCalendar> ExternalCalendars { get; }
         public IRepository<IDatabaseExternalCalendarEvent> ExternalCalendarEvents { get; }
+        public IRepository<IDatabaseTimelineEvent> TimelineEvents { get; }
 
         public IObservable<Unit> Clear() =>
             Observable.Start(() =>

@@ -31,5 +31,8 @@ namespace Toggl.Core.Sync.ConflictResolution
 
         public static IConflictResolver<IDatabaseTimeEntry> ForTimeEntries { get; }
             = new PreferNewer<IDatabaseTimeEntry>(TimeSpan.FromSeconds(5));
+
+        // public static IConflictResolver<IDatabaseTimelineEvent> ForTimelineEvents { get; }
+        //     = new PreferNewer<IDatabaseTimelineEvent>();
     }
 }
