@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Toggl.Core.UI.ViewModels;
+using Toggl.Core.UI.ViewModels.Reports;
 using Toggl.Shared.Extensions;
 using Toggl.WPF.Presentation;
+using Toggl.WPF.Views.Reports;
 
 namespace Toggl.WPF.Views
 {
@@ -18,13 +20,15 @@ namespace Toggl.WPF.Views
         private readonly Dictionary<Type, Func<ViewModel, UserControl>> tabViews =
             new Dictionary<Type, Func<ViewModel, UserControl>>
             {
-                {typeof(MainViewModel), vm => new MainView((MainViewModel)vm)}
+                { typeof(MainViewModel), vm => new MainView((MainViewModel)vm) },
+                { typeof(ReportsViewModel), vm => new ReportsView((ReportsViewModel)vm) }
             };
 
         private readonly Dictionary<Type, string> tabHeaders =
             new Dictionary<Type, string>
             {
-                {typeof(MainViewModel), Toggl.Shared.Resources.Timer }
+                { typeof(MainViewModel), Toggl.Shared.Resources.Timer },
+                { typeof(ReportsViewModel), Toggl.Shared.Resources.Reports }
             };
 
         public MainTabBarView(MainTabBarViewModel mainTabBarViewModel)
@@ -35,6 +39,10 @@ namespace Toggl.WPF.Views
             TimerView.Bind(ViewModel.TimerViewModel.Value as TimerViewModel);
 
             createTabFor(ViewModel.MainViewModel)
+                .GetAwaiter()
+                .GetResult();
+
+            createTabFor(ViewModel.ReportsViewModel)
                 .GetAwaiter()
                 .GetResult();
 
