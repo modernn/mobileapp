@@ -32,7 +32,7 @@ namespace Linux
                     Qml.Net.Qml.RegisterType<QMLTag>("toggl", 1, 0);
                     Qml.Net.Qml.RegisterType<TimeEntriesViewModel>("toggl", 1, 0);
                     engine.SetContextProperty("toggl", toggl);
-                    engine.Load("Main.qml");
+                    engine.Load("UI/MainWindow.qml");
                     return app.Exec();
                 }
             }

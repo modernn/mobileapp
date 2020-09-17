@@ -22,14 +22,17 @@ using Toggl.Shared.Extensions;
 
 namespace Linux
 {
+    [Signal("displayTimeEntryEditor")]
+    [Signal("displayTimeEntryList")]
+    [Signal("displayLogin")]
+    [Signal("displayError", NetVariantType.String)]
     public class Toggl : IPresenter
     {
         private string _status;
         private string _error;
         private List<string> _tabs;
         private QMLTimeEntry _runningTimeEntry;
-        private TimeEntriesViewModel _timeEntries;
-        private List<QMLTimeEntry> _timeEntries2;
+        private List<QMLTimeEntry> _timeEntries;
         [NotifySignal]
         public string Status {
             get {
@@ -77,7 +80,7 @@ namespace Linux
             }
         }
         [NotifySignal]
-        public TimeEntriesViewModel TimeEntries
+        public List<QMLTimeEntry> TimeEntries
         {
             get
             {
@@ -87,19 +90,6 @@ namespace Linux
             {
                 _timeEntries = value;
                 _ = this.ActivateSignal("timeEntriesChanged");
-            }
-        }
-        [NotifySignal]
-        public List<QMLTimeEntry> TimeEntries2
-        {
-            get
-            {
-                return _timeEntries2;
-            }
-            set
-            {
-                _timeEntries2 = value;
-                _ = this.ActivateSignal("timeEntries2Changed");
             }
         }
         public Toggl()
@@ -199,7 +189,6 @@ namespace Linux
                             else
                             {
                                 Console.Error.WriteLine(".............");
-                                TimeEntries = vm.TimeEntriesViewModel;
                             }
                         }
                         else if (val as ReportsViewModel != null)
@@ -234,18 +223,21 @@ namespace Linux
                             }
                             Console.Error.WriteLine(i.Description);
                         }
-                        TimeEntries2 = newTes;
+                        TimeEntries = newTes;
                     });
                     Tabs = tabNames;
+                    this.ActivateSignal("displayTimeEntryList");
                     break;
                 case OutdatedAppViewModel outdated:
                     Status = "OUTDATED";
                     loginView = null;
                     mainTabBarView = null;
+                    this.ActivateSignal("displayError", "The app is outdated");
                     break;
                 default:
                     Status = "Something else";
                     loginView = null;
+                    this.ActivateSignal("displayLogin");
                     break;
             }
         }

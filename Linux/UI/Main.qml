@@ -67,7 +67,7 @@ ApplicationWindow {
 
         spacing: 6
 
-        model: Net.toListModel(toggl.timeEntries2)
+        model: Net.toListModel(toggl.timeEntries)
         
         delegate: Rectangle {
             border {
