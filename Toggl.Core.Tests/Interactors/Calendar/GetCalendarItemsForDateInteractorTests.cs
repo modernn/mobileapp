@@ -35,7 +35,7 @@ namespace Toggl.Core.Tests.Interactors.Calendar
                     new CalendarItem(
                         "id",
                         "id",
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         new DateTimeOffset(2018, 08, 06, 10, 30, 00, TimeSpan.Zero),
                         TimeSpan.FromMinutes(30),
                         "Important meeting",
@@ -45,7 +45,7 @@ namespace Toggl.Core.Tests.Interactors.Calendar
                     new CalendarItem(
                         "id",
                         "id",
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         new DateTimeOffset(2018, 08, 06, 10, 00, 00, TimeSpan.Zero),
                         TimeSpan.FromMinutes(90),
                         "F**** timesheets",
@@ -55,7 +55,7 @@ namespace Toggl.Core.Tests.Interactors.Calendar
                     new CalendarItem(
                         "id",
                         "id",
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         new DateTimeOffset(2018, 08, 06, 09, 00, 00, TimeSpan.Zero),
                         TimeSpan.FromMinutes(15),
                         "Not so important meeting",
@@ -166,7 +166,7 @@ namespace Toggl.Core.Tests.Interactors.Calendar
                         new CalendarItem(
                             "id",
                             "id",
-                            CalendarItemSource.Calendar,
+                            CalendarItemSource.NativeCalendar,
                             new DateTimeOffset(2018, 08, 06, 10, 30, 00, TimeSpan.Zero),
                             TimeSpan.FromHours(24),
                             "Day off",
@@ -176,7 +176,7 @@ namespace Toggl.Core.Tests.Interactors.Calendar
                         new CalendarItem(
                             "id",
                             "id",
-                            CalendarItemSource.Calendar,
+                            CalendarItemSource.NativeCalendar,
                             new DateTimeOffset(2018, 08, 06, 10, 30, 00, TimeSpan.Zero),
                             TimeSpan.FromDays(7),
                             "Team meetup",

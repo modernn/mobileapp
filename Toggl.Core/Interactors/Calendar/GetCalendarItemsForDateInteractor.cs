@@ -66,7 +66,7 @@ namespace Toggl.Core.Interactors.Calendar
             => calendarItems.Where(userCalendarIsEnabled);
 
         private bool userCalendarIsEnabled(CalendarItem calendarItem)
-            => userPreferences.EnabledCalendarIds().Contains(calendarItem.CalendarId);
+            => calendarItem.Source == CalendarItemSource.ExternalCalendar || userPreferences.EnabledCalendarIds().Contains(calendarItem.CalendarId);
 
         private IEnumerable<CalendarItem> convertTimeEntriesToCalendarItems(IEnumerable<IThreadSafeTimeEntry> timeEntries)
             => timeEntries.Select(CalendarItem.From);

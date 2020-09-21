@@ -42,7 +42,7 @@ namespace Toggl.Core.Tests.Interactors.Notifications
                     .Select(number => new CalendarItem(
                         id: number.ToString(),
                         syncId: number.ToString(),
-                        source: CalendarItemSource.Calendar,
+                        source: CalendarItemSource.NativeCalendar,
                         startTime: now.Add(eightHours * number),
                         duration: eightHours,
                         description: number.ToString(),
@@ -90,7 +90,7 @@ namespace Toggl.Core.Tests.Interactors.Notifications
                     .Select(number => new CalendarItem(
                         id: number.ToString(),
                         syncId: number.ToString(),
-                        source: CalendarItemSource.Calendar,
+                        source: CalendarItemSource.NativeCalendar,
                         startTime: now.Add(eightHours * number),
                         duration: eightHours,
                         description: number.ToString(),
@@ -138,7 +138,7 @@ namespace Toggl.Core.Tests.Interactors.Notifications
                         .Select(id => new CalendarItem(
                             id.ToString(),
                             id.ToString(),
-                            CalendarItemSource.Calendar,
+                            CalendarItemSource.NativeCalendar,
                             now.AddHours(id),
                             TimeSpan.FromHours(1),
                             "description",

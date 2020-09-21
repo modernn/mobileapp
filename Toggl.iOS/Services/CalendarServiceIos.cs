@@ -73,7 +73,7 @@ namespace Toggl.iOS.Services
             return new CalendarItem(
                 ev.EventIdentifier,
                 ev.CalendarItemExternalIdentifier,
-                CalendarItemSource.Calendar,
+                CalendarItemSource.NativeCalendar,
                 startDate,
                 duration,
                 ev.Title,

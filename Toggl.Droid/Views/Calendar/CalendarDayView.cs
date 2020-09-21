@@ -193,7 +193,7 @@ namespace Toggl.Droid.Views.Calendar
             }
 
             var calendarItem = calendarItemInEditMode.Value;
-            if (!isCurrentlyEditingItem && calendarItem.Source == CalendarItemSource.Calendar)
+            if (!isCurrentlyEditingItem && calendarItem.Source.IsCalendar())
                 return;
 
             if (isCurrentlyEditingItem)
@@ -202,7 +202,7 @@ namespace Toggl.Droid.Views.Calendar
                     return;
 
                 cancelCurrentEdition();
-                if (calendarItem.Source == CalendarItemSource.Calendar)
+                if (calendarItem.Source.IsCalendar())
                     return;
             }
 

@@ -65,7 +65,7 @@ namespace Toggl.Core.Tests.UI.Services
                     new CalendarItem(
                         "0",
                         "SyncId-0",
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.ExternalCalendar,
                         new DateTimeOffset(2020, 7, 14, 9, 0, 0, TimeSpan.Zero),
                         TimeSpan.FromMinutes(30),
                         "Event 0",
@@ -74,7 +74,7 @@ namespace Toggl.Core.Tests.UI.Services
                     new CalendarItem(
                         "1",
                         "SyncId-1",
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.ExternalCalendar,
                         new DateTimeOffset(2020, 7, 14, 10, 0, 0, TimeSpan.Zero),
                         TimeSpan.FromMinutes(30),
                         "Event 1",

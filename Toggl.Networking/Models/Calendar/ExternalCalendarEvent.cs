@@ -8,6 +8,12 @@ namespace Toggl.Networking.Models.Calendar
     [Preserve(AllMembers = true)]
     internal sealed class ExternalCalendarEvent : IExternalCalendarEvent
     {
+        internal sealed class ExternalCalendarEventColor
+        {
+            public string Foreground { get; set; }
+            public string Background { get; set; }
+        }
+
         [JsonProperty("event_id")]
         public string EventId { get; set; }
 
@@ -22,9 +28,11 @@ namespace Toggl.Networking.Models.Calendar
 
         public DateTimeOffset Updated { get; set; }
 
-        public string BackgroundColor { get; set; }
+        public ExternalCalendarEventColor Color { get; set; }
 
-        public string ForegroundColor { get; set; }
+        public string BackgroundColor => Color.Background;
+
+        public string ForegroundColor => Color.Foreground;
 
         public ExternalCalendarEvent() { }
 
@@ -36,8 +44,11 @@ namespace Toggl.Networking.Models.Calendar
             StartTime = entity.StartTime;
             EndTime = entity.EndTime;
             Updated = entity.Updated;
-            BackgroundColor = entity.BackgroundColor;
-            ForegroundColor = entity.ForegroundColor;
+            Color = new ExternalCalendarEventColor
+            {
+                Background = entity.BackgroundColor,
+                Foreground = entity.ForegroundColor,
+            };
         }
     }
 }

@@ -173,7 +173,7 @@ namespace Toggl.Core.UI.ViewModels.Calendar.ContextualMenu
             if (!calendarItemThatOriginallyTriggeredTheMenu.HasValue)
                 return false;
 
-            if (currentCalendarItem.Source == CalendarItemSource.Calendar)
+            if (currentCalendarItem.Source.IsCalendar())
                 return false;
 
             var originalCalendarItem = calendarItemThatOriginallyTriggeredTheMenu.Value;
@@ -185,7 +185,7 @@ namespace Toggl.Core.UI.ViewModels.Calendar.ContextualMenu
         {
             return newCalendarItem.Source != currentCalendarItem.Source
                    || (newCalendarItem.Source == CalendarItemSource.TimeEntry && newCalendarItem.TimeEntryId != currentCalendarItem.TimeEntryId)
-                   || (newCalendarItem.Source == CalendarItemSource.Calendar && newCalendarItem.CalendarId != currentCalendarItem.CalendarId);
+                   || (newCalendarItem.Source.IsCalendar() && newCalendarItem.CalendarId != currentCalendarItem.CalendarId);
         }
 
         private bool contextualMenuIsAlreadyOpen() => menuVisibilitySubject.Value;

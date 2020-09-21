@@ -129,8 +129,8 @@ namespace Toggl.Core.UI.Calendar
         /// <returns>An list of indexed calendar attributes</returns>
         private List<(CalendarItemLayoutAttributes Item, int Index)> calculateLayoutAttributes(List<(CalendarItem Item, int Index)> bucket)
         {
-            var left = bucket.Where(indexedItem => indexedItem.Item.Source == CalendarItemSource.Calendar).ToList();
-            var right = bucket.Where(indexedItem => indexedItem.Item.Source != CalendarItemSource.Calendar).ToList();
+            var left = bucket.Where(indexedItem => indexedItem.Item.Source.IsCalendar()).ToList();
+            var right = bucket.Where(indexedItem => !indexedItem.Item.Source.IsCalendar()).ToList();
 
             var leftColumns = calculateColumnsForItemsInSource(left);
             var rightColumns = calculateColumnsForItemsInSource(right);

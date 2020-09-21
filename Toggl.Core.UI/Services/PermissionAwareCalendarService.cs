@@ -83,7 +83,7 @@ namespace Toggl.Core.Calendar
             DateTimeOffset start, DateTimeOffset end)
             => dataSource
                 .ExternalCalendarEvents.GetAll((calendarEvent) =>
-                    calendarEvent.StartTime >= start && calendarEvent.EndTime <= end)
+                    calendarEvent.StartTime >= start && calendarEvent.EndTime <= end && calendarEvent.Calendar.Selected)
                 .Select(events => events.ToList());
 
         private IEnumerable<CalendarItem> mergingNativeAndExternalEvents(IEnumerable<CalendarItem> nativeEvents, IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents)

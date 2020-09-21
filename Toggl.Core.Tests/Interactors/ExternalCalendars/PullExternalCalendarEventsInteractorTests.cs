@@ -72,8 +72,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             EndTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             Updated = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
-                            BackgroundColor = "#ffffff",
-                            ForegroundColor = "#000000",
+                            Color = new ExternalCalendarEvent.ExternalCalendarEventColor
+                            {
+                                Background = "#ffffff",
+                                Foreground = "#ffffff",
+                            }
                         },
                         new ExternalCalendarEvent
                         {
@@ -83,8 +86,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             EndTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             Updated = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
-                            BackgroundColor = "#ffffff",
-                            ForegroundColor = "#000000",
+                            Color = new ExternalCalendarEvent.ExternalCalendarEventColor
+                            {
+                                Background = "#ffffff",
+                                Foreground = "#ffffff",
+                            }
                         },
                     },
                     NextPageToken = null,
@@ -121,8 +127,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             EndTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             Updated = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
-                            BackgroundColor = "#ffffff",
-                            ForegroundColor = "#000000",
+                            Color = new ExternalCalendarEvent.ExternalCalendarEventColor
+                            {
+                                Background = "#ffffff",
+                                Foreground = "#ffffff",
+                            }
                         },
                         new ExternalCalendarEvent
                         {
@@ -132,8 +141,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             EndTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             Updated = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
-                            BackgroundColor = "#ffffff",
-                            ForegroundColor = "#000000",
+                            Color = new ExternalCalendarEvent.ExternalCalendarEventColor
+                            {
+                                Background = "#ffffff",
+                                Foreground = "#ffffff",
+                            }
                         },
                     },
                     NextPageToken = "next_page_token",
@@ -151,8 +163,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             EndTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             Updated = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
-                            BackgroundColor = "#ffffff",
-                            ForegroundColor = "#000000",
+                            Color = new ExternalCalendarEvent.ExternalCalendarEventColor
+                            {
+                                Background = "#ffffff",
+                                Foreground = "#ffffff",
+                            }
                         },
                     },
                     NextPageToken = null,
@@ -218,8 +233,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             EndTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
                             Updated = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
-                            BackgroundColor = "#ffffff",
-                            ForegroundColor = "#000000",
+                            Color = new ExternalCalendarEvent.ExternalCalendarEventColor
+                            {
+                                Background = "#ffffff",
+                                Foreground = "#ffffff",
+                            }
                         },
                     },
                     NextPageToken = "next_page_token",

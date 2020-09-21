@@ -177,7 +177,7 @@ namespace Toggl.iOS.Cells.Calendar
             }
 
             stripesLayer.Hidden = !Item.IsRunningTimeEntry();
-            if (Item.Source == CalendarItemSource.Calendar || !Item.IsRunningTimeEntry())
+            if (Item.Source.IsCalendar() || !Item.IsRunningTimeEntry())
             {
                 var alpha = IsEditing ? (nfloat)0.34 : (nfloat)0.25;
                 BackgroundColorView.BackgroundColor = color.ColorWithAlpha(alpha);

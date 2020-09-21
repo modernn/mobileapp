@@ -120,7 +120,7 @@ namespace Toggl.Core.Calendar
             : this(
                   $"{ExternalEventIdPrefix}{calendarEvent.Id}",
                   calendarEvent.EventId,
-                  CalendarItemSource.Calendar,
+                  CalendarItemSource.ExternalCalendar,
                   calendarEvent.StartTime,
                   calendarEvent.Duration(),
                   calendarEvent.Title,

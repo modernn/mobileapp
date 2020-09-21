@@ -66,7 +66,7 @@ namespace Toggl.Core.Tests.Suggestions
                     .Select(id => new CalendarItem(
                         id.ToString(),
                         id.ToString(),
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         now - tenMinutes * id,
                         tenMinutes,
                         id.ToString(),
@@ -103,7 +103,7 @@ namespace Toggl.Core.Tests.Suggestions
                     .Select(id => new CalendarItem(
                         id.ToString(),
                         id.ToString(),
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         now - tenMinutes * id,
                         tenMinutes,
                         id.ToString(),
@@ -136,7 +136,7 @@ namespace Toggl.Core.Tests.Suggestions
                     .Select(id => new CalendarItem(
                         id.ToString(),
                         id.ToString(),
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         id % 2 == 0 ? now - tenMinutes * id : now + tenMinutes * id,
                         tenMinutes,
                         id.ToString(),
@@ -181,7 +181,7 @@ namespace Toggl.Core.Tests.Suggestions
                     .Select(id => new CalendarItem(
                         id.ToString(),
                         id.ToString(),
-                        CalendarItemSource.Calendar,
+                        CalendarItemSource.NativeCalendar,
                         now - tenMinutes * id,
                         tenMinutes,
                         id.ToString(),

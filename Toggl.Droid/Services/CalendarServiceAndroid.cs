@@ -150,7 +150,7 @@ namespace Toggl.Droid.Services
             return new CalendarItem(
                 id: id,
                 syncId: syncId,
-                source: CalendarItemSource.Calendar,
+                source: CalendarItemSource.NativeCalendar,
                 startTime: startDate,
                 duration: DateTimeOffset.FromUnixTimeMilliseconds(endDateUnixTime) - startDate,
                 description: description,

@@ -128,9 +128,9 @@ namespace Toggl.Core.Tests.UI.ViewModels
 
                 var items = new List<CalendarItem>
                 {
-                    new CalendarItem("id", "id", CalendarItemSource.Calendar, now.AddMinutes(30), TimeSpan.FromMinutes(15), "Weekly meeting", CalendarIconKind.Event, "#ff0000"),
+                    new CalendarItem("id", "id", CalendarItemSource.NativeCalendar, now.AddMinutes(30), TimeSpan.FromMinutes(15), "Weekly meeting", CalendarIconKind.Event, "#ff0000"),
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, now.AddHours(-3), TimeSpan.FromMinutes(30), "Bug fixes", CalendarIconKind.None, "#00ff00"),
-                    new CalendarItem("id", "id", CalendarItemSource.Calendar, now.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000")
+                    new CalendarItem("id", "id", CalendarItemSource.NativeCalendar, now.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000")
                 };
                 var interactor = Substitute.For<IInteractor<IObservable<IEnumerable<CalendarItem>>>>();
                 interactor.Execute().Returns(Observable.Return(items));
@@ -354,7 +354,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 AnalyticsService.TimeEntryChangedFromCalendar.Received().Track(CalendarChangeEvent.StartTime);
             }
         }
-        
+
         public sealed class TheTimeTrackedOnDayObservable : CalendarDayViewModelTest
         {
             [Fact, LogIfTooSlow]
@@ -368,7 +368,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, now.AddMinutes(30), TimeSpan.FromMinutes(30), "Weekly meeting", CalendarIconKind.Event, "#ff0000"),
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, now.AddHours(-3), TimeSpan.FromMinutes(30), "Bug fixes", CalendarIconKind.None, "#00ff00"),
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, now.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000"),
-                    new CalendarItem("id", "id", CalendarItemSource.Calendar, now.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000")
+                    new CalendarItem("id", "id", CalendarItemSource.NativeCalendar, now.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000")
                 };
                 var interactor = Substitute.For<IInteractor<IObservable<IEnumerable<CalendarItem>>>>();
                 interactor.Execute().Returns(Observable.Return(items));
@@ -378,14 +378,14 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 this.DataSource.Preferences.Current.Returns(Observable.Return(preferences));
                 var timeOnDayObserver = TestScheduler.CreateObserver<string>();
                 ViewModel.TimeTrackedOnDay.Subscribe(timeOnDayObserver);
-                
+
                 await ViewModel.Initialize();
 
                 TestScheduler.Start();
 
                 timeOnDayObserver.LastEmittedValue().Should().Be(DurationAndFormatToString.Convert(TimeSpan.FromMinutes(90), DurationFormat.Classic));
             }
-            
+
             [Fact, LogIfTooSlow]
             public async Task ItsTheSameAsTheTimeEntriesTodayIfTheCalendarDayInFactToday()
             {
@@ -397,7 +397,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, yesterday.AddMinutes(30), TimeSpan.FromMinutes(30), "Weekly meeting", CalendarIconKind.Event, "#ff0000"),
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, yesterday.AddHours(3), TimeSpan.FromMinutes(30), "Bug fixes", CalendarIconKind.None, "#00ff00"),
                     new CalendarItem("id", "id", CalendarItemSource.TimeEntry, yesterday.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000"),
-                    new CalendarItem("id", "id", CalendarItemSource.Calendar, yesterday.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000")
+                    new CalendarItem("id", "id", CalendarItemSource.NativeCalendar, yesterday.AddHours(2), TimeSpan.FromMinutes(30), "F**** timesheets", CalendarIconKind.Event, "#ff0000")
                 };
                 var calendarItemsInteractor = Substitute.For<IInteractor<IObservable<IEnumerable<CalendarItem>>>>();
                 calendarItemsInteractor.Execute().Returns(Observable.Return(yesterdayItems));

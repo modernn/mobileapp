@@ -19,4 +19,10 @@ namespace Toggl.Core.Extensions
         public static TimeSpan Duration(this CalendarItem calendarItem, DateTimeOffset now)
             => calendarItem.Duration ?? now - calendarItem.StartTime.LocalDateTime;
     }
+
+    public static class CalendarItemSourceExtension
+    {
+        public static bool IsCalendar(this CalendarItemSource source)
+            => source == CalendarItemSource.NativeCalendar || source == CalendarItemSource.ExternalCalendar;
+    }
 }

@@ -3,6 +3,7 @@
     public enum CalendarItemSource
     {
         TimeEntry,
-        Calendar
+        NativeCalendar,
+        ExternalCalendar
     }
 }
