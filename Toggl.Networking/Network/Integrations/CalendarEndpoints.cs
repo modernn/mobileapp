@@ -29,6 +29,12 @@ namespace Toggl.Networking.Network
             return Endpoint.Get(baseUrl, path);
         }
 
+        public Endpoint SetCalendarSelected(long integrationId, long calendarId)
+        {
+            var path = $"calendar/{integrationId}/calendars/{calendarId}";
+            return Endpoint.Patch(baseUrl, path);
+        }
+
         public Endpoint GetAllCalendarEvents(
             long integrationId,
             long calendarId,

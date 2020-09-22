@@ -4,5 +4,6 @@ namespace Toggl.Storage.Models.Calendar
 {
     public interface IDatabaseExternalCalendar : IExternalCalendar, IDatabaseModel
     {
+        public bool NeedsSync { get; }
     }
 }

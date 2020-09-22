@@ -1,4 +1,5 @@
-﻿using Toggl.Core.Models.Interfaces;
+﻿using Toggl.Core.Interactors;
+using Toggl.Core.Models.Interfaces;
 using Toggl.Storage.Models.Calendar;
 
 namespace Toggl.Core.Models.Calendar

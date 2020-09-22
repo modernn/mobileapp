@@ -32,6 +32,8 @@ namespace Toggl.Storage.Realm.Models.Calendar
 
         public bool Selected { get; set; }
 
+        public bool NeedsSync { get; set; }
+
 
         public void SetPropertiesFrom(IDatabaseExternalCalendar entity, Realms.Realm realm)
         {
@@ -39,6 +41,7 @@ namespace Toggl.Storage.Realm.Models.Calendar
             ExternalId = entity.ExternalId;
             Name = entity.Name;
             Selected = entity.Selected;
+            NeedsSync = entity.NeedsSync;
         }
 
         public void SetPropertiesFrom(IExternalCalendar entity, Realms.Realm realm)
@@ -47,6 +50,7 @@ namespace Toggl.Storage.Realm.Models.Calendar
             ExternalId = entity.ExternalId;
             Name = entity.Name;
             Selected = entity.Selected;
+            NeedsSync = false;
         }
 
         public void ChangeId(long id)

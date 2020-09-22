@@ -104,7 +104,11 @@ namespace Toggl.iOS
 
         private void navigateAccordingToAccessLevel(AccessLevel accessLevel, AppStart app)
         {
-            if (accessLevel == AccessLevel.LoggedIn) app.ForceFullSync();
+            if (accessLevel == AccessLevel.LoggedIn)
+            {
+                app.ForceFullSync();
+                fetchExternalCalendarsDataIfNeeded();
+            }
 
             var vc = accessLevel switch
             {

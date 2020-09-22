@@ -70,6 +70,11 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     outcome.Should().Be(SyncOutcome.NoData);
 
                     await interactorFactory
+                        .PushSelectedExternalCalendars()
+                        .DidNotReceive()
+                        .Execute();
+
+                    await interactorFactory
                         .PullCalendarIntegrations()
                         .DidNotReceive()
                         .Execute();
@@ -87,8 +92,8 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     LastTimeUsageStorage
                         .DidNotReceive()
                         .SetLastTimeExternalCalendarsSynced(Arg.Any<DateTimeOffset>());
+                }
             }
-        }
 
             public sealed class WhenNewDataIsAvailable : SyncExternalCalendarsInteractorTestBase
             {
@@ -273,6 +278,22 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 #endregion
 
                 [Fact, LogIfTooSlow]
+                public async Task ItPushesTheUnsyncedCalendars()
+                {
+                    Prepare();
+
+                    var interactorFactory = Substitute.For<IInteractorFactory>();
+
+                    var interactor = new SyncExternalCalendarsInteractor(interactorFactory, TimeService, LastTimeUsageStorage);
+                    await interactor.Execute();
+
+                    await interactorFactory
+                        .PushSelectedExternalCalendars()
+                        .Received()
+                        .Execute();
+                }
+
+                [Fact, LogIfTooSlow]
                 public async Task ItPersistsThePulledData()
                 {
                     Prepare();
@@ -349,6 +370,22 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 private List<IExternalCalendarEvent> events = new List<IExternalCalendarEvent>();
 
                 #endregion
+
+                [Fact, LogIfTooSlow]
+                public async Task ItPushesTheUnsyncedCalendars()
+                {
+                    Prepare();
+
+                    var interactorFactory = Substitute.For<IInteractorFactory>();
+
+                    var interactor = new SyncExternalCalendarsInteractor(interactorFactory, TimeService, LastTimeUsageStorage);
+                    await interactor.Execute();
+
+                    await interactorFactory
+                        .PushSelectedExternalCalendars()
+                        .Received()
+                        .Execute();
+                }
 
                 [Fact, LogIfTooSlow]
                 public async Task ItClearsTheDatabase()

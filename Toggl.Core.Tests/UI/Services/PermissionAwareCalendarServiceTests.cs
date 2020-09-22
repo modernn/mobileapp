@@ -82,7 +82,7 @@ namespace Toggl.Core.Tests.UI.Services
                     ),
                 };
 
-                externalCalendar = new ExternalCalendar(0, 0, "0", "Calendar", true);
+                externalCalendar = new ExternalCalendar(0, 0, "0", "Calendar", true, false);
 
                 externalCalendarEvents = new List<IThreadSafeExternalCalendarEvent>
                 {

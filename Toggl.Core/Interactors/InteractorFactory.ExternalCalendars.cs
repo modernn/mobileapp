@@ -22,5 +22,10 @@ namespace Toggl.Core.Interactors
 
         public IInteractor<Unit> PersistExternalCalendarsData(Dictionary<IExternalCalendar, IEnumerable<IExternalCalendarEvent>> calendarData)
             => new PersistExternalCalendarsDataInteractor(queryFactory, calendarData);
+
+        public IInteractor<Task<Unit>> PushSelectedExternalCalendars()
+            => new PushSelectedExternalCalendarsInteractor(dataSource, api);
+        public IInteractor<Unit> SetExternalCalendarSelectedInteractor(long calendarId, bool selected)
+            => new SetExternalCalendarSelectedInteractor(dataSource, calendarId, selected);
     }
 }

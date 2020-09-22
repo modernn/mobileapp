@@ -30,10 +30,12 @@ namespace Toggl.Core.Interactors
             if (!shouldExecute())
                 return SyncOutcome.NoData;
 
-            var calendarData = new Dictionary<IExternalCalendar, IEnumerable<IExternalCalendarEvent>>();
-
             try
             {
+                await interactorFactory.PushSelectedExternalCalendars().Execute();
+
+                var calendarData = new Dictionary<IExternalCalendar, IEnumerable<IExternalCalendarEvent>>();
+
                 var integrations = await interactorFactory.PullCalendarIntegrations().Execute();
 
                 foreach (var integration in integrations)
@@ -46,19 +48,20 @@ namespace Toggl.Core.Interactors
                         calendarData[calendar] = events;
                     }
                 }
+
+                interactorFactory.PersistExternalCalendarsData(calendarData).Execute();
+                lastTimeUsageStorage.SetLastTimeExternalCalendarsSynced(timeService.Now());
+                return calendarData.Any() ? SyncOutcome.NewData : SyncOutcome.NoData;
             }
             catch
             {
                 return SyncOutcome.Failed;
             }
-
-            interactorFactory.PersistExternalCalendarsData(calendarData).Execute();
-            lastTimeUsageStorage.SetLastTimeExternalCalendarsSynced(timeService.Now());
-            return calendarData.Any() ? SyncOutcome.NewData : SyncOutcome.NoData;
         }
 
         private bool shouldExecute()
         {
+            //return true;
             var now = timeService.Now();
             var lastSynced = lastTimeUsageStorage.LastTimeExternalCalendarsSynced;
             return lastSynced?.Date != now.Date;
