@@ -4,6 +4,7 @@ using Toggl.Core.UI.ViewModels.Calendar;
 using Toggl.Core.UI.ViewModels.DateRangePicker;
 using Toggl.Core.UI.ViewModels.Reports;
 using Toggl.Core.UI.ViewModels.Settings;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Core.UI.ViewModels.Settings.Siri;
 using Toggl.iOS.ViewControllers;
 using Toggl.iOS.ViewControllers.Calendar;

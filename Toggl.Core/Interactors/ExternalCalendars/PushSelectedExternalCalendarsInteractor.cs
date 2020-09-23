@@ -31,7 +31,7 @@ namespace Toggl.Core.Interactors
             {
                 var updatedCalendar = await api.ExternalCalendars.SetCalendarSelected(calendar.IntegrationId, calendar.Id, calendar.Selected);
                 var threadSafeCalendar = ExternalCalendar.From(updatedCalendar);
-                dataSource.ExternalCalendars.Update(threadSafeCalendar);
+                await dataSource.ExternalCalendars.Update(threadSafeCalendar);
             }
 
             return Unit.Default;

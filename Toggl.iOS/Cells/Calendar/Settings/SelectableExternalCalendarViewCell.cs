@@ -1,6 +1,6 @@
-﻿using Foundation;
+using Foundation;
 using System;
-using Toggl.Core.UI.ViewModels.Selectable;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.iOS.Extensions;
 using Toggl.iOS.Extensions.Reactive;
 using Toggl.Shared.Extensions;
@@ -8,20 +8,20 @@ using UIKit;
 
 namespace Toggl.iOS.Cells.Calendar
 {
-    public sealed partial class SelectableUserCalendarViewCell : BaseTableViewCell<SelectableUserCalendarViewModel>
+    public sealed partial class SelectableExternalCalendarViewCell : BaseTableViewCell<SelectableExternalCalendarViewModel>
     {
-        public static readonly string Identifier = nameof(SelectableUserCalendarViewCell);
-        public static readonly NSString Key = new NSString(nameof(SelectableUserCalendarViewCell));
+        public static readonly string Identifier = nameof(SelectableExternalCalendarViewCell);
+        public static readonly NSString Key = new NSString(nameof(SelectableExternalCalendarViewCell));
         public static readonly UINib Nib;
 
-        public InputAction<SelectableUserCalendarViewModel> SelectCalendar { get; set; }
+        public InputAction<SelectableExternalCalendarViewModel> SelectCalendar { get; set; }
 
-        static SelectableUserCalendarViewCell()
+        static SelectableExternalCalendarViewCell()
         {
-            Nib = UINib.FromName(nameof(SelectableUserCalendarViewCell), NSBundle.MainBundle);
+            Nib = UINib.FromName(nameof(SelectableExternalCalendarViewCell), NSBundle.MainBundle);
         }
 
-        protected SelectableUserCalendarViewCell(IntPtr handle) : base(handle)
+        protected SelectableExternalCalendarViewCell(IntPtr handle) : base(handle)
         {
             // Note: this .ctor should not contain any initialization logic.
         }

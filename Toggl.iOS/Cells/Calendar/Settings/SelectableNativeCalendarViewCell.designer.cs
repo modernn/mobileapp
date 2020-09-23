@@ -10,8 +10,8 @@ using Toggl.iOS.Views;
 
 namespace Toggl.iOS.Cells.Calendar
 {
-	[Register ("SelectableUserCalendarViewCell")]
-	partial class SelectableUserCalendarViewCell
+	[Register ("SelectableNativeCalendarViewCell")]
+	partial class SelectableNativeCalendarViewCell
 	{
 		[Outlet]
 		UIKit.UILabel CalendarNameLabel { get; set; }

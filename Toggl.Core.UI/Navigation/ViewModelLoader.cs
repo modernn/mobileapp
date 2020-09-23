@@ -1,12 +1,11 @@
 ﻿using System;
-using Toggl.Core.UI.Parameters;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Core.UI.ViewModels.Calendar;
 using Toggl.Core.UI.ViewModels.DateRangePicker;
 using Toggl.Core.UI.ViewModels.Reports;
 using Toggl.Core.UI.ViewModels.Settings;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Core.UI.ViewModels.Settings.Siri;
-using Toggl.Storage.Settings;
 
 namespace Toggl.Core.UI.Navigation
 {
@@ -318,6 +317,7 @@ namespace Toggl.Core.UI.Navigation
                 return new IndependentCalendarSettingsViewModel(
                     dependencyContainer.UserPreferences,
                     dependencyContainer.InteractorFactory,
+                    dependencyContainer.DataSource,
                     dependencyContainer.OnboardingStorage,
                     dependencyContainer.AnalyticsService,
                     dependencyContainer.NavigationService,
@@ -378,6 +378,7 @@ namespace Toggl.Core.UI.Navigation
                 return new CalendarSettingsViewModel(
                     dependencyContainer.UserPreferences,
                     dependencyContainer.InteractorFactory,
+                    dependencyContainer.DataSource,
                     dependencyContainer.OnboardingStorage,
                     dependencyContainer.AnalyticsService,
                     dependencyContainer.NavigationService,

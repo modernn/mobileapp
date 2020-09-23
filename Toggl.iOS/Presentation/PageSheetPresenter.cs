@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Foundation;
 using Toggl.Core.UI.ViewModels;
-using Toggl.Core.UI.ViewModels.Settings;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Core.UI.Views;
 using UIKit;
 

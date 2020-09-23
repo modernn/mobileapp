@@ -1396,8 +1396,14 @@
     <ImageAsset Include="Resources\Images.xcassets\togglLogoRedAndBlack.imageset\togglPinkLight%403x.png" />
     <ImageAsset Include="Resources\Images.xcassets\togglLogoRedAndBlack.imageset\togglPinkLight%402x.png" />
     <ImageAsset Include="Resources\Images.xcassets\togglLogoRedAndBlack.imageset\togglPinkLight.png" />
+    <ImageAsset Include="Resources\Colors.xcassets\CalendarSettingsCardBackground.colorset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
+    <InterfaceDefinition Include="Cells\Calendar\Settings\ExternalCalendarsCardInfoViewCell.xib" />
+    <InterfaceDefinition Include="Cells\Calendar\Settings\NativeCalendarsToggleIntegrationViewCell.xib" />
+    <InterfaceDefinition Include="Cells\Calendar\Settings\SelectableExternalCalendarViewCell.xib" />
+    <InterfaceDefinition Include="Cells\Calendar\Settings\SelectableNativeCalendarViewCell.xib" />
+    <InterfaceDefinition Include="Cells\Calendar\Settings\UserCalendarListHeaderViewCell.xib" />
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <InterfaceDefinition Include="ViewControllers\MainViewController.xib" />
     <InterfaceDefinition Include="ViewControllers\EditTimeEntryViewController.xib" />
@@ -1447,8 +1453,6 @@
     <InterfaceDefinition Include="Cells\Calendar\CurrentTimeSupplementaryView.xib" />
     <InterfaceDefinition Include="Cells\Calendar\HourSupplementaryView.xib" />
     <InterfaceDefinition Include="Views\SnackBar.xib" />
-    <InterfaceDefinition Include="Cells\Calendar\SelectableUserCalendarViewCell.xib" />
-    <InterfaceDefinition Include="Cells\Calendar\UserCalendarListHeaderViewCell.xib" />
     <InterfaceDefinition Include="Views\Settings\CalendarSettingsTableViewHeader.xib" />
     <InterfaceDefinition Include="ViewControllers\Settings\CalendarSettingsViewController.xib" />
     <InterfaceDefinition Include="Cells\Calendar\EditingHourSupplementaryView.xib" />
@@ -1498,6 +1502,8 @@
     <InterfaceDefinition Include="Cells\Reports\ReportAdvancedReportsViaWebCollectionViewCell.xib" />
     <InterfaceDefinition Include="ViewControllers\Settings\YourPlanViewController.xib" />
     <InterfaceDefinition Include="ViewControllers\AnnouncementViewController.xib" />
+    <InterfaceDefinition Include="Cells\Calendar\Settings\NativeCalendarsMainHeaderViewCell.xib" />
+    <InterfaceDefinition Include="Cells\Calendar\Settings\ExternalCalendarsMainHeaderViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\togglman.mp4" />
@@ -1513,6 +1519,26 @@
     <Compile Include="Analytics\SiriIntentErrorTrackingEvent.cs" />
     <Compile Include="Analytics\SiriTrackingEventExtensions.cs" />
     <Compile Include="Cells\BaseCollectionViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\ExternalCalendarsCardInfoViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\ExternalCalendarsCardInfoViewCell.designer.cs">
+      <DependentUpon>ExternalCalendarsCardInfoViewCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\Calendar\Settings\NativeCalendarsToggleIntegrationViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\NativeCalendarsToggleIntegrationViewCell.designer.cs">
+      <DependentUpon>NativeCalendarsToggleIntegrationViewCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\Calendar\Settings\SelectableExternalCalendarViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\SelectableExternalCalendarViewCell.designer.cs">
+      <DependentUpon>SelectableExternalCalendarViewCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\Calendar\Settings\SelectableNativeCalendarViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\SelectableNativeCalendarViewCell.designer.cs">
+      <DependentUpon>SelectableNativeCalendarViewCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\Calendar\Settings\UserCalendarListHeaderViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\UserCalendarListHeaderViewCell.designer.cs">
+      <DependentUpon>UserCalendarListHeaderViewCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cells\MainLog\SuggestionLogViewCell.cs" />
     <Compile Include="Cells\MainLog\SuggestionLogViewCell.designer.cs">
       <DependentUpon>SuggestionLogViewCell.cs</DependentUpon>
@@ -1904,14 +1930,6 @@
       <DependentUpon>NoWorkspaceViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewSources\SelectUserCalendarsTableViewSource.cs" />
-    <Compile Include="Cells\Calendar\SelectableUserCalendarViewCell.cs" />
-    <Compile Include="Cells\Calendar\SelectableUserCalendarViewCell.designer.cs">
-      <DependentUpon>SelectableUserCalendarViewCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Cells\Calendar\UserCalendarListHeaderViewCell.cs" />
-    <Compile Include="Cells\Calendar\UserCalendarListHeaderViewCell.designer.cs">
-      <DependentUpon>UserCalendarListHeaderViewCell.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewSources\CalendarCollectionViewSource.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Views\Settings\CalendarSettingsTableViewHeader.cs" />
@@ -2153,6 +2171,14 @@
     <Compile Include="ViewControllers\AnnouncementViewController.designer.cs">
       <DependentUpon>AnnouncementViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cells\Calendar\Settings\NativeCalendarsMainHeaderViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\NativeCalendarsMainHeaderViewCell.designer.cs">
+      <DependentUpon>NativeCalendarsMainHeaderViewCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\Calendar\Settings\ExternalCalendarsMainHeaderViewCell.cs" />
+    <Compile Include="Cells\Calendar\Settings\ExternalCalendarsMainHeaderViewCell.designer.cs">
+      <DependentUpon>ExternalCalendarsMainHeaderViewCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Toggl.Core.UI\Toggl.Core.UI.csproj">
@@ -2310,6 +2336,7 @@
     <Folder Include="Resources\Colors.xcassets\StartTimeEntryInactiveButton.colorset\" />
     <Folder Include="Resources\Images.xcassets\illustrationBarChart.imageset\" />
     <Folder Include="Resources\Colors.xcassets\CalendarDragHandles.colorset\" />
+    <Folder Include="Resources\Colors.xcassets\CalendarSettingsCardBackground.colorset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GoogleService-Info.plist" />

@@ -29,7 +29,6 @@ namespace Toggl.Core.Interactors
         {
             if (!shouldExecute())
                 return SyncOutcome.NoData;
-
             try
             {
                 await interactorFactory.PushSelectedExternalCalendars().Execute();
@@ -61,7 +60,6 @@ namespace Toggl.Core.Interactors
 
         private bool shouldExecute()
         {
-            //return true;
             var now = timeService.Now();
             var lastSynced = lastTimeUsageStorage.LastTimeExternalCalendarsSynced;
             return lastSynced?.Date != now.Date;

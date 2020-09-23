@@ -821,7 +821,7 @@ os detalhes abaixo.</value>
     <value>Permitir acesso ao calendário</value>
   </data>
   <data name="CalendarAccessExplanation" xml:space="preserve">
-    <value>O Toggl precisa acessar o seu calendário para exibir seus eventos. Ninguém além de você poderá ver os eventos e eles não aparecem nos seus relatórios.</value>
+    <value>Connect to your calendar to see your events and easily convert them to Time Entries</value>
   </data>
   <data name="CalendarPermissionDeniedOr" xml:space="preserve">
     <value>ou {0}</value>

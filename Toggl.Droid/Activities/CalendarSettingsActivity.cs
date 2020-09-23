@@ -3,7 +3,12 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using System;
-using Toggl.Core.UI.ViewModels.Settings;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Reactive.Linq;
+using Toggl.Core.UI.Collections;
+using Toggl.Core.UI.ViewModels.MainLog;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Droid.Extensions.Reactive;
 using Toggl.Droid.Presentation;
 using Toggl.Shared.Extensions;
@@ -36,30 +41,31 @@ namespace Toggl.Droid.Activities
 
         protected override void InitializeBindings()
         {
-            toggleCalendarsView.Rx()
-                .BindAction(ViewModel.ToggleCalendarIntegration)
-                .DisposedBy(DisposeBag);
-
-            toggleCalendarsSwitch.Rx()
-                .BindAction(ViewModel.ToggleCalendarIntegration)
-                .DisposedBy(DisposeBag);
-
             ViewModel
                 .Calendars
-                .Subscribe(userCalendarsAdapter.Rx().Items())
-                .DisposedBy(DisposeBag);
-
-            ViewModel.CalendarIntegrationEnabled
-                .Subscribe(toggleCalendarsSwitch.Rx().CheckedObserver(true))
-                .DisposedBy(DisposeBag);
-
-            ViewModel.CalendarIntegrationEnabled
-                .Subscribe(calendarsContainer.Rx().IsVisible())
+                .Subscribe(userCalendarsAdapter.UpdateCalendars)
                 .DisposedBy(DisposeBag);
 
             userCalendarsAdapter
                 .ItemTapObservable
-                .Subscribe(ViewModel.SelectCalendar.Inputs)
+                .Where(viewModel => viewModel is SelectableNativeCalendarViewModel)
+                .Cast<SelectableNativeCalendarViewModel>()
+                .Subscribe(ViewModel.SelectNativeCalendar.Inputs)
+                .DisposedBy(DisposeBag);
+
+            userCalendarsAdapter
+                .ItemTapObservable
+                .Where(viewModel => viewModel is SelectableExternalCalendarViewModel)
+                .Cast<SelectableExternalCalendarViewModel>()
+                .Subscribe(ViewModel.SelectExternalCalendar.Inputs)
+                .DisposedBy(DisposeBag);
+
+            userCalendarsAdapter
+                .ItemTapObservable
+                .Where(viewModel => viewModel is NativeCalendarsToggleIntegrationViewModel)
+                .Cast<NativeCalendarsToggleIntegrationViewModel>()
+                .SelectUnit()
+                .Subscribe(ViewModel.ToggleNativeCalendarIntegration.Inputs)
                 .DisposedBy(DisposeBag);
         }
     }

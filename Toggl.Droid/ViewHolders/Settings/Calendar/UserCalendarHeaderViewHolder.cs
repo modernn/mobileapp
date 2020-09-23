@@ -2,16 +2,13 @@
 using Android.Views;
 using Android.Widget;
 using System;
-using Toggl.Core.UI.ViewModels.Calendar;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 
 namespace Toggl.Droid.ViewHolders
 {
-    public class UserCalendarHeaderViewHolder : BaseRecyclerViewHolder<UserCalendarSourceViewModel>
+    public class UserCalendarHeaderViewHolder : BaseRecyclerViewHolder<CalendarSettingsItemViewModel>
     {
         private TextView sourceName;
-
-        public static UserCalendarViewHolder Create(View itemView)
-            => new UserCalendarViewHolder(itemView);
 
         public UserCalendarHeaderViewHolder(View itemView)
             : base(itemView)
@@ -30,7 +27,8 @@ namespace Toggl.Droid.ViewHolders
 
         protected override void UpdateView()
         {
-            sourceName.Text = Item.Name;
+            var viewModel = (UserCalendarSourceViewModel) Item;
+            sourceName.Text = viewModel.Name;
         }
     }
 }

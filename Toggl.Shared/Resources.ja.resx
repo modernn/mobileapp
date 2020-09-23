@@ -664,7 +664,7 @@
         <value>カレンダーへのアクセスを許可する</value>
     </data>
     <data name="CalendarAccessExplanation" xml:space="preserve">
-        <value>Togglは、イベントを表示するためにカレンダーのアクセス権が必要です。 イベントは自分だけに表示され、レポートには表示されません</value>
+        <value>Connect to your calendar to see your events and easily convert them to Time Entries</value>
     </data>
     <data name="Start" xml:space="preserve">
         <value>開始</value>

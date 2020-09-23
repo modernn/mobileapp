@@ -1260,8 +1260,32 @@ the selected time period.</value>
         <comment>Title of the screen/view to select which user calendars should appear in the calendar view, accessed from the settings screen</comment>
     </data>
     <data name="SelectCalendarsMessage" xml:space="preserve">
-        <value>Choose the calendars containing events you’d like to log in Toggl</value>
+        <value>Connect to your calendar to see your events and easily convert them to Time Entries</value>
         <comment>Informative text from the screen/view to select which user calendars should appear in the calendar view, accessed from the settings screen</comment>
+    </data>
+    <data name="ExternalCalendarsCardInfoTitle" xml:space="preserve">
+        <value>Google Calendar integration coming soon! 🎉 </value>
+        <comment>Body of the card shown in the calendar settings when no external calendars are configured</comment>
+    </data>
+    <data name="ExternalCalendarsCardInfoBody" xml:space="preserve">
+        <value>Want to get early access to see your Google Calendar events also on mobile? Go to Calendar view in Web App to connect your Google account.</value>
+        <comment>Body of the card shown in the calendar settings when no external calendars are configured</comment>
+    </data>
+    <data name="ExternalCalendarsTitle" xml:space="preserve">
+        <value>Google Calendar</value>
+        <comment>Google calendar events are visible also in the Web App</comment>
+    </data>
+    <data name="ExternalCalendarsSubtitle" xml:space="preserve">
+        <value>Google calendar events are visible also in the Web App</value>
+        <comment>Subtitle of the external calendars section in the calendar settings</comment>
+    </data>
+    <data name="NativeCalendarsTitle" xml:space="preserve">
+        <value>Local Calendars</value>
+        <comment>Title of the native calendars section in the calendar settings</comment>
+    </data>
+    <data name="NativeCalendarsSubtitle" xml:space="preserve">
+        <value>Local calendars are visible only on your phone</value>
+        <comment>Subtitle of the native calendars section in the calendar settings</comment>
     </data>
     <data name="On" xml:space="preserve">
         <value>On</value>
@@ -1288,7 +1312,7 @@ the selected time period.</value>
         <comment>One of the labels of the actions shown when the user denies the permission to access the user's calendar</comment>
     </data>
     <data name="CalendarAccessExplanation" xml:space="preserve">
-        <value>Toggl needs access to your calendar in order to display events. Events are visible to you only and won’t appear in Reports.</value>
+        <value>Connect to your calendar to see your events and easily convert them to Time Entries</value>
         <comment>Informative message shown when asking permission to access the user's calendar</comment>
     </data>
     <data name="CalendarPermissionDeniedOr" xml:space="preserve">

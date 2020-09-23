@@ -136,4 +136,6 @@
   <color name="announcementBackground">#fef6f4</color>
   <color name="announcementButton">#dd6fd1</color>
   <color name="announcementText">#310f3a</color>
+
+  <color name="calendarSettingsCardBackground">#422A4C</color>
 </resources>

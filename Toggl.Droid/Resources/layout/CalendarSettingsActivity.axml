@@ -11,95 +11,23 @@
         android:id="@+id/Toolbar"
         style="@style/ToolbarStyle"
         app:title="Calendar Settings"/>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ToggleCalendarsView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground">
-        <TextView
-            android:id="@+id/LinkCalendarsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="16dp"
-            android:lineSpacingExtra="5sp"
-            android:textColor="@color/primaryText"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Link calendars"/>
-        <TextView
-            android:id="@+id/LinkCalendarsMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="9dp"
-            android:layout_marginRight="8dp"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/LinkCalendarsTitle"
-            app:layout_constraintLeft_toLeftOf="@id/LinkCalendarsTitle"
-            app:layout_constraintRight_toLeftOf="@+id/ToggleCalendarsSwitch"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="@color/secondaryText"
-            tools:text="View your calendar events in Toggl and log them  with a single tap"/>
-        <Switch
-            android:id="@+id/ToggleCalendarsSwitch"
-            android:background="?attr/selectableItemBackground"
-            android:paddingRight="16dp"
-            android:paddingLeft="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <View
-        android:background="@color/separator"
-        android:layout_height="0.5dp"
-        android:layout_width="match_parent" />
-
-    <LinearLayout
-            android:id="@+id/CalendarsContainer"
-            android:orientation="vertical"
+    <TextView
+            android:id="@+id/SelectCalendarsMessage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        <TextView
-                android:id="@+id/SelectCalendarsTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
-                android:textStyle="normal"
-                android:textColor="@color/primaryText"
-                android:lineSpacingExtra="8sp"
-                tools:text="Select calendars"/>
-        <TextView
-                android:id="@+id/SelectCalendarsMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="@color/primaryText"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="8sp"
-                tools:text="Choose the calendars containing events you\u{2019}d like to log in Toggl"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/separator"/>
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/CalendarsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="@color/primaryText"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="8sp"
+            tools:text="Connect to your calendar to see your events and easily convert them to Time Entries"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/CalendarsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 </LinearLayout>

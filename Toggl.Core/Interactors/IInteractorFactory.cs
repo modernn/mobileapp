@@ -277,7 +277,7 @@ namespace Toggl.Core.Interactors
 
         IInteractor<Task<Unit>> PushSelectedExternalCalendars();
 
-        IInteractor<Unit> SetExternalCalendarSelectedInteractor(long calendarId, bool selected);
+        IInteractor<Unit> SetExternalCalendarSelected(long calendarId, bool selected);
 
         #endregion
 

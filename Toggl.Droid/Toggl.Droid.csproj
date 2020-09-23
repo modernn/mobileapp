@@ -691,6 +691,13 @@
     <Compile Include="ViewHolders\MainLog\MainLogSuggestionItemViewHolder.cs" />
     <Compile Include="ViewHolders\MainLog\MainLogSuggestionSectionViewHolder.cs" />
     <Compile Include="ViewHolders\MainLog\MainLogUserFeedbackViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\ExternalCalendarsCardInfoViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\ExternalCalendarsMainSectionViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\NativeCalendarsMainSectionViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\NativeCalendarsToggleIntegrationViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\SelectableExternalCalendarViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\SelectableNativeCalendarViewHolder.cs" />
+    <Compile Include="ViewHolders\Settings\Calendar\UserCalendarHeaderViewHolder.cs" />
     <Compile Include="ViewHolders\Settings\HeaderRow.cs" />
     <Compile Include="ViewHolders\Settings\HeaderRowView.cs" />
     <Compile Include="ViewHolders\Settings\InfoRowViewView.cs" />
@@ -893,8 +900,6 @@
       <DependentUpon>MainFragment.cs</DependentUpon>
     </Compile>
     <Compile Include="Adapters\UserCalendarsRecyclerAdapter.cs" />
-    <Compile Include="ViewHolders\UserCalendarViewHolder.cs" />
-    <Compile Include="ViewHolders\UserCalendarHeaderViewHolder.cs" />
     <Compile Include="Adapters\BaseSectionedRecyclerAdapter.cs" />
     <Compile Include="Extensions\Reactive\ButtonExtensions.cs" />
     <Compile Include="Fragments\ReactiveDialogFragment.cs" />
@@ -1069,6 +1074,10 @@
     <AndroidResource Include="Resources\drawable\text_placeholder.xml" />
     <AndroidResource Include="Resources\drawable\toggl_loading_logo.xml" />
     <AndroidResource Include="Resources\layout\AboutActivity.axml" />
+    <AndroidResource Include="Resources\layout\ExternalCalendarsCardInfoView.axml" />
+    <AndroidResource Include="Resources\layout\ExternalCalendarsMainSectionHeader.axml" />
+    <AndroidResource Include="Resources\layout\NativeCalendarsMainSectionHeader.axml" />
+    <AndroidResource Include="Resources\layout\NativeCalendarsToggleIntegrationView.axml" />
     <AndroidResource Include="Resources\layout\OnboardingActivity.axml" />
     <AndroidResource Include="Resources\layout\OnboardingFirstSlideFragment.axml" />
     <AndroidResource Include="Resources\layout\OnboardingSecondSlideFragment.axml" />

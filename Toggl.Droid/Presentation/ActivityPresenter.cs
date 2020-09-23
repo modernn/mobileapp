@@ -3,10 +3,9 @@ using Android.Content;
 using System;
 using System.Collections.Generic;
 using Toggl.Core.UI.ViewModels;
-using Toggl.Core.UI.ViewModels.Settings;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Core.UI.Views;
 using Toggl.Droid.Activities;
-using Toggl.Droid.Fragments;
 using Fragment = AndroidX.Fragment.App.Fragment;
 
 namespace Toggl.Droid.Presentation
@@ -76,10 +75,10 @@ namespace Toggl.Droid.Presentation
         {
             var viewModelType = viewModel.GetType();
             ActivityPresenterInfo presentableInfo;
-            
+
             if (viewModelType == typeof(TermsAndCountryViewModel))
             {
-                presentableInfo = sourceView is SignUpActivity 
+                presentableInfo = sourceView is SignUpActivity
                     ? new ActivityPresenterInfo(typeof(TermsAndCountryFullActivity))
                     : new ActivityPresenterInfo(typeof(TermsAndCountryModalActivity));
             }

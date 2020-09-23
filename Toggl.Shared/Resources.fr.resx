@@ -631,7 +631,7 @@ Mettez en marche le chronomètre et vos enregistrements les plus utilisés s'aff
         <value>Autoriser l'accès au calendrier</value>
     </data>
     <data name="CalendarAccessExplanation" xml:space="preserve">
-        <value>Toggl a besoin d'accéder à votre calendrier pour afficher les événements. Les événements ne sont visibles que de vous et n'apparaissent pas dans les rapports.</value>
+        <value>Connect to your calendar to see your events and easily convert them to Time Entries</value>
     </data>
     <data name="Start" xml:space="preserve">
         <value>Début</value>

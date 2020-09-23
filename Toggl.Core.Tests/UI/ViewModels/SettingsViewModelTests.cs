@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using FsCheck;
 using FsCheck.Xunit;
-using Microsoft.Reactive.Testing;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -21,6 +20,7 @@ using Toggl.Core.UI.Navigation;
 using Toggl.Core.UI.Parameters;
 using Toggl.Core.UI.ViewModels;
 using Toggl.Core.UI.ViewModels.Settings;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Core.UI.Views;
 using Toggl.Shared;
 using Xunit;

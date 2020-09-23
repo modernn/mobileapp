@@ -31,12 +31,11 @@ namespace Toggl.Storage.Realm.Queries
                 realm.RemoveAll<RealmExternalCalendar>();
                 realm.RemoveAll<RealmExternalCalendarEvent>();
 
-                long calendarId = 0;
                 long eventId = 0;
                 foreach (var (calendar, events) in calendarData)
                 {
 
-                    var dbCalendar = new RealmExternalCalendar(calendarId++, calendar, realm);
+                    var dbCalendar = new RealmExternalCalendar(calendar.Id, calendar, realm);
                     realm.Add(dbCalendar);
 
                     foreach (var calendarEvent in events)

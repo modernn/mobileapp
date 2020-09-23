@@ -2,28 +2,26 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Toggl.Core.Analytics;
+using Toggl.Core.DataSources;
 using Toggl.Core.Exceptions;
 using Toggl.Core.Interactors;
 using Toggl.Core.Services;
 using Toggl.Core.UI.Collections;
 using Toggl.Core.UI.Navigation;
 using Toggl.Core.UI.Services;
-using Toggl.Core.UI.ViewModels.Calendar;
-using Toggl.Core.UI.ViewModels.Selectable;
 using Toggl.Shared;
 using Toggl.Shared.Extensions;
 using Toggl.Storage.Settings;
 
-namespace Toggl.Core.UI.ViewModels.Settings
+namespace Toggl.Core.UI.ViewModels.Settings.Calendar
 {
-    using CalendarSectionModel = SectionModel<UserCalendarSourceViewModel, SelectableUserCalendarViewModel>;
-    using ImmutableCalendarSectionModel = IImmutableList<SectionModel<UserCalendarSourceViewModel, SelectableUserCalendarViewModel>>;
+    using CalendarSectionModel = SectionModel<CalendarSettingsSectionViewModel, CalendarSettingsItemViewModel>;
+    using ImmutableCalendarSectionModel = IImmutableList<SectionModel<CalendarSettingsSectionViewModel, CalendarSettingsItemViewModel>>;
 
     [Preserve(AllMembers = true)]
     public class CalendarSettingsViewModel : ViewModel
@@ -32,6 +30,7 @@ namespace Toggl.Core.UI.ViewModels.Settings
         private readonly IAnalyticsService analyticsService;
         private readonly IOnboardingStorage onboardingStorage;
         private readonly IInteractorFactory interactorFactory;
+        private readonly ITogglDataSource dataSource;
         private readonly ISchedulerProvider schedulerProvider;
         private readonly IPermissionsChecker permissionsChecker;
 
@@ -47,13 +46,18 @@ namespace Toggl.Core.UI.ViewModels.Settings
 
         public IObservable<bool> CalendarIntegrationEnabled { get;}
 
-        public ViewAction ToggleCalendarIntegration { get; }
+        public ViewAction ToggleNativeCalendarIntegration { get; }
         public ViewAction Save { get; }
-        public InputAction<SelectableUserCalendarViewModel> SelectCalendar { get; }
+
+        public ViewAction Reload { get; }
+        public InputAction<SelectableNativeCalendarViewModel> SelectNativeCalendar { get; }
+
+        public InputAction<SelectableExternalCalendarViewModel> SelectExternalCalendar { get; }
 
         public CalendarSettingsViewModel(
             IUserPreferences userPreferences,
             IInteractorFactory interactorFactory,
+            ITogglDataSource dataSource,
             IOnboardingStorage onboardingStorage,
             IAnalyticsService analyticsService,
             INavigationService navigationService,
@@ -66,6 +70,7 @@ namespace Toggl.Core.UI.ViewModels.Settings
             Ensure.Argument.IsNotNull(rxActionFactory, nameof(rxActionFactory));
             Ensure.Argument.IsNotNull(analyticsService, nameof(analyticsService));
             Ensure.Argument.IsNotNull(interactorFactory, nameof(interactorFactory));
+            Ensure.Argument.IsNotNull(dataSource, nameof(dataSource));
             Ensure.Argument.IsNotNull(onboardingStorage, nameof(onboardingStorage));
             Ensure.Argument.IsNotNull(schedulerProvider, nameof(schedulerProvider));
             Ensure.Argument.IsNotNull(permissionsChecker, nameof(permissionsChecker));
@@ -74,12 +79,15 @@ namespace Toggl.Core.UI.ViewModels.Settings
             this.analyticsService = analyticsService;
             this.onboardingStorage = onboardingStorage;
             this.interactorFactory = interactorFactory;
+            this.dataSource = dataSource;
             this.schedulerProvider = schedulerProvider;
             this.permissionsChecker = permissionsChecker;
 
             Save = rxActionFactory.FromAction(save);
-            SelectCalendar = rxActionFactory.FromAction<SelectableUserCalendarViewModel>(selectCalendar);
-            ToggleCalendarIntegration = rxActionFactory.FromAsync(toggleCalendarIntegration);
+            Reload = rxActionFactory.FromAsync(reloadCalendars);
+            SelectNativeCalendar = rxActionFactory.FromAction<SelectableNativeCalendarViewModel>(selectNativeCalendar);
+            SelectExternalCalendar = rxActionFactory.FromAction<SelectableExternalCalendarViewModel>(selectExternalCalendar);
+            ToggleNativeCalendarIntegration = rxActionFactory.FromAsync(toggleCalendarIntegration);
 
             Calendars = calendarsSubject.AsObservable().DistinctUntilChanged();
             CalendarIntegrationEnabled = userPreferences.CalendarIntegrationEnabledObservable
@@ -138,19 +146,61 @@ namespace Toggl.Core.UI.ViewModels.Settings
 
         private async Task reloadCalendars()
         {
-            if (!userPreferences.CalendarIntegrationEnabled())
+            var sections = new List<CalendarSectionModel>();
+
+            var externalCalendars = await dataSource.ExternalCalendars.GetAll();
+            var externalCalendarsGroups = externalCalendars
+                .GroupBy(cal => cal.IntegrationId)
+                .Select(section => section.OrderBy(cal => cal.Name));
+
+            // Add the external calendars main section
+            var shouldShowCard = externalCalendars.None();
+            var externalCalendarsMainHeader = new ExternalCalendarsMainSectionViewModel(shouldShowCard);
+            var externalCalendarsMainItems = new List<CalendarSettingsItemViewModel>();
+
+            if (shouldShowCard)
             {
-                calendarsSubject.OnNext(ImmutableList.Create<CalendarSectionModel>());
-                return;
+                var externalCalendarsCardItem = new ExternalCalendarsCardInfoViewModel();
+                externalCalendarsMainItems.Add(externalCalendarsCardItem);
+            }
+            var externalCalendarsMainSection = new CalendarSectionModel(externalCalendarsMainHeader, externalCalendarsMainItems.ToImmutableList());
+            sections.Add(externalCalendarsMainSection);
+
+            // Add the external calendars sections
+            foreach (var externalCalendarsGroup in externalCalendarsGroups)
+            {
+                var externalCalendarsHeader = new UserCalendarSourceViewModel($"Google Calendar");
+                var externalCalendarsItems = externalCalendarsGroup.Select(cal => new SelectableExternalCalendarViewModel(cal, cal.Selected));
+                var externalCalendarsSection = new CalendarSectionModel(externalCalendarsHeader, externalCalendarsItems);
+                sections.Add(externalCalendarsSection);
             }
 
-            var calendars = await interactorFactory
-                .GetUserCalendars()
-                .Execute()
-                .Catch((NotAuthorizedException _) => Observable.Return(new List<UserCalendar>()))
-                .Select(group);
+            var nativeCalendarsIntegrationEnabled = userPreferences.CalendarIntegrationEnabled();
 
-            calendarsSubject.OnNext(calendars);
+            // Add the native calendars main section
+            var nativeCalendarsMainHeader = new NativeCalendarsMainSectionViewModel();
+            var nativeCalendarsMainItems = new List<CalendarSettingsItemViewModel>
+            {
+                new NativeCalendarsToggleIntegrationViewModel(nativeCalendarsIntegrationEnabled),
+            };
+            var nativeCalendarsMainSection = new CalendarSectionModel(
+                nativeCalendarsMainHeader,
+                nativeCalendarsMainItems.ToImmutableList());
+
+            sections.Add(nativeCalendarsMainSection);
+
+            // Add the native calendars sections
+            if (nativeCalendarsIntegrationEnabled)
+            {
+                var nativeCalendars = await interactorFactory
+                    .GetUserCalendars()
+                    .Execute()
+                    .Catch((NotAuthorizedException _) => Observable.Return(new List<UserCalendar>()))
+                    .Select(group);
+                sections.AddRange(nativeCalendars);
+            }
+
+            calendarsSubject.OnNext(sections.ToImmutableList());
         }
 
         private ImmutableCalendarSectionModel group(IEnumerable<UserCalendar> calendars)
@@ -165,10 +215,10 @@ namespace Toggl.Core.UI.ViewModels.Settings
                 )
                 .ToImmutableList();
 
-        private SelectableUserCalendarViewModel toSelectable(UserCalendar calendar)
-            => new SelectableUserCalendarViewModel(calendar, selectedCalendarIds.Contains(calendar.Id));
+        private SelectableNativeCalendarViewModel toSelectable(UserCalendar calendar)
+            => new SelectableNativeCalendarViewModel(calendar, selectedCalendarIds.Contains(calendar.Id));
 
-        private void save()
+        private async void save()
         {
             if (!userPreferences.CalendarIntegrationEnabled())
                 selectedCalendarIds.Clear();
@@ -185,14 +235,22 @@ namespace Toggl.Core.UI.ViewModels.Settings
             }
 
             onboardingStorage.SetIsFirstTimeConnectingCalendars();
+
+            await interactorFactory.PushSelectedExternalCalendars().Execute();
         }
 
-        private void selectCalendar(SelectableUserCalendarViewModel calendar)
+        private void selectNativeCalendar(SelectableNativeCalendarViewModel calendar)
         {
             if (selectedCalendarIds.Contains(calendar.Id))
                 selectedCalendarIds.Remove(calendar.Id);
             else
                 selectedCalendarIds.Add(calendar.Id);
+            calendar.Selected = !calendar.Selected;
+        }
+
+        private void selectExternalCalendar(SelectableExternalCalendarViewModel calendar)
+        {
+            interactorFactory.SetExternalCalendarSelected(calendar.Id, !calendar.Selected).Execute();
             calendar.Selected = !calendar.Selected;
         }
 

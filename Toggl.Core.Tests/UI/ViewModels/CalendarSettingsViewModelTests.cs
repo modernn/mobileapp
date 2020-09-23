@@ -9,12 +9,14 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Toggl.Core.Exceptions;
+using Toggl.Core.Models.Calendar;
 using Toggl.Core.Tests.Generators;
 using Toggl.Core.Tests.TestExtensions;
 using Toggl.Core.UI.Collections;
 using Toggl.Core.UI.ViewModels.Calendar;
 using Toggl.Core.UI.ViewModels.Selectable;
 using Toggl.Core.UI.ViewModels.Settings;
+using Toggl.Core.UI.ViewModels.Settings.Calendar;
 using Toggl.Core.UI.Views;
 using Toggl.Shared;
 using Toggl.Shared.Extensions;
@@ -22,14 +24,14 @@ using Xunit;
 
 namespace Toggl.Core.Tests.UI.ViewModels
 {
-    using ImmutableCalendarSectionModel = IImmutableList<SectionModel<UserCalendarSourceViewModel, SelectableUserCalendarViewModel>>;
+    using ImmutableCalendarSectionModel = IImmutableList<SectionModel<CalendarSettingsSectionViewModel, CalendarSettingsItemViewModel>>;
 
     public sealed class CalendarSettingsViewModelTests
     {
         public abstract class CalendarSettingsViewModelTest : BaseViewModelTests<CalendarSettingsViewModel>
         {
             protected override CalendarSettingsViewModel CreateViewModel()
-                => new CalendarSettingsViewModel(UserPreferences, InteractorFactory, OnboardingStorage, AnalyticsService, NavigationService, RxActionFactory, PermissionsChecker, SchedulerProvider);
+                => new CalendarSettingsViewModel(UserPreferences, InteractorFactory, DataSource, OnboardingStorage, AnalyticsService, NavigationService, RxActionFactory, PermissionsChecker, SchedulerProvider);
         }
 
         public sealed class TheConstructor : CalendarSettingsViewModelTest
@@ -39,6 +41,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
             public void ThrowsIfAnyOfTheArgumentsIsNull(
                 bool useUserPreferences,
                 bool useInteractorFactory,
+                bool useDataSource,
                 bool useOnboardingStorage,
                 bool useAnalyticsService,
                 bool useNavigationService,
@@ -50,6 +53,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                     () => new CalendarSettingsViewModel(
                         useUserPreferences ? UserPreferences : null,
                         useInteractorFactory ? InteractorFactory : null,
+                        useDataSource ? DataSource : null,
                         useOnboardingStorage ? OnboardingStorage : null,
                         useAnalyticsService ? AnalyticsService : null,
                         useNavigationService ? NavigationService : null,
@@ -67,7 +71,18 @@ namespace Toggl.Core.Tests.UI.ViewModels
             [Fact, LogIfTooSlow]
             public async Task FillsTheCalendarList()
             {
-                var userCalendarsObservable = Enumerable
+                var externalCalendarsObservable = Enumerable
+                    .Range(0, 3)
+                    .Select(id => new ExternalCalendar(
+                        id,
+                        0,
+                        $"Calendar #{id}",
+                        $"Calendar #{id}",
+                        false,
+                        false))
+                    .Apply(Observable.Return);
+
+                var nativeCalendarsObservable = Enumerable
                     .Range(0, 9)
                     .Select(id => new UserCalendar(
                         id.ToString(),
@@ -75,7 +90,8 @@ namespace Toggl.Core.Tests.UI.ViewModels
                         $"Source #{id % 3}",
                         false))
                     .Apply(Observable.Return);
-                InteractorFactory.GetUserCalendars().Execute().Returns(userCalendarsObservable);
+                DataSource.ExternalCalendars.GetAll().Returns(externalCalendarsObservable);
+                InteractorFactory.GetUserCalendars().Execute().Returns(nativeCalendarsObservable);
                 UserPreferences.CalendarIntegrationEnabled().Returns(true);
                 var viewModel = CreateViewModel();
 
@@ -83,12 +99,48 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 TestScheduler.Start();
 
                 var calendars = await viewModel.Calendars.FirstAsync();
-                calendars.Should().HaveCount(3);
-                calendars.ForEach(group => group.Items.Should().HaveCount(3));
+                calendars.Should().HaveCount(6);
+                calendars
+                    .Where(section => section.Header is UserCalendarSourceViewModel)
+                    .ForEach(group => group.Items.Should().HaveCount(3));
+            }
+
+            [Fact, LogIfTooSlow]
+            public void SetsProperExternalCalendarsAsSelected()
+            {
+                var enabledCalendarIds = new List<long> { 1, 2, 3 };
+                var unenabledCalendarIds = new List<long> { 4, 5, 6 };
+                var allCalendarIds = enabledCalendarIds.Concat(unenabledCalendarIds).ToList();
+
+                var externalCalendars = allCalendarIds
+                    .Select(id => new ExternalCalendar(
+                        id,
+                        0,
+                        $"Calendar #{id}",
+                        $"Calendar #{id}",
+                        enabledCalendarIds.Contains(id),
+                        false));
+
+                DataSource.ExternalCalendars.GetAll().Returns(Observable.Return(externalCalendars));
+                var viewModel = CreateViewModel();
+
+                viewModel.Initialize().Wait();
+
+                var sections = viewModel.Calendars.FirstAsync().Wait();
+                var calendars = sections.Where(section => section.Header is UserCalendarSourceViewModel);
+                foreach (var calendarGroup in calendars)
+                {
+                    foreach (var calendar in calendarGroup.Items)
+                    {
+                        var externalCalendar = (SelectableExternalCalendarViewModel)calendar;
+                        if (enabledCalendarIds.Contains(externalCalendar.Id))
+                            externalCalendar.Selected.Should().BeTrue();
+                    }
+                }
             }
 
             [Property]
-            public void SetsProperCalendarsAsSelected(
+            public void SetsProperNativeCalendarsAsSelected(
                 NonEmptySet<NonEmptyString> strings0,
                 NonEmptySet<NonEmptyString> strings1)
             {
@@ -96,6 +148,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 var unenabledCalendarIds = strings1.Get.Select(str => str.Get).ToList();
                 var allCalendarIds = enabledCalendarIds.Concat(unenabledCalendarIds).ToList();
                 UserPreferences.EnabledCalendarIds().Returns(enabledCalendarIds);
+
                 var userCalendars = allCalendarIds
                     .Select(id => new UserCalendar(
                         id,
@@ -110,13 +163,15 @@ namespace Toggl.Core.Tests.UI.ViewModels
 
                 viewModel.Initialize().Wait();
 
-                var calendars = viewModel.Calendars.FirstAsync().Wait();
+                var sections = viewModel.Calendars.FirstAsync().Wait();
+                var calendars = sections.Where(section => section.Header is UserCalendarSourceViewModel);
                 foreach (var calendarGroup in calendars)
                 {
                     foreach (var calendar in calendarGroup.Items)
                     {
-                        if (enabledCalendarIds.Contains(calendar.Id))
-                            calendar.Selected.Should().BeTrue();
+                        var nativeCalendar = (SelectableNativeCalendarViewModel)calendar;
+                        if (enabledCalendarIds.Contains(nativeCalendar.Id))
+                            nativeCalendar.Selected.Should().BeTrue();
                     }
                 }
             }
@@ -171,7 +226,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 await ViewModel.Initialize();
                 var calendars = await ViewModel.Calendars.FirstAsync();
 
-                calendars.Should().HaveCount(0);
+                calendars.Should().HaveCount(2);
             }
         }
 
@@ -197,16 +252,24 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 var selectedIds = new[] { "0", "2", "4", "7" };
                 var calendars = userCalendars
                     .Where(calendar => selectedIds.Contains(calendar.Id))
-                    .Select(calendar => new SelectableUserCalendarViewModel(calendar, false))
+                    .Select(calendar => new SelectableNativeCalendarViewModel(calendar, false))
                     .ToArray();
 
-                ViewModel.SelectCalendar.ExecuteSequentially(calendars)
+                ViewModel.SelectNativeCalendar.ExecuteSequentially(calendars)
                     .AppendAction(ViewModel.Save)
                     .Subscribe();
 
                 TestScheduler.Start();
 
                 UserPreferences.Received().SetEnabledCalendars(selectedIds);
+            }
+
+            [Fact, LogIfTooSlow]
+            public async Task PushesTheSelectedNativeCalendars()
+            {
+                await ViewModel.Initialize();
+                ViewModel.Save.Execute();
+                await InteractorFactory.PushSelectedExternalCalendars().Received().Execute();
             }
         }
 
@@ -243,15 +306,27 @@ namespace Toggl.Core.Tests.UI.ViewModels
         {
             public TheSelectCalendarAction()
             {
-                var userCalendars = Enumerable
+                var externalCalendars = Enumerable
+                    .Range(0, 3)
+                    .Select(id => new ExternalCalendar(
+                        id,
+                        0,
+                        $"Calendar #{id}",
+                        $"Calendar #{id}",
+                        false,
+                        false));
+
+                var nativeCalendars = Enumerable
                     .Range(0, 9)
                     .Select(id => new UserCalendar(
                         id.ToString(),
                         $"Calendar #{id}",
                         $"Source #{id % 3}",
-                        true));
-                var userCalendarsObservable = Observable.Return(userCalendars);
-                InteractorFactory.GetUserCalendars().Execute().Returns(userCalendarsObservable);
+                        false));
+                var externalCalendarsObservable = Observable.Return(externalCalendars);
+                var nativeCalendarsObservable = Observable.Return(nativeCalendars);
+                DataSource.ExternalCalendars.GetAll().Returns(externalCalendarsObservable);
+                InteractorFactory.GetUserCalendars().Execute().Returns(nativeCalendarsObservable);
                 PermissionsChecker.CalendarPermissionGranted.Returns(Observable.Return(true));
                 UserPreferences.CalendarIntegrationEnabled().Returns(true);
             }
@@ -261,12 +336,15 @@ namespace Toggl.Core.Tests.UI.ViewModels
             {
                 await ViewModel.Initialize();
                 var viewModelCalendars = await ViewModel.Calendars.FirstAsync();
-                var calendarToBeSelected = viewModelCalendars.First().Items.First();
+                var externalCalendarToBeSelected = viewModelCalendars[1].Items.First() as SelectableExternalCalendarViewModel;
+                var nativeCalendarToBeSelected = viewModelCalendars[3].Items.First() as SelectableNativeCalendarViewModel;
 
-                ViewModel.SelectCalendar.Execute(calendarToBeSelected);
+                ViewModel.SelectExternalCalendar.Execute(externalCalendarToBeSelected);
+                ViewModel.SelectNativeCalendar.Execute(nativeCalendarToBeSelected);
                 TestScheduler.Start();
 
-                calendarToBeSelected.Selected.Should().BeTrue();
+                externalCalendarToBeSelected.Selected.Should().BeTrue();
+                nativeCalendarToBeSelected.Selected.Should().BeTrue();
             }
 
             [Fact, LogIfTooSlow]
@@ -274,14 +352,18 @@ namespace Toggl.Core.Tests.UI.ViewModels
             {
                 await ViewModel.Initialize();
                 var viewModelCalendars = await ViewModel.Calendars.FirstAsync();
-                var calendarToBeSelected = viewModelCalendars.First().Items.First();
+                var externalCalendarToBeSelected = viewModelCalendars[1].Items.First() as SelectableExternalCalendarViewModel;
+                var nativeCalendarToBeSelected = viewModelCalendars[3].Items.First() as SelectableNativeCalendarViewModel;
 
-                ViewModel.SelectCalendar.Execute(calendarToBeSelected); //Select the calendar
+                ViewModel.SelectExternalCalendar.Execute(externalCalendarToBeSelected); //Select the calendar
+                ViewModel.SelectNativeCalendar.Execute(nativeCalendarToBeSelected); //Select the calendar
                 TestScheduler.Start();
-                ViewModel.SelectCalendar.Execute(calendarToBeSelected); //Deselect the calendar
+                ViewModel.SelectExternalCalendar.Execute(externalCalendarToBeSelected); //Deselect the calendar
+                ViewModel.SelectNativeCalendar.Execute(nativeCalendarToBeSelected); //Deselect the calendar
                 TestScheduler.Start();
 
-                calendarToBeSelected.Selected.Should().BeFalse();
+                externalCalendarToBeSelected.Selected.Should().BeFalse();
+                nativeCalendarToBeSelected.Selected.Should().BeFalse();
             }
         }
 
@@ -300,7 +382,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 {
                     await ViewModel.Initialize();
 
-                    ViewModel.ToggleCalendarIntegration.Execute();
+                    ViewModel.ToggleNativeCalendarIntegration.Execute();
                     TestScheduler.Start();
 
                     UserPreferences.Received().SetCalendarIntegrationEnabled(false);
@@ -311,35 +393,48 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 {
                     await ViewModel.Initialize();
 
-                    ViewModel.ToggleCalendarIntegration.Execute();
+                    ViewModel.ToggleNativeCalendarIntegration.Execute();
                     TestScheduler.Start();
 
                     UserPreferences.Received().SetEnabledCalendars(null);
                 }
 
                 [Fact, LogIfTooSlow]
-                public async Task RemovesAllCalendarsFromTheCalendarsProperty()
+                public async Task RemovesAllNativeCalendarsFromTheCalendarsProperty()
                 {
-                    var userCalendars = Enumerable
+                    var externalCalendars = Enumerable
+                        .Range(0, 9)
+                        .Select(id => new ExternalCalendar(
+                            id,
+                            0,
+                            $"Calendar #{id}",
+                            $"Calendar #{id}",
+                            false,
+                            false));
+
+                    var nativeCalendars = Enumerable
                         .Range(0, 9)
                         .Select(id => new UserCalendar(
                             id.ToString(),
                             $"Calendar #{id}",
                             $"Source #{id % 3}",
                             false));
-                    var userCalendarsObservable = Observable.Return(userCalendars);
-                    InteractorFactory.GetUserCalendars().Execute().Returns(userCalendarsObservable);
+                    var externalCalendarsObservable = Observable.Return(externalCalendars);
+                    var nativeCalendarsObservable = Observable.Return(nativeCalendars);
+
+                    DataSource.ExternalCalendars.GetAll().Returns(externalCalendarsObservable);
+                    InteractorFactory.GetUserCalendars().Execute().Returns(nativeCalendarsObservable);
                     var calendarsObserver = TestScheduler.CreateObserver<ImmutableCalendarSectionModel>();
                     ViewModel.Calendars.Subscribe(calendarsObserver);
                     await ViewModel.Initialize();
 
                     UserPreferences.CalendarIntegrationEnabled().Returns(false);
-                    ViewModel.ToggleCalendarIntegration.Execute();
+                    ViewModel.ToggleNativeCalendarIntegration.Execute();
                     TestScheduler.Start();
 
                     //The first calendar list is empty, so the second one actually holds initial values
-                    calendarsObserver.Values().ElementAt(1).Should().HaveCount(3);
-                    calendarsObserver.Values().Last().Should().BeEmpty();
+                    calendarsObserver.Values().ElementAt(1).Should().HaveCount(6);
+                    calendarsObserver.Values().Last().Should().HaveCount(3);
                 }
             }
 
@@ -356,7 +451,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                 {
                     await ViewModel.Initialize();
 
-                    ViewModel.ToggleCalendarIntegration.Execute();
+                    ViewModel.ToggleNativeCalendarIntegration.Execute();
                     TestScheduler.Start();
 
                     UserPreferences.Received().SetCalendarIntegrationEnabled(true);
@@ -370,7 +465,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                         .Do(_ => UserPreferences.CalendarIntegrationEnabled().Returns(true));
                     await ViewModel.Initialize();
 
-                    ViewModel.ToggleCalendarIntegration.Execute();
+                    ViewModel.ToggleNativeCalendarIntegration.Execute();
                     TestScheduler.Start();
 
                     InteractorFactory.GetUserCalendars().Received().Execute();
@@ -391,7 +486,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                         var view = Substitute.For<IView>();
                         ViewModel.AttachView(view);
 
-                        ViewModel.ToggleCalendarIntegration.Execute();
+                        ViewModel.ToggleNativeCalendarIntegration.Execute();
                         TestScheduler.Start();
 
                         view.Received().RequestCalendarAuthorization(true);
@@ -405,7 +500,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                         view.RequestCalendarAuthorization(true).Returns(Observable.Return(true));
                         ViewModel.AttachView(view);
 
-                        ViewModel.ToggleCalendarIntegration.Execute();
+                        ViewModel.ToggleNativeCalendarIntegration.Execute();
                         TestScheduler.Start();
 
                         UserPreferences.Received().SetCalendarIntegrationEnabled(true);
@@ -421,7 +516,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                             .Do(_ => UserPreferences.CalendarIntegrationEnabled().Returns(true));
                         ViewModel.AttachView(view);
 
-                        ViewModel.ToggleCalendarIntegration.Execute();
+                        ViewModel.ToggleNativeCalendarIntegration.Execute();
                         TestScheduler.Start();
 
                         InteractorFactory.GetUserCalendars().Received().Execute();
@@ -435,7 +530,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                         view.RequestCalendarAuthorization(true).Returns(Observable.Return(false));
                         ViewModel.AttachView(view);
 
-                        ViewModel.ToggleCalendarIntegration.Execute();
+                        ViewModel.ToggleNativeCalendarIntegration.Execute();
                         TestScheduler.Start();
 
                         UserPreferences.DidNotReceive().SetCalendarIntegrationEnabled(true);
@@ -449,7 +544,7 @@ namespace Toggl.Core.Tests.UI.ViewModels
                         view.RequestCalendarAuthorization(true).Returns(Observable.Return(false));
                         ViewModel.AttachView(view);
 
-                        ViewModel.ToggleCalendarIntegration.Execute();
+                        ViewModel.ToggleNativeCalendarIntegration.Execute();
                         TestScheduler.Start();
 
                         InteractorFactory.GetUserCalendars().DidNotReceive().Execute();
@@ -487,9 +582,9 @@ namespace Toggl.Core.Tests.UI.ViewModels
 
                 var calendars = userCalendars
                     .Where(calendar => selectedIds.Contains(calendar.Id))
-                    .Select(calendar => new SelectableUserCalendarViewModel(calendar, false));
+                    .Select(calendar => new SelectableNativeCalendarViewModel(calendar, false));
 
-                ViewModel.SelectCalendar.ExecuteSequentially(calendars)
+                ViewModel.SelectNativeCalendar.ExecuteSequentially(calendars)
                     .AppendAction(ViewModel.Save)
                     .Subscribe();
 
@@ -524,9 +619,9 @@ namespace Toggl.Core.Tests.UI.ViewModels
 
                 var calendars = userCalendars
                     .Where(calendar => selectedIds.Contains(calendar.Id))
-                    .Select(calendar => new SelectableUserCalendarViewModel(calendar, false));
+                    .Select(calendar => new SelectableNativeCalendarViewModel(calendar, false));
 
-                ViewModel.SelectCalendar.ExecuteSequentially(calendars)
+                ViewModel.SelectNativeCalendar.ExecuteSequentially(calendars)
                     .AppendAction(ViewModel.Save)
                     .Subscribe();
 

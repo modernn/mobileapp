@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,31 +14,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="106"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-O5-xJN">
-                    <rect key="frame" x="0.0" y="1" width="375" height="44"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link calendars" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1RA-iN-lYG">
-                            <rect key="frame" x="16" y="13" width="99" height="18"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" name="Text"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oag-Wz-K1q">
-                            <rect key="frame" x="310" y="6.5" width="51" height="31"/>
-                            <color key="onTintColor" name="Accent"/>
-                        </switch>
-                    </subviews>
-                    <color key="backgroundColor" name="CellBackground"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="3dt-gd-wIV"/>
-                        <constraint firstAttribute="trailing" secondItem="Oag-Wz-K1q" secondAttribute="trailing" constant="16" id="8z9-vb-59i"/>
-                        <constraint firstItem="1RA-iN-lYG" firstAttribute="centerY" secondItem="bQZ-O5-xJN" secondAttribute="centerY" id="AYj-JI-v6z"/>
-                        <constraint firstItem="1RA-iN-lYG" firstAttribute="leading" secondItem="bQZ-O5-xJN" secondAttribute="leading" constant="16" id="MRy-EY-sCk"/>
-                        <constraint firstItem="Oag-Wz-K1q" firstAttribute="centerY" secondItem="bQZ-O5-xJN" secondAttribute="centerY" id="zDc-51-dk3"/>
-                    </constraints>
-                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toggl needs access to your calendar in order to display events. Events are visible to you only and won’t appear in Reports." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRD-zi-I9X">
-                    <rect key="frame" x="16" y="54" width="343" height="43"/>
+                    <rect key="frame" x="15" y="10" width="345" height="71"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" name="Text2"/>
                     <nil key="highlightedColor"/>
@@ -46,35 +23,21 @@
             </subviews>
             <color key="backgroundColor" name="TableBackground"/>
             <constraints>
-                <constraint firstItem="bQZ-O5-xJN" firstAttribute="top" secondItem="1" secondAttribute="top" constant="1" id="KiJ-VO-doe"/>
-                <constraint firstAttribute="trailing" secondItem="bQZ-O5-xJN" secondAttribute="trailing" id="NLm-L2-OhN"/>
-                <constraint firstItem="GRD-zi-I9X" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="16" id="ULr-K8-naq"/>
-                <constraint firstItem="bQZ-O5-xJN" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="YbD-1S-p99"/>
-                <constraint firstItem="GRD-zi-I9X" firstAttribute="top" secondItem="bQZ-O5-xJN" secondAttribute="bottom" constant="9" id="ru7-dR-qBY"/>
-                <constraint firstAttribute="trailing" secondItem="GRD-zi-I9X" secondAttribute="trailing" constant="16" id="x0O-nO-h2W"/>
+                <constraint firstAttribute="bottom" secondItem="GRD-zi-I9X" secondAttribute="bottom" constant="25" id="3Hi-6X-Nmq"/>
+                <constraint firstItem="GRD-zi-I9X" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="Qbb-tY-h5t"/>
+                <constraint firstAttribute="trailing" secondItem="GRD-zi-I9X" secondAttribute="trailing" constant="15" id="hfW-pS-WPK"/>
+                <constraint firstItem="GRD-zi-I9X" firstAttribute="top" secondItem="1" secondAttribute="top" constant="10" id="jX2-bT-1W7"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="DescriptionLabel" destination="GRD-zi-I9X" id="pfC-Xr-hZL"/>
-                <outlet property="EnableCalendarAccessView" destination="bQZ-O5-xJN" id="AMO-FT-iSP"/>
-                <outlet property="LinkCalendarsSwitch" destination="Oag-Wz-K1q" id="pKb-XF-R9W"/>
-                <outlet property="TextLabel" destination="1RA-iN-lYG" id="cBY-Iy-ckX"/>
             </connections>
             <point key="canvasLocation" x="132" y="154"/>
         </view>
     </objects>
     <resources>
-        <namedColor name="Accent">
-            <color red="0.89803922176361084" green="0.48627451062202454" blue="0.84705883264541626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="CellBackground">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="TableBackground">
             <color red="0.9529411792755127" green="0.94901961088180542" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Text">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Text2">
             <color red="0.23529411852359772" green="0.23529411852359772" blue="0.26274511218070984" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>

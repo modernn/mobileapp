@@ -33,7 +33,7 @@ namespace Toggl.Core.Interactors
                 return;
 
             calendar = ExternalCalendar.SetSelected(calendar, selected);
-            dataSource.ExternalCalendars.Update(calendar);
+            await dataSource.ExternalCalendars.Update(calendar);
         }
     }
 }
