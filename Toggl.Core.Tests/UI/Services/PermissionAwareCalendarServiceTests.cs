@@ -42,10 +42,11 @@ namespace Toggl.Core.Tests.UI.Services
             protected override IEnumerable<UserCalendar> NativeGetUserCalendars()
                 => NativeCalendars;
 
-            protected override IEnumerable<IThreadSafeExternalCalendarEvent> ResolveDuplicates(
+            protected override IEnumerable<CalendarItem> ResolveDuplicates(
                 IEnumerable<CalendarItem> nativeEvents,
                 IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents)
-                => externalEvents.Where((externalEvent) => nativeEvents.None((nativeEvent) => externalEvent.EventId == nativeEvent.SyncId));
+                => nativeEvents.Where((nativeEvent) => externalEvents.None((externalEvent)
+                    => nativeEvent.SyncId.StartsWith(externalEvent.ExternalId) || externalEvent.ExternalId.StartsWith(nativeEvent.SyncId)));
         }
 
         public sealed class MergingCalendarItemsFromMultipleSources
@@ -131,12 +132,12 @@ namespace Toggl.Core.Tests.UI.Services
                 var calendarItems = (await calendarService.GetEventsInRange(start, end)).ToArray();
 
                 calendarItems.Length.Should().Be(3);
-                calendarItems[0].Id.Should().Be("0");
-                calendarItems[0].SyncId.Should().Be("SyncId-0");
-                calendarItems[1].Id.Should().Be("1");
-                calendarItems[1].SyncId.Should().Be("SyncId-1");
-                calendarItems[2].Id.Should().Be("ExternalEvent-1337");
-                calendarItems[2].SyncId.Should().Be("SyncId-2");
+                calendarItems[0].Id.Should().Be("ExternalEvent-42");
+                calendarItems[0].SyncId.Should().Be("SyncId-1");
+                calendarItems[1].Id.Should().Be("ExternalEvent-1337");
+                calendarItems[1].SyncId.Should().Be("SyncId-2");
+                calendarItems[2].Id.Should().Be("0");
+                calendarItems[2].SyncId.Should().Be("SyncId-0");
             }
 
             [Fact]

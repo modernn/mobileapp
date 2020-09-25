@@ -119,7 +119,7 @@ namespace Toggl.Core.Calendar
         private CalendarItem(IThreadSafeExternalCalendarEvent calendarEvent)
             : this(
                   $"{ExternalEventIdPrefix}{calendarEvent.Id}",
-                  calendarEvent.EventId,
+                  calendarEvent.ExternalId,
                   CalendarItemSource.ExternalCalendar,
                   calendarEvent.StartTime,
                   calendarEvent.Duration(),

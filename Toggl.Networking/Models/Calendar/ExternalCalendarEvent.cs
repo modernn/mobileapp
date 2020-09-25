@@ -14,8 +14,8 @@ namespace Toggl.Networking.Models.Calendar
             public string Background { get; set; }
         }
 
-        [JsonProperty("event_id")]
-        public string EventId { get; set; }
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
 
         [JsonProperty("ical_uid")]
         public string ICalId { get; set; }
@@ -38,7 +38,7 @@ namespace Toggl.Networking.Models.Calendar
 
         public ExternalCalendarEvent(IExternalCalendarEvent entity)
         {
-            EventId = entity.EventId;
+            ExternalId = entity.ExternalId;
             ICalId = entity.ICalId;
             Title = entity.Title;
             StartTime = entity.StartTime;

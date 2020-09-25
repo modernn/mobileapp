@@ -66,7 +66,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            EventId = "0",
+                            ExternalId = "0",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -80,7 +80,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                         },
                         new ExternalCalendarEvent
                         {
-                            EventId = "1",
+                            ExternalId = "1",
                             ICalId = "1",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -121,7 +121,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            EventId = "0",
+                            ExternalId = "0",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -135,7 +135,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                         },
                         new ExternalCalendarEvent
                         {
-                            EventId = "1",
+                            ExternalId = "1",
                             ICalId = "1",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -157,7 +157,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            EventId = "3",
+                            ExternalId = "3",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),
@@ -227,7 +227,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     {
                         new ExternalCalendarEvent
                         {
-                            EventId = "0",
+                            ExternalId = "0",
                             ICalId = "0",
                             Title = "Memes Meeting",
                             StartTime = new DateTimeOffset(2020, 7, 24, 15, 46, 0, TimeSpan.Zero),

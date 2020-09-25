@@ -40,7 +40,7 @@ namespace Toggl.Core.Calendar
             {
                 var syncId = id.Substring(CalendarItem.ExternalEventIdPrefix.Length);
                 return dataSource.ExternalCalendarEvents
-                    .GetAll((externalEvent) => externalEvent.EventId == syncId)
+                    .GetAll((externalEvent) => externalEvent.ExternalId == syncId)
                     .Select((events) => events.First())
                     .Select(CalendarItem.From);
             }
@@ -77,7 +77,7 @@ namespace Toggl.Core.Calendar
 
         protected abstract IEnumerable<CalendarItem> NativeGetEventsInRange(DateTimeOffset start, DateTimeOffset end);
 
-        protected abstract IEnumerable<IThreadSafeExternalCalendarEvent> ResolveDuplicates(IEnumerable<CalendarItem> nativeEvents, IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents);
+        protected abstract IEnumerable<CalendarItem> ResolveDuplicates(IEnumerable<CalendarItem> nativeEvents, IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents);
 
         private IObservable<IEnumerable<IThreadSafeExternalCalendarEvent>> getExternalCalendarEventsInRange(
             DateTimeOffset start, DateTimeOffset end)
@@ -88,8 +88,8 @@ namespace Toggl.Core.Calendar
 
         private IEnumerable<CalendarItem> mergingNativeAndExternalEvents(IEnumerable<CalendarItem> nativeEvents, IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents)
         {
-            var conflictFreeExternalEvents = ResolveDuplicates(nativeEvents, externalEvents).Select(CalendarItem.From);
-            return nativeEvents.Concat(conflictFreeExternalEvents);
+            var conflictFreeNativeEvents = ResolveDuplicates(nativeEvents, externalEvents);
+            return externalEvents.Select(CalendarItem.From).Concat(conflictFreeNativeEvents);
         }
     }
 }

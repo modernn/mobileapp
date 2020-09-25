@@ -26,7 +26,7 @@ namespace Toggl.Storage.Realm.Models.Calendar
 
         public long? OriginalId { get; set; }
 
-        public string EventId { get; set; }
+        public string ExternalId { get; set; }
 
         public string ICalId { get; set; }
 
@@ -50,7 +50,7 @@ namespace Toggl.Storage.Realm.Models.Calendar
 
         public void SetPropertiesFrom(IDatabaseExternalCalendarEvent entity, Realms.Realm realm)
         {
-            EventId = entity.EventId;
+            ExternalId = entity.ExternalId;
             ICalId = entity.ICalId;
             Title = entity.Title;
             StartTime = entity.StartTime;
@@ -64,7 +64,7 @@ namespace Toggl.Storage.Realm.Models.Calendar
 
         public void SetPropertiesFrom(IExternalCalendarEvent entity, Realms.Realm realm)
         {
-            EventId = entity.EventId;
+            ExternalId = entity.ExternalId;
             ICalId = entity.ICalId;
             Title = entity.Title;
             StartTime = entity.StartTime;

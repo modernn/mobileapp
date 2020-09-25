@@ -7,7 +7,7 @@ namespace Toggl.Core.Models.Calendar
     {
         public long Id { get; }
 
-        public string EventId { get; }
+        public string ExternalId { get; }
 
         public string ICalId { get; }
 
@@ -43,7 +43,7 @@ namespace Toggl.Core.Models.Calendar
             IThreadSafeExternalCalendar calendar)
         {
             Id = id;
-            EventId = eventId;
+            ExternalId = eventId;
             ICalId = iCalId;
             Title = title;
             StartTime = startTime;
@@ -57,7 +57,7 @@ namespace Toggl.Core.Models.Calendar
 
         public ExternalCalendarEvent(IDatabaseExternalCalendarEvent entity)
             : this(entity.Id,
-                  entity.EventId,
+                  entity.ExternalId,
                   entity.ICalId,
                   entity.Title,
                   entity.StartTime,

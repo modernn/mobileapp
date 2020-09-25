@@ -53,10 +53,11 @@ namespace Toggl.iOS.Services
             return calendarItem;
         }
 
-        protected override IEnumerable<IThreadSafeExternalCalendarEvent> ResolveDuplicates(
+        protected override IEnumerable<CalendarItem> ResolveDuplicates(
             IEnumerable<CalendarItem> nativeEvents,
             IEnumerable<IThreadSafeExternalCalendarEvent> externalEvents)
-            => externalEvents.Where((externalEvent) => nativeEvents.None((nativeEvent) => externalEvent.ICalId == nativeEvent.SyncId));
+            => nativeEvents.Where((nativeEvent) => externalEvents.None((externalEvent)
+                => nativeEvent.SyncId.StartsWith(externalEvent.ICalId) || externalEvent.ICalId.StartsWith(nativeEvent.SyncId)));
 
         private UserCalendar userCalendarFromEKCalendar(EKCalendar calendar)
             => new UserCalendar(

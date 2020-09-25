@@ -151,7 +151,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     new ExternalCalendarEvent
                     {
-                        EventId = "42-1-0",
+                        ExternalId = "42-1-0",
                         ICalId = "42-1-0",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -165,7 +165,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     },
                     new ExternalCalendarEvent
                     {
-                        EventId = "42-1-1",
+                        ExternalId = "42-1-1",
                         ICalId = "42-1-1",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -183,7 +183,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     new ExternalCalendarEvent
                     {
-                        EventId = "42-2-0",
+                        ExternalId = "42-2-0",
                         ICalId = "42-2-0",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -197,7 +197,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     },
                     new ExternalCalendarEvent
                     {
-                        EventId = "42-2-1",
+                        ExternalId = "42-2-1",
                         ICalId = "42-2-1",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -215,7 +215,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     new ExternalCalendarEvent
                     {
-                        EventId = "1337-1-0",
+                        ExternalId = "1337-1-0",
                         ICalId = "1337-1-0",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -229,7 +229,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     },
                     new ExternalCalendarEvent
                     {
-                        EventId = "1337-1-1",
+                        ExternalId = "1337-1-1",
                         ICalId = "1337-1-1",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -247,7 +247,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     new ExternalCalendarEvent
                     {
-                        EventId = "1337-2-0",
+                        ExternalId = "1337-2-0",
                         ICalId = "1337-2-0",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -261,7 +261,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                     },
                     new ExternalCalendarEvent
                     {
-                        EventId = "1337-2-1",
+                        ExternalId = "1337-2-1",
                         ICalId = "1337-2-1",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
@@ -441,7 +441,7 @@ namespace Toggl.Core.Tests.Interactors.ExternalCalendars
                 {
                     new ExternalCalendarEvent
                     {
-                        EventId = "42-1",
+                        ExternalId = "42-1",
                         ICalId = "42-1",
                         Title = "Title",
                         StartTime = new DateTimeOffset(2020, 7, 24, 12, 12, 12, TimeSpan.Zero),
