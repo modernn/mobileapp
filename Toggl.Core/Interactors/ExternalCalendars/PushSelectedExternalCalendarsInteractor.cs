@@ -1,10 +1,10 @@
-using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Toggl.Core.DataSources;
 using Toggl.Core.Models.Calendar;
 using Toggl.Networking;
+using Toggl.Networking.Exceptions;
 using Toggl.Shared;
 
 namespace Toggl.Core.Interactors
@@ -29,9 +29,20 @@ namespace Toggl.Core.Interactors
 
             foreach (var calendar in calendarsToSync)
             {
-                var updatedCalendar = await api.ExternalCalendars.SetCalendarSelected(calendar.IntegrationId, calendar.Id, calendar.Selected);
-                var threadSafeCalendar = ExternalCalendar.From(updatedCalendar);
-                await dataSource.ExternalCalendars.Update(threadSafeCalendar);
+                try
+                {
+                    var updatedCalendar = await api.ExternalCalendars.SetCalendarSelected(calendar.IntegrationId, calendar.Id, calendar.Selected);
+                    var threadSafeCalendar = ExternalCalendar.From(updatedCalendar);
+                    await dataSource.ExternalCalendars.Update(threadSafeCalendar);
+                }
+                catch (ApiException)
+                {
+                    // Ignore
+                    // This exception can happen when the integration was deleted
+                    // but since we don't a proper way to resolve conflicts when
+                    // syncing calendar data (i.e: no `At` property), we can ignore
+                    // this exception and then fetch the calendars again
+                }
             }
 
             return Unit.Default;
