@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="15sp"
-                    android:textColor="@color/primaryTextOnDarkBackground"
+                    android:textColor="@android:color/white"
                     tools:text="Google Calendar integration coming soon! 🎉"/>
             <TextView
                     android:id="@+id/Body"
@@ -40,7 +40,8 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-medium"
                     android:textSize="12sp"
-                    android:textColor="@color/primaryTextOnDarkBackground"
+                    android:lineHeight="18sp"
+                    android:textColor="@android:color/white"
                     tools:text="Want to get early access to see your Google Calendar events also on mobile? Go to Calendar view in Web App to connect your Google account."/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

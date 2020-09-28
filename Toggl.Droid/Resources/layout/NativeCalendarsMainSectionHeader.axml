@@ -13,7 +13,7 @@
             android:layout_marginLeft="15dp"
             android:textAllCaps="true"
             android:textStyle="bold"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="@color/primaryText"
             tools:text="Google Calendar"/>
     <TextView
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="10dp"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/primaryText"
             tools:text="Google calendar events are visible also in the Web App"/>
 </LinearLayout>
